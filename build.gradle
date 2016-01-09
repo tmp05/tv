@@ -1,0 +1,68 @@
+buildscript {
+   /**
+    * The nested repositories{} block declares that this build uses the
+    * jcenter repository.
+    */
+    repositories {
+        jcenter()
+    }
+
+   /**
+    * This block declares a dependency on the 2.3.3 version
+    * of the Gradle plugin for the buildscript.
+    */
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+    }
+}
+
+apply plugin: 'com.android.application'
+
+allprojects {
+repositories{
+    mavenCentral()
+    maven { url "http://jzaccone.github.io/SlidingMenu-aar" }
+}
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a'
+            universalApk true
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+
+        debug {
+            debuggable true
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.jeremyfeinstein.slidingmenu:library:1.3@aar'
+    //compile 'de.mrmaffen:vlc-android-sdk:2.0.6'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':kvLib')
+    compile project(':libvlc')
+}
