@@ -8,6 +8,8 @@ import ru.krasview.kvlib.indep.consts.IntentConst;
 import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
 import ru.krasview.secret.ApiConst;
 import android.app.Activity;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -18,6 +20,7 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebResourceRequest;
 
 public class SocialAuthActivity extends Activity {
 	WebView wv;
@@ -28,6 +31,8 @@ public class SocialAuthActivity extends Activity {
 		setContentView(R.layout.social_auth_activity);
 
 		wv = (WebView)findViewById(R.id.webView1);
+		wv.getSettings().setJavaScriptEnabled(true);
+		wv.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36 Kadu");
 		wv.setWebViewClient(new CustomWebViewClient());
 		if(getIntent().hasExtra("address")) {
 			wv.loadUrl(getIntent().getExtras().getString("address"));
@@ -43,11 +48,28 @@ public class SocialAuthActivity extends Activity {
 	}
 
 	private class CustomWebViewClient extends WebViewClient {
+		@SuppressWarnings("deprecation")
+		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			CookieSyncManager.createInstance(getApplication());
+			final Uri uri = Uri.parse(url);
+			return handleUri(view, uri);
+		}
+
+		@RequiresApi(Build.VERSION_CODES.N)
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+			final Uri uri = request.getUrl();
+			return handleUri(view, uri);
+		}
+
+		private boolean handleUri(WebView view, final Uri uri) {
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+				CookieSyncManager.createInstance(getApplication());
+			}
 			CookieManager cookieManager = CookieManager.getInstance();
-			String cookie = cookieManager.getCookie("krasview.ru");
-			Log.i("Debug", "cookie " +  cookie);
+			cookieManager.setAcceptCookie(true);
+			String cookie = cookieManager.getCookie("hlamer.ru");
+			Log.i("Debug", "cookie " +  cookie + "; address: " + uri.getSchemeSpecificPart());
 			if(cookie!=null) {
 				String[] x = Pattern.compile(";").split(cookie);
 				String hash = x[0].replaceFirst("user=", "");
@@ -80,10 +102,10 @@ public class SocialAuthActivity extends Activity {
 				startActivity(a);
 				SocialAuthActivity.this.setResult(SocialAuthActivity.RESULT_OK);
 				SocialAuthActivity.this.finish();
-			} else if(Uri.parse(url).getQueryParameter("error") != null) {
+			} else if(uri.getQueryParameter("error") != null) {
 				SocialAuthActivity.this.finish();
 			} else {
-				view.loadUrl(url);
+				view.loadUrl(uri.getScheme() + ":" + uri.getSchemeSpecificPart());
 			}
 
 			return true;
