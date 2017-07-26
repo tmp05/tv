@@ -22,6 +22,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebResourceRequest;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import ru.krasview.kvlib.indep.Parser;
+
 public class SocialAuthActivity extends Activity {
 	WebView wv;
 
@@ -76,19 +81,25 @@ public class SocialAuthActivity extends Activity {
 				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 				prefs.edit().putString("pref_hash", hash).commit();
 
-				final String get_tv_hash = ApiConst.TV_HASH;
-				HTTPClient.getXMLAsync(get_tv_hash, "hash="+hash ,new OnLoadCompleteListener() {
+				final String get_user_info = ApiConst.GET_USER_INFO;
+				HTTPClient.getXMLAsync(get_user_info, "hash="+hash ,new OnLoadCompleteListener() {
 					@Override
 					public void loadComplete(String result) {
 					}
 
 					@Override
 					public void loadComplete(String address, String result) {
-						if(address.equals(get_tv_hash)) {
+						if(address.equals(get_user_info)) {
 							SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-							prefs.edit().putString("pref_hash_tv", result).commit();
-							Log.i("Debug", "получен тв хеш с красвью " + result);
-							AuthAccount.getInstance().setTvHash(result);
+							Document mDocument = Parser.XMLfromString(result);
+							if(mDocument == null) { return; }
+							mDocument.normalizeDocument();
+							Node node = mDocument.getElementsByTagName("user").item(0);
+							Element user = (Element)node;
+							String name = user.getElementsByTagName("name").item(0).getTextContent();
+							String tv_hash = user.getElementsByTagName("tv_hash").item(0).getTextContent();
+							prefs.edit().putString("pref_login", name).putString("pref_hash_tv", tv_hash).commit();
+							//Log.i("Debug", "получен тв хеш с красвью " + tv_hash);
 						}
 					}
 				});
