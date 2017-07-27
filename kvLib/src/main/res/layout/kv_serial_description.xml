@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,17 +16,17 @@
     <requestFocus />
     </Button>
 
-    
-    
+
+
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/button"
-        android:layout_alignParentRight="true"  
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:padding="10dip" >
-	<RelativeLayout 
+	<RelativeLayout
     	android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
@@ -36,7 +37,7 @@
          android:layout_alignParentTop="true"
         android:scaleType="fitStart" >
     </ImageView>
-            <TextView 
+            <TextView
         android:id="@+id/name"
         android:paddingRight="@dimen/main_padding"
         android:lines="3"
@@ -48,17 +49,18 @@
         android:layout_toLeftOf="@id/image"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textSize="@dimen/text_size" 
+        android:textSize="@dimen/text_size"
         android:layout_alignBottom="@id/image"
         />
-            
+
         <View
     		android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
     		android:background="?android:attr/listDivider"
     		android:layout_below="@id/image"
     		android:layout_marginTop="@dimen/main_padding"
-    		android:layout_marginBottom="@dimen/main_padding"/>
+    		android:layout_marginBottom="@dimen/main_padding"
+            android:id="@+id/view_divider" />
 
         <TextView
             android:id="@+id/text"
@@ -70,10 +72,19 @@
             android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
             android:textSize="@dimen/text_size_medium"  />
 
-</RelativeLayout>
-   
+        <TextView
+            android:id="@+id/params"
+            android:paddingTop="@dimen/main_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/text"
+            tools:layout_width="match_parent"
+            android:textSize="@dimen/text_size_medium"  />
 
-        
+    </RelativeLayout>
+
+
+
     </ScrollView>
 
 
