@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLCVout.OnNewVideoLayoutListener, VideoInterface {
-
     public final static String TAG = "Krasview/VideoViewVLC";
 
     private SurfaceView mSurface;
@@ -40,9 +39,6 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
     Map<String, Object> mMap;
     private Context video_context;
     private View.OnLayoutChangeListener mOnLayoutChangeListener = null;
-
-    int dw = 1;
-    int dh = 1;
 
     boolean stopped = false;
 
@@ -218,7 +214,6 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
 
     @Override
     public void end() {
-        // TODO Auto-generated method stub
         if(mTVController != null) {
             mTVController.end();
         }
@@ -236,12 +231,12 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
         Log.d("MyVLC", "CreatePlayer " + media);
         //releasePlayer();
         try {
-            if (media.toString().length() > 0) {
+            /*if (media.toString().length() > 0) {
                 Toast toast = Toast.makeText(getContext(), media.toString(), Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,
                         0);
                 toast.show();
-            }
+            }*/
             if(mMediaPlayer == null) {
                 // Create LibVLC
                 ArrayList<String> options = new ArrayList<String>();
@@ -252,8 +247,7 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
                 libvlc = new LibVLC(video_context, options);
                 holder.setKeepScreenOn(true);
             } else {
-                mMediaPlayer.stop();
-                mMediaPlayer.release();
+                releaseMedia();
             }
 
             // Create media player
@@ -301,7 +295,14 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
         }
     }
 
-    // TODO: handle this cleaner
+    public void releaseMedia() {
+        final IVLCVout vout = mMediaPlayer.getVLCVout();
+        vout.removeCallback(this);
+        vout.detachViews();
+        mMediaPlayer.stop();
+        mMediaPlayer.release();
+    }
+
     public void releasePlayer() {
         if (libvlc == null)
             return;
@@ -311,10 +312,7 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
             mOnLayoutChangeListener = null;
         }
 
-        mMediaPlayer.stop();
-        final IVLCVout vout = mMediaPlayer.getVLCVout();
-        vout.removeCallback(this);
-        vout.detachViews();
+        releaseMedia();
         holder = null;
         libvlc.release();
         libvlc = null;
@@ -323,38 +321,6 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
         mVideoWidth = 0;
         mVideoHeight = 0;
     }
-/*    private void changeMediaPlayerLayout(int displayW, int displayH) {
-        Media.VideoTrack vtrack = mMediaPlayer.getCurrentVideoTrack();
-        if (vtrack == null) {
-            Log.d("setSize", "no video track");
-            return;
-        }
-        final boolean videoSwapped = vtrack.orientation == Media.VideoTrack.Orientation.LeftBottom
-                || vtrack.orientation == Media.VideoTrack.Orientation.RightTop;
-        int videoW = vtrack.width;
-        int videoH = vtrack.height;
-
-        if (videoSwapped) {
-            int swap = videoW;
-            videoW = videoH;
-            videoH = swap;
-        }
-        if (vtrack.sarNum != vtrack.sarDen)
-            videoW = videoW * vtrack.sarNum / vtrack.sarDen;
-
-        float ar = videoW / (float) videoH;
-        float dar = displayW / (float) displayH;
-
-        float scale;
-        if (dar >= ar)
-            scale = displayW / (float) videoW;
-        else
-            scale = displayH / (float) videoH;
-        Log.d("setSize", String.format("layout width: %d, height: %d", displayW, displayH));
-        Log.d("setSize", String.format("scale: %f, video width: %d, height: %d", scale, videoW, videoH));
-        mMediaPlayer.setScale(scale);
-        mMediaPlayer.setAspectRatio(null);
-    }*/
 
     public void setSize() {
         // get screen size
@@ -376,12 +342,13 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
             lp.width  = ViewGroup.LayoutParams.MATCH_PARENT;
             lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
             mSurface.setLayoutParams(lp);
-            if(pref_aspect_ratio.equals("default")) {
+            if(pref_aspect_ratio_video.equals("default")) {
                 mMediaPlayer.setAspectRatio(null);
-            } else if(pref_aspect_ratio.equals("fullscreen")) {
-                mMediaPlayer.setAspectRatio(!isPortrait ? ""+w+":"+h : ""+h+":"+w);
+            } else if(pref_aspect_ratio_video.equals("fullscreen")) {
+                Log.d("test", "isPortrait + " + isPortrait);
+                mMediaPlayer.setAspectRatio(isPortrait ? ""+h+":"+w : ""+w+":"+h);
             } else {
-                mMediaPlayer.setAspectRatio(pref_aspect_ratio);
+                mMediaPlayer.setAspectRatio(pref_aspect_ratio_video);
             }
             mMediaPlayer.setScale(0);
 //            changeMediaPlayerLayout(w, h);
@@ -476,7 +443,6 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
             pref_aspect_ratio_video = prefs.getString("aspect_ratio_video", "default");
         } else {
             pref_aspect_ratio_video = prefs.getString("aspect_ratio_tv", "default");
-
         }
     }
 
@@ -505,7 +471,7 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
     }
 
     @Override
-    public boolean dispatchKeyEvent (KeyEvent event) {
+    public boolean dispatchKeyEvent(KeyEvent event) {
         if(mTVController!=null) {
             return mTVController.dispatchKeyEvent(event);
         }

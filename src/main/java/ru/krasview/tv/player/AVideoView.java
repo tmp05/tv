@@ -50,18 +50,15 @@ public class AVideoView extends VideoView implements VideoInterface {
 	public AVideoView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
-		// TODO Auto-generated constructor stub
 	}
 
 	public AVideoView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
-		// TODO Auto-generated constructor stub
 	}
 
 	public AVideoView(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 		init();
 	}
 
@@ -88,7 +85,6 @@ public class AVideoView extends VideoView implements VideoInterface {
 			pref_aspect_ratio_video = prefs.getString("aspect_ratio_video", "default");
 		} else {
 			pref_aspect_ratio_video = prefs.getString("aspect_ratio_tv", "default");
-
 		}
 	}
 
@@ -115,14 +111,12 @@ public class AVideoView extends VideoView implements VideoInterface {
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
 		((VideoView)this).stopPlayback();
 		stopped = true;
 	}
 
 	@Override
 	public void setTVController(TVController tc) {
-		// TODO Auto-generated method stub
 		mTVController = tc;
 		mTVController.setVideo(this);
 	}
@@ -141,8 +135,6 @@ public class AVideoView extends VideoView implements VideoInterface {
 
 	@Override
 	public void play() {
-		// TODO Auto-generated method stub
-
 		if(stopped) {
 			String mLocation = (String) mMap.get("uri");
 			stopped = false;
@@ -154,7 +146,6 @@ public class AVideoView extends VideoView implements VideoInterface {
 
 	@Override
 	public void setVideoController(VideoController vc) {
-		// TODO Auto-generated method stub
 		mVideoController = vc;
 		mVideoController.setVideo(this);
 	}
@@ -168,32 +159,27 @@ public class AVideoView extends VideoView implements VideoInterface {
 
 	@Override
 	public boolean hideOverlay() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int getProgress() {
-		// TODO Auto-generated method stub
 		return this.getCurrentPosition();
 	}
 
 	@Override
 	public int getLeight() {
-		// TODO Auto-generated method stub
 		Log.i("Debug", "" + this.getDuration());
 		return this.getDuration();
 	}
 
 	@Override
 	public int getTime() {
-		// TODO Auto-generated method stub
 		return this.getCurrentPosition();
 	}
 
 	@Override
 	public void setTime(int time) {
-		// TODO Auto-generated method stub
 		this.seekTo(time);
 	}
 
@@ -366,20 +352,16 @@ public class AVideoView extends VideoView implements VideoInterface {
 
 	@Override
 	public int getAudioTracksCount() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public String changeAudio() {
-		// TODO Auto-generated method stub
 		return "Следующая дорожка";
 	}
 
 	@Override
 	public int getSpuTracksCount() {
-		// TODO Auto-generated method stub
-
 		return 0;
 	}
 
@@ -391,7 +373,6 @@ public class AVideoView extends VideoView implements VideoInterface {
 
 	@Override
 	public void end() {
-		// TODO Auto-generated method stub
 		if(mTVController != null) {
 			mTVController.end();
 		}
@@ -404,7 +385,6 @@ public class AVideoView extends VideoView implements VideoInterface {
 
 	@Override
 	public String changeSubtitle() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

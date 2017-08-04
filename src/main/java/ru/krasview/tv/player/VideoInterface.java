@@ -24,8 +24,8 @@ public interface VideoInterface {
 	public String changeSubtitle();
 	public int getAudioTracksCount();
 	public int getSpuTracksCount();
-	public void setOnCompletionListener( MediaPlayer.OnCompletionListener listener);
-	public void setOnErrorListener (MediaPlayer.OnErrorListener l);
+	public void setOnCompletionListener(MediaPlayer.OnCompletionListener listener);
+	public void setOnErrorListener(MediaPlayer.OnErrorListener l);
 
 	public int changeOrientation();
 	public void end();

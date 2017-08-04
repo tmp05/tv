@@ -13,12 +13,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.example.kvlib.R;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+
 import org.videolan1.vlc.Util;
 import ru.krasview.kvlib.indep.ListAccount;
 
@@ -28,6 +31,7 @@ public class VideoActivity extends Activity {
 	RelativeLayout mFrame;
 	SurfaceView mVideoSurface;
 	RelativeLayout mOverlayFrame;
+	SimpleExoPlayerView simpleExoPlayerView;
 
 	int current;
 	String mLocation;
@@ -57,6 +61,7 @@ public class VideoActivity extends Activity {
 		mInfo = (TextView) findViewById(R.id.player_overlay_info);
 		mTitle = (TextView)findViewById(R.id.player_overlay_title);
 		mIcon = (ImageView)findViewById(R.id.player_overlay_icon);
+		simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
 		initLayout();
 	}
 
@@ -87,7 +92,8 @@ public class VideoActivity extends Activity {
 			if(pref_video_player.equals("VLC")) {
 				mVideoSurface = new VideoViewVLC(this);
 			} else {
-				mVideoSurface = new AVideoView(this);
+				mVideoSurface = new KExoPlayer(this, simpleExoPlayerView);
+				//mVideoSurface = new AVideoView(this);
 			}
 			mFrame.addView(mVideoSurface);
 		}
@@ -221,6 +227,7 @@ public class VideoActivity extends Activity {
 
 		if(event.getAction() == KeyEvent.ACTION_DOWN) {
 			switch(event.getKeyCode()) {
+			case KeyEvent.KEYCODE_N:
 			case KeyEvent.KEYCODE_DPAD_DOWN:
 				current++;
 				if(current>=ListAccount.adapterForActivity.getCount()) {
@@ -320,7 +327,6 @@ public class VideoActivity extends Activity {
 	}
 
 	public void showInfo(String msg, int i) {
-		// TODO Auto-generated method stub
 		mInfo.setVisibility(View.VISIBLE);
 		mInfo.setText(msg);
 		mHandler.removeMessages(FADE_OUT_INFO);
@@ -328,11 +334,11 @@ public class VideoActivity extends Activity {
 	}
 
 	public void showInfo(CharSequence text) {
-        mInfo.setVisibility(View.VISIBLE);
-        mInfo.setText(text);
-        mHandler.removeMessages(FADE_OUT_INFO);
-        mHandler.removeMessages(FADE_OUT);
-    }
+		mInfo.setVisibility(View.VISIBLE);
+		mInfo.setText(text);
+		mHandler.removeMessages(FADE_OUT_INFO);
+		mHandler.removeMessages(FADE_OUT);
+	}
 
 	void hideInfo() {
 		mInfo.setVisibility(View.GONE);

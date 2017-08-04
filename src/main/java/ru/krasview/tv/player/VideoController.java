@@ -37,7 +37,6 @@ public class VideoController extends FrameLayout {
 	SeekBar mSeekbar;
 	TextView mTime;
 	TextView mLeight;
-	TextView mInfo;
 	ImageButton mSize;
 	ImageButton mAudio;
 	ImageButton mSubtitle;
@@ -60,22 +59,19 @@ public class VideoController extends FrameLayout {
 
 	public VideoController(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		// TODO Auto-generated constructor stub
 		init();
 	}
 	public VideoController(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
-		// TODO Auto-generated constructor stub
 	}
 	public VideoController(Context context) {
 		super(context);
 		init();
-		// TODO Auto-generated constructor stub
 	}
 
 	private void init() {
-		LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.kv_controller_video, this, true);
 		mPause = (ImageButton)findViewById(R.id.player_overlay_play);
 		mPause.setOnClickListener(listener);
@@ -89,7 +85,6 @@ public class VideoController extends FrameLayout {
 		mLeight = (TextView)findViewById(R.id.player_overlay_length);
 		mSize = (ImageButton)findViewById(R.id.player_overlay_size);
 		mSize.setOnClickListener(listener);
-		mInfo = (TextView)findViewById(R.id.player_overlay_info);
 		mAudio = (ImageButton)findViewById(R.id.player_overlay_audio);
 		mAudio.setOnClickListener(listener);
 		mSubtitle = (ImageButton)findViewById(R.id.player_overlay_subtitle);
@@ -100,7 +95,6 @@ public class VideoController extends FrameLayout {
 	OnClickListener listener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			//switch(v.getId()){
 			if(v.getId()== R.id.player_overlay_subtitle) {
 				//	case R.id.player_overlay_subtitle:
@@ -166,17 +160,6 @@ public class VideoController extends FrameLayout {
 			}
 		}
 	};
-	/*	private void showInfo(CharSequence text, int duration) {
-	        mInfo.setVisibility(View.VISIBLE);
-	        mInfo.setText(text);
-	        mHandler.removeMessages(FADE_OUT_INFO);
-	        mHandler.sendEmptyMessageDelayed(FADE_OUT_INFO, duration);
-	    }
-		private void showInfo(CharSequence text) {
-	        mInfo.setVisibility(View.VISIBLE);
-	        mInfo.setText(text);
-	        mHandler.removeMessages(FADE_OUT_INFO);
-	    }*/
 
 	Handler mHandler = new VideoControllerHandler(this);
 	private static class VideoControllerHandler extends Handler {

@@ -74,7 +74,7 @@ public class KVItemClickListener implements OnItemClickListener {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mList.getContext());
 		String player;
 		if(t.equals(TypeConsts.CHANNEL) || t.equals(TypeConsts.TV_RECORD_VIDEO)) {
-			player = prefs.getString("video_player_tv", "VLC");
+			player = prefs.getString("video_player_tv", "std");
 		} else if(t.equals(TypeConsts.VIDEO)) {
 			player = prefs.getString("video_player_serial", "std");
 		} else {

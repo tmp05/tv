@@ -420,7 +420,6 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 
 	@Override
 	public void setVideoAndStart(String address) {
-		// TODO Auto-generated method stub
 		clear();
 		if(mLibVLC==null) {
 			//Log.e("Debug", "Должно появиться сообщение");
@@ -438,7 +437,6 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 
 	@Override
 	public void setTVController(TVController tc) {
-		// TODO Auto-generated method stub
 		mTVController = tc;
 		mTVController.setVideo(this);
 	}
@@ -492,13 +490,11 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 
 	@Override
 	public boolean hideOverlay() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int getProgress() {
-		// TODO Auto-generated method stub
 		if(mLibVLC==null) {
 			return 0;
 		}
@@ -535,7 +531,6 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 
 	@Override
 	public int changeSizeMode() {
-		// TODO Auto-generated method stub
 		mCurrentSize++;
 		if(mCurrentSize>SURFACE_FROM_SETTINGS) {
 			mCurrentSize = 0;
@@ -549,7 +544,6 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 	@Override
 	public int getAudioTracksCount() {
 		mAudioTracksList = mLibVLC.getAudioTrackDescription();
-		// TODO Auto-generated method stub
 		if(mLibVLC==null) {
 			return 0;
 		}
@@ -561,7 +555,6 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 		if(mLibVLC==null) {
 			return null;
 		}
-		// TODO Auto-generated method stub
 
 		int i = 0;
 		int listPosition = 0;
@@ -591,7 +584,6 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 
 	@Override
 	public int getSpuTracksCount() {
-		// TODO Auto-generated method stub
 		if(mLibVLC == null) {
 			return 0;
 		}
@@ -600,7 +592,6 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 
 	@Override
 	public void setOnCompletionListener(OnCompletionListener listener) {
-		// TODO Auto-generated method stub
 		mOnCompletionListener = listener;
 	}
 
@@ -639,9 +630,6 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 
 	@Override
 	public String changeSubtitle() {
-		// TODO Auto-generated method stub
 		return "Субтитры";
 	}
-
-
 }

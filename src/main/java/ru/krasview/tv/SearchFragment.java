@@ -61,7 +61,6 @@ public class SearchFragment extends Fragment implements OnTabChangeListener {
 
 		@Override
 		public View createTabContent(String tag) {
-
 			if(mContext == null) {
 				return null;
 			}
@@ -82,7 +81,7 @@ public class SearchFragment extends Fragment implements OnTabChangeListener {
 		}
 	};
 
-	public void onAttach (Activity activity) {
+	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		mContext = activity;
 	}

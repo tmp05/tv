@@ -24,7 +24,7 @@ public class NavigationViewFactory implements Factory {
 		c = context;
 		View view = null;
 		String type = (String)map.get(TagConsts.TYPE);
-		Log.d("movie", "type: " + type);
+		//Log.d("Navigation", "type: " + type);
 		if(type == null)				{view = get_null();
 		}else if(type.equals(TypeConsts.MAIN))		{view = new  MainList(c);
 		}else if(type.equals(TypeConsts.TV))		{view = new TVList(c);

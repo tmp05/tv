@@ -18,6 +18,7 @@ import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -54,18 +55,15 @@ public class TVController extends FrameLayout {
 
 	public TVController(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		// TODO Auto-generated constructor stub
 		init();
 	}
 	public TVController(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
-		// TODO Auto-generated constructor stub
 	}
 	public TVController(Context context) {
 		super(context);
 		init();
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -89,8 +87,6 @@ public class TVController extends FrameLayout {
 	OnClickListener listener = new OnClickListener() {
 		@Override
 		public void onClick(View arg0) {
-			// TODO Auto-generated method stub
-			//switch(arg0.getId()){
 			if(arg0.getId()==R.id.progress_overlay_tv_pause) {
 				//case R.id.progress_overlay_tv_pause:
 				if(mVideo == null) {
@@ -118,7 +114,6 @@ public class TVController extends FrameLayout {
 					msg = "По вертикали";
 					break;
 				case SURFACE_FILL:
-
 					msg = "Заполнение";
 					break;
 				case SURFACE_16_9:
@@ -141,18 +136,6 @@ public class TVController extends FrameLayout {
 		}
 	};
 
-	/*private void showInfo(CharSequence text, int duration) {
-	    mInfo.setVisibility(View.VISIBLE);
-	    mInfo.setText(text);
-	    mHandler.removeMessages(FADE_OUT_INFO);
-	    mHandler.sendEmptyMessageDelayed(FADE_OUT_INFO, duration);
-	}
-	private void showInfo(CharSequence text) {
-	    mInfo.setVisibility(View.VISIBLE);
-	    mInfo.setText(text);
-	    mHandler.removeMessages(FADE_OUT_INFO);
-	}*/
-
 	public void setMap(Map<String, Object> map) {
 		mMap = map;
 		mProgressBar.setProgress(85);
@@ -171,12 +154,13 @@ public class TVController extends FrameLayout {
 				return true;
 			}
 		});
-		if(mVideo.getClass().equals(VLCView.class)) {
-			Drawable d = getResources().getDrawable(R.drawable.po_seekbar);
+		/*if(mVideo.getClass().equals(VLCView.class)) {
+			//Drawable d = getResources().getDrawable(R.drawable.po_seekbar);
+			Drawable d = ContextCompat.getDrawable(getContext(), R.drawable.po_seekbar);
 			mProgressBar.setProgressDrawable(d);
 		} else if(mVideo.getClass().equals(AVideoView.class)) {
 
-		}
+		}*/
 	}
 
 	GetInfoTask getInfoTask;
@@ -217,11 +201,6 @@ public class TVController extends FrameLayout {
 			}
 		}
 	}
-
-	/*	 private void fadeOutInfo() {
-		        mInfo.setVisibility(View.INVISIBLE);
-		    }*/
-
 
 	class GetInfoTask extends AsyncTask<String, Void, Node> {
 		@Override
@@ -269,7 +248,7 @@ public class TVController extends FrameLayout {
 		}
 	}
 
-	public boolean dispatchKeyEvent (KeyEvent event) {
+	public boolean dispatchKeyEvent(KeyEvent event) {
 		if(event.getAction() == KeyEvent.ACTION_DOWN) {
 			switch(event.getKeyCode()) {
 			case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
