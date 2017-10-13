@@ -328,7 +328,7 @@ public class MainAuthActivity extends Activity {
 				} else {
 					return;
 				}
-				if(tv && krasview) {
+				if(krasview) {
 					startActivity(krasviewIntent);
 					MainAuthActivity.this.finish();
 					prefs.edit().putInt("pref_auth_type", AuthAccount.AUTH_TYPE_KRASVIEW).commit();
