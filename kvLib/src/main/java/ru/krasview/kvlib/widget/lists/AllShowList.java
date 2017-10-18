@@ -26,11 +26,11 @@ public class AllShowList extends UserShowList{
 
 	protected String getType() {return "series";}
 
-	public AllShowList(Context context){
+	public AllShowList(Context context) {
 		super(context);
 	}
 
-	protected AllShowList(Context context, Map<String, Object> map){
+	protected AllShowList(Context context, Map<String, Object> map) {
 		super(context, map);
 	}
 
@@ -39,24 +39,25 @@ public class AllShowList extends UserShowList{
 		return ApiConst.SHOW;
 	}
 
-	protected int getAuthRequest(){
+	protected int getAuthRequest() {
 		return AuthRequestConst.AUTH_NONE;
 	}
 
 	@Override
 	public void setConstData(){
 		Map<String, Object> m;
-		if(ListAccount.fromLauncher){
-			m = new HashMap<String, Object>();
-			m.put("type", TypeConsts.MOVIE);
-			m.put("name", "!!Фильмы!!");
-			data.add(m);
-		}
 
-		if(account.isKrasviewAccount() && ListAccount.fromLauncher){
+		if(account.isKrasviewAccount()){
 			m = new HashMap<String, Object>();
-			m.put("type", "my_shows_all_s");
+			m.put("type", "my_view");
+			m.put("section", "series");
 			m.put("name", "Я смотрю");
+			data.add(m);
+
+			m = new HashMap<String, Object>();
+			m.put("type", "faves");
+			m.put("section", "series");
+			m.put("name", "Избранное");
 			data.add(m);
 		}
 		m = new HashMap<String, Object>();
@@ -65,7 +66,7 @@ public class AllShowList extends UserShowList{
 		data.add(m);
 	}
 
-	private void loadNext(){
+	private void loadNext() {
 		((AllShowAdapter)getAdapter()).loadNext();
 	}
 

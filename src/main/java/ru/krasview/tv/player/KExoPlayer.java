@@ -40,6 +40,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
@@ -47,7 +48,7 @@ import android.widget.Toast;
 
 import static ru.krasview.tv.player.VideoController.mVideo;
 
-public class KExoPlayer extends SurfaceView implements VideoInterface, ExoPlayer.EventListener {
+public class KExoPlayer extends SurfaceView implements ExoPlayer.EventListener, VideoInterface {
 	private SurfaceView mSurface;
 	SimpleExoPlayer player;
 	SimpleExoPlayerView simpleExoPlayerView;
@@ -227,12 +228,12 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, ExoPlayer
 
 	@Override
 	public int getProgress() {
-		return (int)player.getCurrentPosition();
+		Log.d(TAG, "progress " + player.getCurrentPosition()); return (int)player.getCurrentPosition();
 	}
 
 	@Override
 	public int getLeight() {
-		return (int)player.getDuration();
+		Log.d(TAG, "duration " + player.getDuration()); return (int)player.getDuration();
 	}
 
 	@Override
@@ -303,13 +304,15 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, ExoPlayer
 	@Override
 	public void onLoadingChanged(boolean isLoading) {
 		Log.d(TAG, "isLoading: " + isLoading);
-		if(isLoading) setSize();
+		Log.d(TAG, "duration " + player.getDuration());
+		if(isLoading) {setSize(); if(mVideoController!=null) {mVideoController.showProgress();}}
 		// Do nothing.
 	}
 
 	@Override
 	public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
 		Log.d(TAG, "playbackState: " + playbackState);
+		Log.d(TAG, "duration " + player.getDuration());
 		if (playbackState == ExoPlayer.STATE_ENDED) {
 		}
 	}
@@ -358,5 +361,16 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, ExoPlayer
 	@Override
 	public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
 
+	}
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		Log.d("Debug","нажата клавиша exo");
+		if(mTVController!=null) {
+			return mTVController.dispatchKeyEvent(event);
+		}
+		if(mVideoController!=null) {
+			return mVideoController.dispatchKeyEvent(event);
+		}
+		return true;
 	}
 }

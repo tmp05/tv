@@ -39,7 +39,7 @@ public class UserShowList extends List {
 
 	@Override
 	protected String getApiAddress() {
-		return ApiConst.USER;
+		return mSection == null ? ApiConst.USER : ApiConst.BASE + mSection + "/user";
 	}
 
 	@SuppressWarnings("unchecked")
@@ -84,18 +84,16 @@ public class UserShowList extends List {
 			Node locNode = nListChannel.item(nodeIndex);
 			m = new HashMap<String, Object>();
 			String s = Parser.getValue("section", locNode);
-			if(mSection == null||s.equals(mSection)){
-				m.put("id", Parser.getValue("id", locNode));
-				m.put("name", Html.fromHtml(Parser.getValue("title", locNode)));
-				m.put("img_uri", Parser.getValue("thumb", locNode));
-				m.put("description", Parser.getValue("description", locNode));
-				m.put("type", "series" );
-				if(task.isCancelled()) {
-					return;
-				}
-				task.onStep(m);
-				empty = false;
+			m.put("id", Parser.getValue("id", locNode));
+			m.put("name", Html.fromHtml(Parser.getValue("title", locNode)));
+			m.put("img_uri", Parser.getValue("thumb", locNode));
+			m.put("description", Parser.getValue("description", locNode));
+			m.put("type", "series" );
+			if(task.isCancelled()) {
+				return;
 			}
+			task.onStep(m);
+			empty = false;
 		}
 		if(empty == true) {
 			m = new HashMap<String, Object>();

@@ -20,10 +20,17 @@ public class AllAnimeList extends AllShowList {
 	@Override
 	public void setConstData() {
 		Map<String, Object> m;
-		if(account.isKrasviewAccount() && ListAccount.fromLauncher) {
+		if(account.isKrasviewAccount()) {
 			m = new HashMap<String, Object>();
-			m.put("type", "my_shows_all_a");
+			m.put("type", "my_view");
+			m.put("section", "anime");
 			m.put("name", "Я смотрю");
+			data.add(m);
+
+			m = new HashMap<String, Object>();
+			m.put("type", "faves");
+			m.put("section", "anime");
+			m.put("name", "Избранное");
 			data.add(m);
 		}
 		m = new HashMap<String, Object>();

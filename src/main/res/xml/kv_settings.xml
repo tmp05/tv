@@ -36,17 +36,11 @@
 
 	<PreferenceCategory android:title="Настройки для видео">
 	<ListPreference
-			android:key="video_player_serial"
-			android:title="Проигрыватель"
-			android:defaultValue="std"
-			android:entries="@array/video_player"
-			android:entryValues="@array/video_player_values"/>
-	</PreferenceCategory>
-	<ListPreference
 		android:key="aspect_ratio_video"
 		android:title="Соотношение сторон"
 		android:summary="Устанавливает соотношение сторон для видео"
 		android:defaultValue="default"
 		android:entries="@array/aspect_ratio_video"
 		android:entryValues="@array/aspect_ratio_video"/>
+	</PreferenceCategory>
 </PreferenceScreen>

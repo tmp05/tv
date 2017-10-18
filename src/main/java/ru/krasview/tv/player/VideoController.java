@@ -102,7 +102,7 @@ public class VideoController extends FrameLayout {
 				//	break;
 			} else if(v.getId() == R.id.player_overlay_audio) {
 				//case R.id.player_overlay_audio:
-				((VideoActivity)getContext()).showInfo( mVideo.changeAudio(), 1000);
+				((VideoActivity)getContext()).showInfo(mVideo.changeAudio(), 1000);
 				//	break;
 			} else if(v.getId() == R.id.player_overlay_play) {
 				//case R.id.player_overlay_play:
@@ -138,7 +138,6 @@ public class VideoController extends FrameLayout {
 					msg = "По вертикали";
 					break;
 				case SURFACE_FILL:
-
 					msg = "Заполнение";
 					break;
 				case SURFACE_16_9:
@@ -301,8 +300,8 @@ public class VideoController extends FrameLayout {
 		task.execute();
 	}
 
-	public boolean dispatchKeyEvent (KeyEvent event) {
-		// Log.i("Debug","нажата клавиша");
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		Log.d("Debug","нажата клавиша");
 		if(event.getAction() == KeyEvent.ACTION_DOWN) {
 			switch(event.getKeyCode()) {
 			case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
@@ -318,9 +317,10 @@ public class VideoController extends FrameLayout {
 				mVideo.stop();
 				mPause.setBackgroundResource(R.drawable.ic_new_play);
 				return true;
+				default: Log.i("Debug", "Нажата клавиша: " + event.getKeyCode());
 			}
 		}
-		return false;
+		return super.dispatchKeyEvent(event);
 	}
 
 	public void checkTrack() {

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.krasview.tv"
 
-    android:versionCode="145"
+    android:versionCode="147"
     android:versionName="1.4">
 
     <uses-sdk
@@ -35,13 +35,13 @@
             >
             <intent-filter>
                 <action android:name="android.intent.action.LAUNCH"/>
-            	<category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>  
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter> 
+            </intent-filter>
         </activity>
 
         <activity
@@ -69,38 +69,38 @@
             android:label="Оплата">
             <intent-filter>
                 <action android:name="ru.krasview.tv.ACTION_BILLING"/>
-            	<category android:name="android.intent.category.DEFAULT" />
-            	</intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
          <activity
             android:name="ru.krasview.tv.player.VideoActivity" 
-           	android:configChanges="orientation|screenSize"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.MyTheme.NoTitleBar.Fullscreen"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="ru.krasview.tv.PLAY_VIDEO_LIST"/>
-            	<category android:name="android.intent.category.DEFAULT" />
-            	</intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <activity
             android:name=".MainActivity"
-            android:label="" 
+            android:label=""
             android:theme="@style/Theme.AppCompat"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="krasview.intent.action.LAUNCH"/>
-            	<category android:name="android.intent.category.DEFAULT" />
-            </intent-filter> 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
             <intent-filter>
                 <action android:name= "ru.krasview.tv.ACTION_MAIN_ACTIVITY"/>
-            	<category android:name="android.intent.category.DEFAULT" />
-            </intent-filter> 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.LAUNCH"/>
-            	<category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>   
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <service android:name="org.videolan1.vlc.AudioService" />
