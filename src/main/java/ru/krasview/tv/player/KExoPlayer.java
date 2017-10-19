@@ -28,6 +28,7 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.android.exoplayer2.Player.EventListener;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -48,7 +49,7 @@ import android.widget.Toast;
 
 import static ru.krasview.tv.player.VideoController.mVideo;
 
-public class KExoPlayer extends SurfaceView implements ExoPlayer.EventListener, VideoInterface {
+public class KExoPlayer extends SurfaceView implements VideoInterface, EventListener {
 	private SurfaceView mSurface;
 	SimpleExoPlayer player;
 	SimpleExoPlayerView simpleExoPlayerView;
@@ -164,6 +165,7 @@ public class KExoPlayer extends SurfaceView implements ExoPlayer.EventListener, 
 		}
 		player.prepare(mediaSource);
 		//Log.d(TAG, "after prepare");
+
 		player.setPlayWhenReady(true);
 		Log.d(TAG, "after play");
 		player.addListener(this);
@@ -360,16 +362,19 @@ public class KExoPlayer extends SurfaceView implements ExoPlayer.EventListener, 
 
 	@Override
 	public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
 	}
+	@Override
+	public void onRepeatModeChanged(int repeatMode) {
+	}
+
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		Log.d("Debug","нажата клавиша exo");
 		if(mTVController!=null) {
-			return mTVController.dispatchKeyEvent(event);
+			return mTVController.dispatchKeyEvent(event) || simpleExoPlayerView.dispatchKeyEvent(event);
 		}
 		if(mVideoController!=null) {
-			return mVideoController.dispatchKeyEvent(event);
+			return mVideoController.dispatchKeyEvent(event) || simpleExoPlayerView.dispatchKeyEvent(event);
 		}
 		return true;
 	}

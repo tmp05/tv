@@ -22,8 +22,8 @@
 		android:key="video_player_tv"
 		android:title="Проигрыватель"
 		android:defaultValue="std"
-		android:entries="@array/video_player"
-		android:entryValues="@array/video_player_values"/>
+		android:entries="@array/tv_player"
+		android:entryValues="@array/tv_player_values"/>
 
 	<ListPreference
 		android:key="aspect_ratio_tv"
@@ -35,6 +35,12 @@
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="Настройки для видео">
+	<ListPreference
+		android:key="video_player_serial"
+		android:title="Проигрыватель"
+		android:defaultValue="std"
+		android:entries="@array/video_player"
+		android:entryValues="@array/video_player_values"/>
 	<ListPreference
 		android:key="aspect_ratio_video"
 		android:title="Соотношение сторон"

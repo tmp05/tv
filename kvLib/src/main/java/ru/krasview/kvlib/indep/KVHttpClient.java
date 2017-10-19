@@ -37,6 +37,8 @@ public class KVHttpClient {
 	String line = "";
 	try {
 		DefaultHttpClient httpClient = new DefaultHttpClient();
+		httpClient.getParams().setParameter(CoreProtocolPNames.USER_AGENT, "krasview 2.0");
+
 		HttpGet httpGet = new HttpGet(address);
 		HttpResponse httpResponse = httpClient.execute(httpGet);
 		HttpEntity httpEntity = httpResponse.getEntity();

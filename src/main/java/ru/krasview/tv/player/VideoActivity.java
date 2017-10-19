@@ -83,7 +83,7 @@ public class VideoActivity extends Activity {
 		getPrefs();
 
 		if(mType.equals("video")) {
-			pref_video_player = "std";//pref_video_player_serial;
+			pref_video_player = pref_video_player_serial;
 		} else if(mType.equals("channel")||mType.equals("tv_record")) {
 			pref_video_player = pref_video_player_tv;
 		}

@@ -320,7 +320,7 @@ public class VideoController extends FrameLayout {
 				default: Log.i("Debug", "Нажата клавиша: " + event.getKeyCode());
 			}
 		}
-		return super.dispatchKeyEvent(event);
+		return false;
 	}
 
 	public void checkTrack() {
