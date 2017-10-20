@@ -220,6 +220,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public boolean showOverlay() {
+		if(mVideoController != null) mVideoController.showProgress();
 		return true;
 	}
 
@@ -256,7 +257,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public String changeAudio() {
-		return null;
+		return "Следующая дорожка";
 	}
 
 	@Override
@@ -266,7 +267,14 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public int getAudioTracksCount() {
-		return 0;
+		TrackSelectionArray Selections = player.getCurrentTrackSelections();
+		//TrackSelection[] Tracks = Selections.getAll();
+		int tracks = 0;
+		for (int i = 0; i < Selections.length; i++) {
+			if (player.getRendererType(i) == C.TRACK_TYPE_AUDIO && Selections.get(i) != null) tracks++;
+			Log.d(TAG, Selections.get(i).toString());
+		}
+		return tracks;
 	}
 
 	@Override
@@ -316,6 +324,9 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 		Log.d(TAG, "playbackState: " + playbackState);
 		Log.d(TAG, "duration " + player.getDuration());
 		if (playbackState == ExoPlayer.STATE_ENDED) {
+			//if(mTVController != null) mTVController.end();
+			//if(mVideoController != null) mVideoController.end();
+			end();
 		}
 	}
 
@@ -369,9 +380,9 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
-		Log.d("Debug","нажата клавиша exo");
+		//Log.d("Debug","нажата клавиша exo");
 		if(mTVController!=null) {
-			return mTVController.dispatchKeyEvent(event) || simpleExoPlayerView.dispatchKeyEvent(event);
+			return mTVController.dispatchKeyEvent(event) || simpleExoPlayerView.dispatchKeyEvent(event)	;
 		}
 		if(mVideoController!=null) {
 			return mVideoController.dispatchKeyEvent(event) || simpleExoPlayerView.dispatchKeyEvent(event);

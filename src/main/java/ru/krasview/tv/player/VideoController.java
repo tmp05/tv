@@ -240,11 +240,11 @@ public class VideoController extends FrameLayout {
 	}
 
 	public void showProgress() {
-		Log.i("Debug", "Показать прогресс");
 		mSeekListener.onProgressChanged(mSeekbar, mVideo.getProgress(), false);
 		mTime.setText("" + Util.millisToString(mVideo.getTime()));
 		mLeight.setText("" + Util.millisToString(mVideo.getLeight()));
 		//Log.i("Debug", "showProgress");
+		//Log.i("Debug", "Показ прогресса " + Util.millisToString(mVideo.getTime()));
 		Updater.updateProgress(id, mVideo.getTime());
 	}
 
@@ -266,7 +266,6 @@ public class VideoController extends FrameLayout {
 		//SentProgressRunnable
 
 		AsyncTask<Void, Void, Integer> task = new AsyncTask<Void, Void, Integer>() {
-
 			@Override
 			protected Integer doInBackground(Void... arg0) {
 				id = (String)mMap.get("id");
@@ -301,10 +300,11 @@ public class VideoController extends FrameLayout {
 	}
 
 	public boolean dispatchKeyEvent(KeyEvent event) {
-		Log.d("Debug","нажата клавиша");
+		//Log.d("Debug","нажата клавиша");
 		if(event.getAction() == KeyEvent.ACTION_DOWN) {
 			switch(event.getKeyCode()) {
 			case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+			case KeyEvent.KEYCODE_DEL:
 				listener.onClick(mPause);
 				return true;
 			case KeyEvent.KEYCODE_DPAD_LEFT:
@@ -334,7 +334,7 @@ public class VideoController extends FrameLayout {
 			mAudio.setVisibility(View.VISIBLE);
 		}
 		mSubtitle.setVisibility(View.GONE);
-		Log.i("Debug", "Число дорожек субтитров " + mVideo.getSpuTracksCount());
+		//Log.i("Debug", "Число дорожек субтитров " + mVideo.getSpuTracksCount());
 		if(mVideo.getSpuTracksCount()>0) {
 			mSubtitle.setVisibility(View.VISIBLE);
 		} else {
@@ -359,7 +359,6 @@ public class VideoController extends FrameLayout {
 			}
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				String address = ApiConst.SET_POSITION;
 				String params = "video_id="+video+"&time="+(progress/1000);
 
@@ -368,14 +367,14 @@ public class VideoController extends FrameLayout {
 
 				if(mComplete && mMap.get("type").equals("video")) {
 					if(AuthAccount.getInstance().isKrasviewAccount()) {
-						//Log.i("Debug", "Отправлено: id="+ video + " просмотрено");
+						Log.i("Debug", "Отправлено: id="+ video + " просмотрено");
 						//String str = Parser.getXML(address_complete, params_complete, AuthRequestConst.AUTH_KRASVIEW);
 						//Log.i("Debug", "получено " + params_complete);
 					} else {
 						//Log.i("Debug", "!Отправлено: id=" + video + " просмотрено " + Parser.auth_type);
 					}
 				} else {
-					///Log.i("Debug", "Отправлено: id="+ video + " time=" + Util.millisToString( progress));
+					Log.i("Debug", "Отправлено: id="+ video + " time=" + Util.millisToString(progress));
 					HTTPClient.getXML(address, params, AuthRequestConst.AUTH_KRASVIEW);
 				}
 			}
@@ -407,33 +406,33 @@ public class VideoController extends FrameLayout {
 				otpr = false;
 				return;
 			}
-			if((lastId.equals(id) && Math.abs(time - lastTime) > 10000)) {
+			/*if((lastId.equals(id) && Math.abs(time - lastTime) > 10000)) {
 				//	Log.i("Debug", "Перемотано");
 				beginTime = 0;
 				lastId = id;
 				lastTime = time;
-			}
+			}*/
 
-			if((lastId.equals(id) && Math.abs(time - lastTime) > 7000)) {
+			//if((lastId.equals(id) && Math.abs(time - lastTime) > 7000)) {
 				sendProgress(id, time, false);
 
 				if(beginTime == 0) {
 					beginTime = time;
-					//Log.i("Debug", "Начинает отсюда " + Util.millisToString(time));
+					Log.i("Debug", "Начинает отсюда " + Util.millisToString(time));
 					otpr = false;
-				} else {
+				} /*else {
 					int norm = mVideo.getLeight()/3;
-					//Log.i("Debug", "Просмотрено: " + Util.millisToString(Math.abs(time - beginTime)) + " " + "Треть: " + Util.millisToString(norm) + " Условие: " + (otpr == false&&(Math.abs(time - beginTime)>norm)));
+					Log.i("Debug", "Просмотрено: " + Util.millisToString(Math.abs(time - beginTime)) + " " + "Треть: " + Util.millisToString(norm) + " Условие: " + (otpr == false&&(Math.abs(time - beginTime)>norm)));
 
 					if(otpr == false&&(Math.abs(time - beginTime)>norm)) {
-						//Log.i("Debug", "Отправить просмотрено");
+						Log.i("Debug", "Отправить просмотрено");
 						sendProgress(id, time, true);
 						otpr = true;
 					}
-				}
-				lastTime = time;
+				}*/
+				//lastTime = time;
 				return;
-			}
+			//}
 		};
 
 		public static void clear() {
