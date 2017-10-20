@@ -18,6 +18,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.apache.http.params.CoreProtocolPNames;
 
 import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
 
@@ -37,9 +38,10 @@ public class KVHttpClient {
 	String line = "";
 	try {
 		DefaultHttpClient httpClient = new DefaultHttpClient();
-		httpClient.getParams().setParameter(CoreProtocolPNames.USER_AGENT, "krasview 2.0");
+		//httpClient.getParams().setParameter(CoreProtocolPNames.USER_AGENT, "");
 
 		HttpGet httpGet = new HttpGet(address);
+		httpGet.setHeader("User-Agent", "krasview 2.0");
 		HttpResponse httpResponse = httpClient.execute(httpGet);
 		HttpEntity httpEntity = httpResponse.getEntity();
 		if(httpEntity != null){
