@@ -8,6 +8,7 @@ public class TypeConsts {
 	public static final String TV			= "sublist_tv"; 
 	public static final String ALL_SHOW		= "all_show";
 	public static final String ALL_ANIME		= "all_anime";
+	public static final String ALL_MOVIE		= "all_movie";
 	public static final String FAVORITE_TV 		= "favorite_tv";
 	public static final String MY_ALL		= "my_shows_all";
 	public static final String MY_ANIME		= "my_shows_all_a";

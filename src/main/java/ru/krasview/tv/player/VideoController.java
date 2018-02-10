@@ -305,6 +305,7 @@ public class VideoController extends FrameLayout {
 			switch(event.getKeyCode()) {
 			case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
 			case KeyEvent.KEYCODE_DEL:
+			case KeyEvent.KEYCODE_DPAD_CENTER:
 				listener.onClick(mPause);
 				return true;
 			case KeyEvent.KEYCODE_DPAD_LEFT:

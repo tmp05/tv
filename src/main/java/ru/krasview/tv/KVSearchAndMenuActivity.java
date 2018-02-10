@@ -170,7 +170,6 @@ public abstract class KVSearchAndMenuActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
 	}
-	
 
 	Map<String, Object> contextMenuMap;
 	CombineSimpleAdapter contextMenuAdapter;

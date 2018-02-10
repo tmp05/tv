@@ -74,6 +74,9 @@ public class MainActivity extends KVSearchAndMenuActivity {
 			} else if(address.equals(ApiConst.OLD_ALL_ANIME)) {
 				start = TypeConsts.ALL_ANIME;
 				getSupportActionBar().setTitle("Аниме");
+			} else if(address.equals(ApiConst.OLD_ALL_MOVIE)) {
+				start = TypeConsts.ALL_MOVIE;
+				getSupportActionBar().setTitle("Фильмы");
 			}
 		}
 

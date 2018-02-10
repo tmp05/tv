@@ -325,13 +325,20 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 		Log.d(TAG, "duration " + player.getDuration());
 		if (playbackState == ExoPlayer.STATE_ENDED) {
 			//if(mTVController != null) mTVController.end();
-			//if(mVideoController != null) mVideoController.end();
-			end();
+			if(mVideoController != null) mVideoController.end();
+			//end();
 		}
 	}
 
 	@Override
-	public void onPositionDiscontinuity() {
+	public void onPositionDiscontinuity(int reason) {
+	}
+
+	@Override
+	public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+	}
+
+	@Override public void onSeekProcessed() {
 	}
 
 	@Override
