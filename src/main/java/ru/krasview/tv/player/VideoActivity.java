@@ -222,9 +222,9 @@ public class VideoActivity extends Activity {
 		Log.d("Debug", "Клавиша нажата VideoActivity");
 		showOverlay();
 
-		if(event.getKeyCode()== KeyEvent.KEYCODE_DPAD_CENTER) {
+		/*if(event.getKeyCode()== KeyEvent.KEYCODE_DPAD_CENTER) {
 			return true;
-		}
+		}*/
 
 		if(event.getAction() == KeyEvent.ACTION_DOWN) {
 			switch(event.getKeyCode()) {

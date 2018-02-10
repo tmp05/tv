@@ -296,11 +296,12 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
     }
 
     public void releaseMedia() {
+        mMediaPlayer.stop();
         final IVLCVout vout = mMediaPlayer.getVLCVout();
         vout.removeCallback(this);
         vout.detachViews();
-        mMediaPlayer.stop();
         mMediaPlayer.release();
+        mMediaPlayer = null;
     }
 
     public void releasePlayer() {
@@ -315,14 +316,15 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
         releaseMedia();
         holder = null;
         libvlc.release();
+
         libvlc = null;
-        mMediaPlayer = null;
 
         mVideoWidth = 0;
         mVideoHeight = 0;
     }
 
     public void setSize() {
+        if(mMediaPlayer == null) return;
         // get screen size
         int w = ((Activity)this.getContext()).getWindow().getDecorView().getWidth();
         int h = ((Activity)this.getContext()).getWindow().getDecorView().getHeight();
