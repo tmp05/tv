@@ -221,7 +221,8 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
             mVideoController.end();
         }
 
-        mHandler.removeMessages(SHOW_PROGRESS);
+        if(mHandler != null) mHandler.removeMessages(SHOW_PROGRESS);
+        releasePlayer();
     }
     /*************
      * Player

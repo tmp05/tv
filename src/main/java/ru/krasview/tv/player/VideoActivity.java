@@ -319,6 +319,7 @@ public class VideoActivity extends Activity {
 		setResult(RESULT_OK, intent);
 		super.onBackPressed();
 		overridePendingTransition(ru.krasview.tv.R.anim.anim_enter_left, ru.krasview.tv.R.anim.anim_leave_right);
+		((VideoInterface)mVideoSurface).end();
 	}
 
 	@Override
