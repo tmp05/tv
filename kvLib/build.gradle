@@ -11,8 +11,8 @@ android {
 }
 
 dependencies {
-    compile project(':kvSecret')
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile files('libs/universal-image-loader-1.9.3.jar')
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    api project(':kvSecret')
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+    api files('libs/universal-image-loader-1.9.3.jar')
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 }

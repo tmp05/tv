@@ -25,7 +25,7 @@
     android:layout_toLeftOf="@id/img"
     android:text="This is text1"
     android:textSize="25dip"
-    app:font="fonts/PTN57F.ttf" />
+    app:fontName="fonts/PTN57F.ttf" />
     
 
    <View

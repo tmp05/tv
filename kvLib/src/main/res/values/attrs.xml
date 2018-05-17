@@ -12,7 +12,7 @@
     <attr name="darkorange" format="reference|color" />
     
     <declare-styleable name="FontTextView">
-		<attr name="font" format="string" />
+		<attr name="fontName" format="string" />
 	</declare-styleable>
 	 <declare-styleable name="VideoView">
     </declare-styleable>

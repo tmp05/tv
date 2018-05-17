@@ -347,6 +347,11 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	}
 
 	@Override
+	public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
+		// Do nothing.
+	}
+
+	@Override
 	public void onPlayerError(ExoPlaybackException e) {
 		String errorString = null;
 		if (e.type == ExoPlaybackException.TYPE_RENDERER) {

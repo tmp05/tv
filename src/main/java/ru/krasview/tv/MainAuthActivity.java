@@ -380,9 +380,7 @@ public class MainAuthActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(resultCode != RESULT_OK) {
-			return;
-		}
+		if(resultCode != RESULT_OK) return;
 		switch(requestCode) {
 		case REQUEST_CODE_GUEST:
 		case REQUEST_CODE_SOCIAL:

@@ -9,7 +9,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 
 
 <ru.krasview.tv.service.FontTextView
-    app:font="fonts/PTN57F.ttf"
+    app:fontName="fonts/PTN57F.ttf"
     android:id="@+id/prTime"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -18,7 +18,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
     android:text="TextView" />
 
 <ru.krasview.tv.service.FontTextView
-    app:font="fonts/PTN57F.ttf"
+    app:fontName="fonts/PTN57F.ttf"
     android:id="@+id/prName"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
