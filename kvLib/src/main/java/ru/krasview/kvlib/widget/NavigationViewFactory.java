@@ -24,15 +24,16 @@ public class NavigationViewFactory implements Factory {
 		c = context;
 		View view = null;
 		String type = (String)map.get(TagConsts.TYPE);
-		//Log.d("Navigation", "type: " + type);
+		// Log.d("Navigation", "type: " + type);
 		if(type == null)				{view = get_null();
-		}else if(type.equals(TypeConsts.MAIN))		{view = new  MainList(c);
+		}else if(type.equals(TypeConsts.MAIN))		{view = new MainList(c);
 		}else if(type.equals(TypeConsts.TV))		{view = new TVList(c);
 		}else if(type.equals(TypeConsts.FAVORITE_TV))	{view = new TVFavoriteList(c);
 		}else if(type.equals(TypeConsts.MY_ALL))	{view = new UserShowList(c);
-		}else if(type.equals("my_view"))	{view = new UserShowList(c,(String)map.get("section"));
+		}else if(type.equals("my_view"))		{view = new UserShowList(c,(String)map.get("section"));
 		}else if(type.equals(TypeConsts.DESCRIPTION))	{view = new Serial(c, map);
 		}else if(type.equals("series"))			{view = new SeasonList(c, map);
+		}else if(type.equals("anime"))			{view = new SeasonList(c, map);
 		}else if(type.equals("movie"))			{view = new MovieList(c, map);
 		}else if(type.equals("season_list"))		{view = new SeasonList(c, map);
 		}else if(type.equals(TypeConsts.ALL_SERIES))	{view = new AllSeriesList(c, map);
@@ -55,7 +56,7 @@ public class NavigationViewFactory implements Factory {
 		}else if(type.equals("alfabet_movie"))		{view = new AlfabetMovieList(c);
 		}else if(type.equals("letter_movie"))		{view = new LetterMovieList(c, map);
 		}else if(type.equals("search_movie"))		{view = new SearchMovieList(c);
-		}else if(type.equals("faves"))		{view = new FavesList(c, map);
+		}else if(type.equals("faves"))			{view = new FavesList(c, map);
 		}else						{view = get_unknown(type);
 		}
 		if(implementsInterface(view, List.class)){
