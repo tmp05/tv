@@ -168,11 +168,9 @@ public class VideoActivity extends Activity {
 		mLocation = (String) map.get("uri");
 
 		mTitle_value = (CharSequence) map.get("name");
-		if(map.get("image")!=null&&map.get("image").getClass().equals(Bitmap.class))
-		{
+		if(map.get("image")!=null && map.get("image").getClass().equals(Bitmap.class)) {
 			mIcon_value = (Bitmap)map.get("image");
-		}
-		else {
+		} else {
 			mIcon_value = null;
 		}
 		if(mLocation == null && mType == null) {

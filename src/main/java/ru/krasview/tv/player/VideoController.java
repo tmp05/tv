@@ -277,6 +277,7 @@ public class VideoController extends FrameLayout {
 				} else {
 					//Log.i("Debug", "VideoController запрашивать время");
 				}
+				// todo request subtitles
 				String result = HTTPClient.getXML(ApiConst.GET_POSITION, "id="+id, AuthRequestConst.AUTH_KRASVIEW);
 				if(result!=null&&!result.equals("")&&!result.equals("<results status=\"error\"><msg>Can't connect to server</msg></results>")) {
 					int r = (int) Float.parseFloat(result);

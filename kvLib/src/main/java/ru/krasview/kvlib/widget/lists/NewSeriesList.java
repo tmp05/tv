@@ -123,7 +123,7 @@ public class NewSeriesList extends AllSeriesList {
 		m.put("uri", Parser.getValue("file", locNode0));
 		m.put("first", true);
 		m.put("type", "video");
-		m.put("request_time", true);
+		//m.put("request_time", true);
 		if(task.isCancelled()) {
 			return;
 		}
@@ -136,7 +136,7 @@ public class NewSeriesList extends AllSeriesList {
 			m.put("uri", Parser.getValue("file", locNode));
 			m.put("first", false);
 			m.put("type", "video");
-			m.put("request_time", true);
+			//m.put("request_time", true);
 			if(task.isCancelled()) {
 				return;
 			}

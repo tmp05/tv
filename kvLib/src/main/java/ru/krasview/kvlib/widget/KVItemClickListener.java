@@ -54,11 +54,11 @@ public class KVItemClickListener implements OnItemClickListener {
 				intent = new Intent();
 				intent.setAction(IntentConst.ACTION_VIDEO_LIST);
 				intent.putExtra("index", position - ((CombineSimpleAdapter)parent.getAdapter()).getConstDataCount());
-				boolean rt = false;
+				/*boolean rt = false;
 				if(m.get("request_time") != null && (Boolean)m.get("request_time") == true){
 					rt = true;
-				}
-				intent.putExtra("request_time", rt);
+				}*/
+				intent.putExtra("request_time", true);
 				ListAccount.adapterForActivity = new SimpleAdapter(mList.getContext(), mList.getAdapter().getData(), 0, null, null);
 				ListAccount.currentList = mList;
 				((Activity)mList.getContext()).startActivityForResult(intent, RequestConst.REQUEST_CODE_VIDEO);
