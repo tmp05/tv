@@ -4,7 +4,7 @@ android {
     apply plugin: 'com.android.library'
 
     android {
-        compileSdkVersion = 25
+        compileSdkVersion = 27
     }
 
     useLibrary  'org.apache.http.legacy'

@@ -7,7 +7,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="25"
+        android:targetSdkVersion="27"
         />
 
     <uses-permission android:name="com.android.vending.BILLING" />
@@ -45,7 +45,7 @@
         </activity>
 
         <activity
-            android:name="ru.krasview.tv.GuestAuthActivity"  
+            android:name="ru.krasview.tv.GuestAuthActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" 
             android:theme="@style/Theme.MyTheme.NoTitleBar"/>
         <activity
