@@ -192,11 +192,9 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 		player.setPlayWhenReady(true);
 		Log.d(TAG, "after play");
-        TrackSelectionArray Selections = player.getCurrentTrackSelections();
-        for (int i = 0; i < Selections.length; i++) {
-            if (Selections.get(i) != null) Log.d(TAG, Selections.get(i).toString());
-        }
 		player.addListener(this);
+
+		// todo subtitles: https://github.com/google/ExoPlayer/issues/1183
 	}
 
 	@Override
@@ -259,16 +257,19 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public int getProgress() {
+	    if(player == null) return 0;
 		Log.d(TAG, "progress " + player.getCurrentPosition()); return (int)player.getCurrentPosition();
 	}
 
 	@Override
 	public int getLeight() {
+	    if(player == null) return 0;
 		Log.d(TAG, "duration " + player.getDuration()); return (int)player.getDuration();
 	}
 
 	@Override
 	public int getTime() {
+	    if(player == null) return 0;
 		return (int)player.getCurrentPosition();
 	}
 
@@ -296,11 +297,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	@Override
 	public int getAudioTracksCount() {
         int tracks = 0;
-/*		TrackSelectionArray Selections = player.getCurrentTrackSelections();
-		for (int i = 0; i < Selections.length; i++) {
-			if (player.getRendererType(i) == C.TRACK_TYPE_AUDIO && Selections.get(i) != null) tracks++;
-			Log.d(TAG, Selections.get(i).toString());
-		}*/
+        if(trackSelector == null) return tracks;
         MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
         if(mappedTrackInfo != null) {
             for (int i = 0; i < mappedTrackInfo.getRendererCount(); i++) {
