@@ -3,7 +3,6 @@ package ru.krasview.tv.player;
 import java.util.Map;
 
 import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -19,12 +18,14 @@ import com.google.android.exoplayer2.source.dash.DashMediaSource;
 import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
-import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.FixedTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
-import com.google.android.exoplayer2.trackselection.TrackSelector;
+//import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.trackselection.MappingTrackSelector.MappedTrackInfo;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.ui.TrackSelectionView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
@@ -33,18 +34,16 @@ import com.google.android.exoplayer2.Player.EventListener;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.content.Context;
+import android.app.AlertDialog;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Display;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.SurfaceView;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import static ru.krasview.tv.player.VideoController.mVideo;
@@ -52,8 +51,9 @@ import static ru.krasview.tv.player.VideoController.mVideo;
 public class KExoPlayer extends SurfaceView implements VideoInterface, EventListener {
 	private SurfaceView mSurface;
 	SimpleExoPlayer player;
-	SimpleExoPlayerView simpleExoPlayerView;
+    PlayerView simpleExoPlayerView;
 	DataSource.Factory dataSourceFactory;
+    DefaultTrackSelector trackSelector;
 
 	TVController mTVController;
 	VideoController mVideoController;
@@ -63,7 +63,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	String pref_aspect_ratio = "default";
 	String pref_aspect_ratio_video = "default";
 
-	public KExoPlayer(Context context, SimpleExoPlayerView view) {
+	public KExoPlayer(Context context, PlayerView view) {
 		super(context);
 		simpleExoPlayerView = view;
 		init();
@@ -74,12 +74,13 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 		// 1. Create a default TrackSelector
 		//BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-		TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(null);
-		TrackSelector trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+		//TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(null);
+		TrackSelection.Factory TrackSelectionFactory = new FixedTrackSelection.Factory();
+		trackSelector = new DefaultTrackSelector(TrackSelectionFactory);
+		trackSelector.setParameters(trackSelector.buildUponParameters().setPreferredAudioLanguage("ru"));
 
 		// 3. Create the player
 		player = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
-		//SimpleExoPlayerView simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
 		simpleExoPlayerView.requestFocus();
 		simpleExoPlayerView.setPlayer(player);
 
@@ -150,35 +151,62 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 		Log.d(TAG, "aspect ratio: " + pref_aspect_ratio_video);
 	}
 
+	private void displayTrackSelector(Activity activity) {
+        MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
+        if(mappedTrackInfo != null) {
+            Pair<AlertDialog, TrackSelectionView> dialogPair =
+                    TrackSelectionView.getDialog(activity, "Звуковая дорожка", trackSelector, 1);
+            dialogPair.second.setShowDisableOption(true);
+            //dialogPair.second.setAllowAdaptiveSelections(allowAdaptiveSelections);
+            dialogPair.first.show();
+        }
+    }
+
 	@Override
 	public void setVideoAndStart(String address) {
-		Log.d("ExoPlayer", "setVideoAndStart");
-		Uri uri = Uri.parse(address);
-		MediaSource mediaSource;
-		if(address.indexOf("mpd") != -1) {
-			mediaSource = new DashMediaSource(uri, dataSourceFactory, new DefaultDashChunkSource.Factory(dataSourceFactory), null, null);
-		} else {
-			DefaultExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-			if(address.indexOf("t.kraslan.ru") != -1)
-				extractorsFactory.setTsExtractorFlags(DefaultTsPayloadReaderFactory.FLAG_DETECT_ACCESS_UNITS | DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES);
-			mediaSource = new ExtractorMediaSource(uri, dataSourceFactory, extractorsFactory, null, null);
-		}
-		player.prepare(mediaSource);
+        Log.d("ExoPlayer", "setVideoAndStart");
+        Uri uri = Uri.parse(address);
+        MediaSource mediaSource;
+        if (address.indexOf("mpd") != -1) {
+            mediaSource = new DashMediaSource.Factory(new DefaultDashChunkSource.Factory(dataSourceFactory), dataSourceFactory)
+                    .createMediaSource(uri);
+        } else {
+            DefaultExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+            if (address.indexOf("t.kraslan.ru") != -1)
+                extractorsFactory.setTsExtractorFlags(DefaultTsPayloadReaderFactory.FLAG_DETECT_ACCESS_UNITS | DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES);
+            mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                    .setExtractorsFactory(extractorsFactory)
+                    .createMediaSource(uri);
+        }
+        player.prepare(mediaSource);
+
+        /*MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
+        if (mappedTrackInfo != null) {
+            int rendererIndex = 0;
+            TrackGroupArray rendererTrackGroups = mappedTrackInfo.getTrackGroups(rendererIndex);
+            SelectionOverride selectionOverride = new SelectionOverride(0, 0);
+            trackSelector.setParameters(trackSelector.buildUponParameters()
+                    .setSelectionOverride(rendererIndex, rendererTrackGroups, selectionOverride));
+        }*/
 		//Log.d(TAG, "after prepare");
 
 		player.setPlayWhenReady(true);
 		Log.d(TAG, "after play");
+        TrackSelectionArray Selections = player.getCurrentTrackSelections();
+        for (int i = 0; i < Selections.length; i++) {
+            if (Selections.get(i) != null) Log.d(TAG, Selections.get(i).toString());
+        }
 		player.addListener(this);
 	}
 
 	@Override
 	public void stop() {
-		player.setPlayWhenReady(false);
+		if(player != null) player.setPlayWhenReady(false);
 	}
 
 	@Override
 	public void pause() {
-		player.setPlayWhenReady(false);
+		if(player != null) player.setPlayWhenReady(false);
 	}
 
 	@Override
@@ -267,13 +295,20 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public int getAudioTracksCount() {
-		TrackSelectionArray Selections = player.getCurrentTrackSelections();
-		//TrackSelection[] Tracks = Selections.getAll();
-		int tracks = 0;
+        int tracks = 0;
+/*		TrackSelectionArray Selections = player.getCurrentTrackSelections();
 		for (int i = 0; i < Selections.length; i++) {
 			if (player.getRendererType(i) == C.TRACK_TYPE_AUDIO && Selections.get(i) != null) tracks++;
 			Log.d(TAG, Selections.get(i).toString());
-		}
+		}*/
+        MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
+        if(mappedTrackInfo != null) {
+            for (int i = 0; i < mappedTrackInfo.getRendererCount(); i++) {
+                if(player.getRendererType(i) == C.TRACK_TYPE_AUDIO) tracks++;
+            }
+        }
+
+        Log.d(TAG, "tracks: " + tracks);
 		return tracks;
 	}
 
@@ -304,9 +339,11 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 		if(mVideoController != null) {
 			mVideoController.end();
 		}
-		player.stop();
-		player.release();
-		player = null;
+		if(player != null) {
+            player.stop();
+            player.release();
+            player = null;
+        }
 	}
 
 	// ExoPlayer.EventListener implementation
@@ -323,7 +360,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
 		Log.d(TAG, "playbackState: " + playbackState);
 		Log.d(TAG, "duration " + player.getDuration());
-		if (playbackState == ExoPlayer.STATE_ENDED) {
+		if (playbackState == 4) {
 			//if(mTVController != null) mTVController.end();
 			if(mVideoController != null) mVideoController.end();
 			//end();
@@ -388,7 +425,12 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		//Log.d("Debug","нажата клавиша exo");
-		if(mTVController!=null) {
+        if(event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_MENU) {
+            displayTrackSelector((VideoActivity) getContext());
+            return true;
+        }
+
+        if(mTVController!=null) {
 			return mTVController.dispatchKeyEvent(event) || simpleExoPlayerView.dispatchKeyEvent(event)	;
 		}
 		if(mVideoController!=null) {

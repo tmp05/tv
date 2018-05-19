@@ -318,7 +318,7 @@ public class VideoController extends FrameLayout {
 				mVideo.stop();
 				mPause.setBackgroundResource(R.drawable.ic_new_play);
 				return true;
-				default: Log.i("Debug", "Нажата клавиша: " + event.getKeyCode());
+			default: Log.i("Debug", "Нажата клавиша: " + event.getKeyCode());
 			}
 		}
 		return false;
@@ -363,7 +363,7 @@ public class VideoController extends FrameLayout {
 				String address = ApiConst.SET_POSITION;
 				String params = "video_id="+video+"&time="+(progress/1000);
 
-				//String address_complete = ApiConst.SET_WATCH;
+                //String address_complete = ApiConst.SET_WATCH;
 				//String params_complete = "video_id="+video;//+"&login="+URLEncoder.encode(Parser.login)+"&password="+URLEncoder.encode(Parser.password);
 
 				if(mComplete && mMap.get("type").equals("video")) {
@@ -372,7 +372,7 @@ public class VideoController extends FrameLayout {
 						//String str = Parser.getXML(address_complete, params_complete, AuthRequestConst.AUTH_KRASVIEW);
 						//Log.i("Debug", "получено " + params_complete);
 					} else {
-						//Log.i("Debug", "!Отправлено: id=" + video + " просмотрено " + Parser.auth_type);
+						Log.i("Debug", "!Отправлено: id=" + video);
 					}
 				} else {
 					Log.i("Debug", "Отправлено: id="+ video + " time=" + Util.millisToString(progress));

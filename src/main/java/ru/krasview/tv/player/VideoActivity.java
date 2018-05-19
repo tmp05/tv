@@ -17,10 +17,9 @@ import android.util.Log;
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.example.kvlib.R;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.ui.PlayerView;
 
 import org.videolan1.vlc.Util;
 import ru.krasview.kvlib.indep.ListAccount;
@@ -31,7 +30,7 @@ public class VideoActivity extends Activity {
 	RelativeLayout mFrame;
 	SurfaceView mVideoSurface;
 	RelativeLayout mOverlayFrame;
-	SimpleExoPlayerView simpleExoPlayerView;
+	PlayerView simpleExoPlayerView;
 
 	int current;
 	String mLocation;
@@ -61,7 +60,7 @@ public class VideoActivity extends Activity {
 		mInfo = (TextView) findViewById(R.id.player_overlay_info);
 		mTitle = (TextView)findViewById(R.id.player_overlay_title);
 		mIcon = (ImageView)findViewById(R.id.player_overlay_icon);
-		simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
+		simpleExoPlayerView = (PlayerView) findViewById(R.id.player_view);
 		initLayout();
 	}
 
@@ -251,7 +250,6 @@ public class VideoActivity extends Activity {
 				this.onBackPressed();
 				return true;
 			case KeyEvent.KEYCODE_DPAD_LEFT:
-
 				if(mType.equals("channel")) {
 					this.onBackPressed();
 					return true;
@@ -301,7 +299,7 @@ public class VideoActivity extends Activity {
 		}
 	}
 
-	public boolean dispatchTouchEvent (MotionEvent ev) {
+	public boolean dispatchTouchEvent(MotionEvent ev) {
 		showOverlay();
 		return super.dispatchTouchEvent(ev);
 	}

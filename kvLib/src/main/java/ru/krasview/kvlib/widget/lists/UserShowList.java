@@ -88,7 +88,7 @@ public class UserShowList extends List {
 			m.put("name", Html.fromHtml(Parser.getValue("title", locNode)));
 			m.put("img_uri", Parser.getValue("thumb", locNode));
 			m.put("description", Parser.getValue("description", locNode));
-			m.put("type", "series" );
+			m.put("type", "series");
 			if(task.isCancelled()) {
 				return;
 			}

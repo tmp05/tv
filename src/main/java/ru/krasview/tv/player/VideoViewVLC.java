@@ -12,7 +12,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.*;
 import android.widget.Toast;
-import android.widget.FrameLayout;
 import org.videolan.libvlc.IVLCVout;
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
@@ -483,7 +482,4 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
         }
         return true;
     }
-
-/*    @Override
-    public void onHardwareAccelerationError(IVLCVout vlcVout) {}*/
 }
