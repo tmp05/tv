@@ -84,7 +84,8 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 		simpleExoPlayerView.requestFocus();
 		simpleExoPlayerView.setPlayer(player);
 
-		dataSourceFactory = new DefaultDataSourceFactory(getContext(), Util.getUserAgent(getContext(), "krasview"), null);
+		//dataSourceFactory = new DefaultDataSourceFactory(getContext(), Util.getUserAgent(getContext(), "krasview"), null);
+		dataSourceFactory = new DefaultDataSourceFactory(getContext(), "http://kadu.ru", null);
 	}
 
 	private void setSize() {
@@ -178,6 +179,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
                     .setExtractorsFactory(extractorsFactory)
                     .createMediaSource(uri);
         }
+        if(player == null) return; // sanity check
         player.prepare(mediaSource);
 
         /*MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
