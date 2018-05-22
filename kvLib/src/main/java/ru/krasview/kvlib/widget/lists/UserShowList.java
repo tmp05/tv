@@ -14,6 +14,8 @@ import ru.krasview.kvlib.indep.Parser;
 import ru.krasview.kvlib.widget.List;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.Html;
 
 public class UserShowList extends List {
@@ -39,7 +41,11 @@ public class UserShowList extends List {
 
 	@Override
 	protected String getApiAddress() {
-		return mSection == null ? ApiConst.USER : ApiConst.BASE + mSection + "/user";
+		SharedPreferences prefs;
+		prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+		String sort = prefs.getString("my_view_sort", "default");
+
+		return mSection == null ? ApiConst.USER : ApiConst.BASE + mSection + "/user" + (sort != "default" ? "?sort=" + sort : "");
 	}
 
 	@SuppressWarnings("unchecked")

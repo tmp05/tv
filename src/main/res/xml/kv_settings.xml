@@ -48,5 +48,11 @@
 		android:defaultValue="default"
 		android:entries="@array/aspect_ratio_video"
 		android:entryValues="@array/aspect_ratio_video"/>
+	<ListPreference
+		android:key="my_view_sort"
+		android:title="Сортировка в Я смотрю"
+		android:defaultValue="default"
+		android:entries="@array/my_view_sort"
+		android:entryValues="@array/my_view_sort"/>
 	</PreferenceCategory>
 </PreferenceScreen>
