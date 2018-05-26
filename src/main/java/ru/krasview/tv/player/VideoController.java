@@ -345,7 +345,12 @@ public class VideoController extends FrameLayout {
 		}
 	}
 
-	public void end() {}
+	public void end() {
+        Log.i("Debug", "end");
+	}
+    public void next() {
+        ((VideoActivity)getContext()).onNext(false);
+    }
 
 	private static class Updater {
 		private static class SentProgressRunnable implements Runnable {

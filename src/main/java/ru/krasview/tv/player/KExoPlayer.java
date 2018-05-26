@@ -211,7 +211,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public void play() {
-		player.setPlayWhenReady(true);
+		if(player != null) player.setPlayWhenReady(true);
 		Log.d(TAG, "play");
 	}
 
@@ -243,6 +243,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	@Override
 	public boolean isPlaying() {
 		Log.d(TAG, "isPlaying");
+		if(player == null) return false;
 		return player.getPlayWhenReady();
 	}
 
@@ -277,7 +278,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public void setTime(int time) {
-		player.seekTo(time);
+		if(player != null) player.seekTo(time);
 	}
 
 	@Override
@@ -332,17 +333,18 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public void end() {
+		Log.d(TAG, "end");
+        if(player != null) {
+            player.stop();
+            player.release();
+            player = null;
+        }
 		if(mTVController != null) {
 			mTVController.end();
 		}
 		if(mVideoController != null) {
 			mVideoController.end();
 		}
-		if(player != null) {
-            player.stop();
-            player.release();
-            player = null;
-        }
 	}
 
 	// ExoPlayer.EventListener implementation
@@ -359,9 +361,9 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
 		Log.d(TAG, "playbackState: " + playbackState);
 		Log.d(TAG, "duration " + player.getDuration());
-		if (playbackState == 4) {
+		if (playbackState == 4 && player != null) {
 			//if(mTVController != null) mTVController.end();
-			if(mVideoController != null) mVideoController.end();
+			if(mVideoController != null) mVideoController.next();
 			//end();
 		}
 	}

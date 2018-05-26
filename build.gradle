@@ -34,14 +34,14 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 155
+        versionCode 156
         versionName "1.0"
     }
     splits {
         abi {
             enable true
             reset()
-            include 'x86', 'armeabi-v7a'
+            include 'armeabi-v7a'
             universalApk false
         }
     }

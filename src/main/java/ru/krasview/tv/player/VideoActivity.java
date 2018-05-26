@@ -227,18 +227,10 @@ public class VideoActivity extends Activity {
 			switch(event.getKeyCode()) {
 			case KeyEvent.KEYCODE_N:
 			case KeyEvent.KEYCODE_DPAD_DOWN:
-				current++;
-				if(current>=ListAccount.adapterForActivity.getCount()) {
-					current=0;
-				}
-				start(false);
+			    onNext(true);
 				return true;
 			case KeyEvent.KEYCODE_DPAD_UP:
-				current--;
-				if(current<0) {
-					current=ListAccount.adapterForActivity.getCount()-1;
-				}
-				start(false);
+			    onPrev();
 				return true;
 			}
 		}
@@ -337,6 +329,22 @@ public class VideoActivity extends Activity {
 		mHandler.removeMessages(FADE_OUT_INFO);
 		mHandler.removeMessages(FADE_OUT);
 	}
+
+	public void onNext(boolean loop) {
+        current++;
+        if(current >= ListAccount.adapterForActivity.getCount()) {
+            if(loop) current = 0;
+        }
+        start(false);
+    }
+
+    public void onPrev() {
+        current--;
+        if(current<0) {
+            current=ListAccount.adapterForActivity.getCount()-1;
+        }
+        start(false);
+    }
 
 	void hideInfo() {
 		mInfo.setVisibility(View.GONE);
