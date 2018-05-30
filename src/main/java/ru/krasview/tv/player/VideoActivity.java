@@ -331,10 +331,10 @@ public class VideoActivity extends Activity {
 	}
 
 	public void onNext(boolean loop) {
-        current++;
-        if(current >= ListAccount.adapterForActivity.getCount()) {
+        if(current + 1 >= ListAccount.adapterForActivity.getCount()) {
             if(loop) current = 0;
-        }
+            else return;
+        } else current++;
         start(false);
     }
 
