@@ -1,6 +1,8 @@
 package ru.krasview.tv.player;
 
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.videolan1.vlc.Util;
 
@@ -40,6 +42,7 @@ public class VideoController extends FrameLayout {
 	ImageButton mSize;
 	ImageButton mAudio;
 	ImageButton mSubtitle;
+	Timer timer;
 
 	int time = 0;
 
@@ -90,6 +93,7 @@ public class VideoController extends FrameLayout {
 		mSubtitle = (ImageButton)findViewById(R.id.player_overlay_subtitle);
 		mSubtitle.setOnClickListener(listener);
 		//mSubtitle.setVisibility(View.VISIBLE);
+		timer = new Timer();
 	}
 
 	OnClickListener listener = new OnClickListener() {
@@ -240,11 +244,11 @@ public class VideoController extends FrameLayout {
 	}
 
 	public void showProgress() {
+		/*Throwable trace = new Exception();
+		Log.d("Debug", "Показ прогресса " + Util.millisToString(mVideo.getTime()), trace);*/
 		mSeekListener.onProgressChanged(mSeekbar, mVideo.getProgress(), false);
 		mTime.setText("" + Util.millisToString(mVideo.getTime()));
 		mLeight.setText("" + Util.millisToString(mVideo.getLeight()));
-		//Log.i("Debug", "showProgress");
-		//Log.i("Debug", "Показ прогресса " + Util.millisToString(mVideo.getTime()));
 		Updater.updateProgress(id, mVideo.getTime());
 	}
 
@@ -294,6 +298,12 @@ public class VideoController extends FrameLayout {
 				//((VideoActivity)getContext()).showInfo("поставлено время " + Util.millisToString(time), 3000);
 				mVideo.setTime(time);
 				showProgress();
+				timer.scheduleAtFixedRate(new TimerTask() {
+					@Override
+					public void run() {
+						Updater.updateProgress(id, mVideo.getTime());
+					}
+				}, 20000, 20000);
 			}
 		};
 
@@ -346,11 +356,13 @@ public class VideoController extends FrameLayout {
 	}
 
 	public void end() {
+		timer.cancel();
         Log.i("Debug", "end");
 	}
-    public void next() {
-        ((VideoActivity)getContext()).onNext(false);
-    }
+	public void next() {
+		end();
+		((VideoActivity)getContext()).onNext(false);
+	}
 
 	private static class Updater {
 		private static class SentProgressRunnable implements Runnable {

@@ -352,7 +352,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	@Override
 	public void onLoadingChanged(boolean isLoading) {
 		Log.d(TAG, "isLoading: " + isLoading);
-		Log.d(TAG, "duration " + player.getDuration());
+		//Log.d(TAG, "duration " + player.getDuration());
 		if(isLoading) {setSize(); if(mVideoController!=null) {mVideoController.showProgress();}}
 		// Do nothing.
 	}
@@ -360,7 +360,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	@Override
 	public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
 		Log.d(TAG, "playbackState: " + playbackState);
-		Log.d(TAG, "duration " + player.getDuration());
+		//Log.d(TAG, "duration " + player.getDuration());
 		if (playbackState == 4 && player != null) {
 			//if(mTVController != null) mTVController.end();
 			if(mVideoController != null) mVideoController.next();
