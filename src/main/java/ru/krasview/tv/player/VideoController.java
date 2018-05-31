@@ -1,12 +1,13 @@
 package ru.krasview.tv.player;
 
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.videolan1.vlc.Util;
 
-import ru.krasview.kvlib.indep.AuthAccount;
 import ru.krasview.kvlib.indep.HTTPClient;
 import ru.krasview.kvlib.indep.consts.AuthRequestConst;
 import ru.krasview.secret.ApiConst;
@@ -42,7 +43,8 @@ public class VideoController extends FrameLayout {
 	ImageButton mSize;
 	ImageButton mAudio;
 	ImageButton mSubtitle;
-	Timer timer;
+	ScheduledExecutorService service;
+	Future<?> timer;
 
 	int time = 0;
 
@@ -93,7 +95,7 @@ public class VideoController extends FrameLayout {
 		mSubtitle = (ImageButton)findViewById(R.id.player_overlay_subtitle);
 		mSubtitle.setOnClickListener(listener);
 		//mSubtitle.setVisibility(View.VISIBLE);
-		timer = new Timer();
+		service = Executors.newSingleThreadScheduledExecutor();
 	}
 
 	OnClickListener listener = new OnClickListener() {
@@ -249,7 +251,7 @@ public class VideoController extends FrameLayout {
 		mSeekListener.onProgressChanged(mSeekbar, mVideo.getProgress(), false);
 		mTime.setText("" + Util.millisToString(mVideo.getTime()));
 		mLeight.setText("" + Util.millisToString(mVideo.getLeight()));
-		Updater.updateProgress(id, mVideo.getTime());
+		Updater.updateProgress(id);
 	}
 
 	private void goBackward() {
@@ -264,7 +266,6 @@ public class VideoController extends FrameLayout {
 	String id;
 
 	public void setMap(Map<String, Object> map) {
-		Updater.clear();
 		time = 0;
 		mMap = map;
 		//SentProgressRunnable
@@ -298,12 +299,7 @@ public class VideoController extends FrameLayout {
 				//((VideoActivity)getContext()).showInfo("поставлено время " + Util.millisToString(time), 3000);
 				mVideo.setTime(time);
 				showProgress();
-				timer.scheduleAtFixedRate(new TimerTask() {
-					@Override
-					public void run() {
-						Updater.updateProgress(id, mVideo.getTime());
-					}
-				}, 20000, 20000);
+				timer = service.scheduleAtFixedRate(new Updater.SentProgressRunnable(id),20,20, TimeUnit.SECONDS);
 			}
 		};
 
@@ -356,109 +352,36 @@ public class VideoController extends FrameLayout {
 	}
 
 	public void end() {
-		timer.cancel();
-        Log.i("Debug", "end");
+		timer.cancel(true);
+		Log.i("Debug", "end");
 	}
 	public void next() {
-		end();
 		((VideoActivity)getContext()).onNext(false);
 	}
 
 	private static class Updater {
 		private static class SentProgressRunnable implements Runnable {
-			int progress = 0;
 			String video = "";
-			boolean mComplete;
 
-			SentProgressRunnable(String id, int time, boolean complete) {
+			SentProgressRunnable(String id) {
 				super();
-				progress = time;
 				video = id;
-				mComplete = complete;
 			}
 			@Override
 			public void run() {
 				String address = ApiConst.SET_POSITION;
+				int progress = mVideo.getTime();
 				String params = "video_id="+video+"&time="+(progress/1000);
 
                 //String address_complete = ApiConst.SET_WATCH;
 				//String params_complete = "video_id="+video;//+"&login="+URLEncoder.encode(Parser.login)+"&password="+URLEncoder.encode(Parser.password);
-
-				if(mComplete && mMap.get("type").equals("video")) {
-					if(AuthAccount.getInstance().isKrasviewAccount()) {
-						Log.i("Debug", "Отправлено: id="+ video + " просмотрено");
-						//String str = Parser.getXML(address_complete, params_complete, AuthRequestConst.AUTH_KRASVIEW);
-						//Log.i("Debug", "получено " + params_complete);
-					} else {
-						Log.i("Debug", "!Отправлено: id=" + video);
-					}
-				} else {
-					Log.i("Debug", "Отправлено: id="+ video + " time=" + Util.millisToString(progress));
-					HTTPClient.getXML(address, params, AuthRequestConst.AUTH_KRASVIEW);
-				}
+				Log.i("Debug", "Отправлено: id="+ video + " time=" + Util.millisToString(progress));
+				HTTPClient.getXML(address, params, AuthRequestConst.AUTH_KRASVIEW);
 			}
 		}
 
-		static private String lastId = "";
-		static private int lastTime = 0;
-		static private int beginTime = 0;
-		static boolean otpr = false;
-		private static void sendProgress(String id, int time, boolean complete) {
-			new Thread(new SentProgressRunnable(id, time, complete)).start();
-		}
-		static void updateProgress(String id, int time) {
-			if(lastId == null) {
-				lastId = "";
-			}
-
-			if(time <= 0) {
-				lastId = id;
-				lastTime = 0;
-				beginTime = 0;
-				otpr = false;
-				return;
-			}
-			if(!lastId.equals(id)) {
-				beginTime = 0;
-				lastId = id;
-				lastTime = time;
-				otpr = false;
-				return;
-			}
-			/*if((lastId.equals(id) && Math.abs(time - lastTime) > 10000)) {
-				//	Log.i("Debug", "Перемотано");
-				beginTime = 0;
-				lastId = id;
-				lastTime = time;
-			}*/
-
-			//if((lastId.equals(id) && Math.abs(time - lastTime) > 7000)) {
-				sendProgress(id, time, false);
-
-				if(beginTime == 0) {
-					beginTime = time;
-					Log.i("Debug", "Начинает отсюда " + Util.millisToString(time));
-					otpr = false;
-				} /*else {
-					int norm = mVideo.getLeight()/3;
-					Log.i("Debug", "Просмотрено: " + Util.millisToString(Math.abs(time - beginTime)) + " " + "Треть: " + Util.millisToString(norm) + " Условие: " + (otpr == false&&(Math.abs(time - beginTime)>norm)));
-
-					if(otpr == false&&(Math.abs(time - beginTime)>norm)) {
-						Log.i("Debug", "Отправить просмотрено");
-						sendProgress(id, time, true);
-						otpr = true;
-					}
-				}*/
-				//lastTime = time;
-				return;
-			//}
+		static void updateProgress(String id) {
+			new Thread(new SentProgressRunnable(id)).start();
 		};
-
-		public static void clear() {
-			lastId = "";
-			lastTime = 0;
-			beginTime = 0;
-			otpr = false;
-		}
 	}
 }
