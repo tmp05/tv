@@ -264,15 +264,16 @@ public class MainAuthActivity extends Activity {
 		.putString("pref_password", password)
 		.putInt("pref_auth_type", AuthAccount.AUTH_TYPE_UNKNOWN)
 		.putString("pref_hash", "1").putString("pref_hash_tv", "1").commit();
-		if(login.equals("")&&password.equals("")) {
+		/*if(login.equals("")&&password.equals("")) {
 			Toast toast = Toast.makeText(getApplicationContext(),
 			                             "Гостевой вход.", Toast.LENGTH_SHORT);
 			toast.show();
 			guestAuth();
 			return;
-		} else if(login.equals("")||password.equals("")) {
+		} else*/
+		if(login.equals("")||password.equals("")) {
 			Toast toast = Toast.makeText(getApplicationContext(),
-			                             "Логин и пароль не должны быть пустыми. Если у вас нет учетной записи krasview, зарегистрируйтесь или войдите как гость", Toast.LENGTH_SHORT);
+			                             "Логин и пароль не должны быть пустыми. Если у вас нет учетной записи krasview, зарегистрируйтесь или войдите как гость", Toast.LENGTH_LONG);
 			toast.show();
 			return;
 		}
