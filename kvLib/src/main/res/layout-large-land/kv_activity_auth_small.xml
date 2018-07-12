@@ -90,13 +90,13 @@
             android:visibility="gone"
             android:onClick="onClick"/>
 
-        <!--Button
+        <Button
             android:id="@+id/kv_auth_guest_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Войти как гость" 
+            android:text="Войти как гость(без ТВ)"
             android:layout_weight="1"
-            android:onClick="onClick"/-->
+            android:onClick="onClick"/>
     
     <GridView 
         android:id="@+id/social_grid"

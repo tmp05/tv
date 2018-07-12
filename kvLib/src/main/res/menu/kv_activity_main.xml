@@ -8,7 +8,7 @@
     <item android:id="@+id/changeInterface" 
           android:title="Смотреть сериалы"/>
     <item android:id="@+id/exit"
-          android:title="Выход"/>
+          android:title="Выход из учетной записи"/>
     <item
           android:id="@+id/kv_login_item"
           android:title="Логин"

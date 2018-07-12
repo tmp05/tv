@@ -30,5 +30,5 @@
 
 
     <item android:id="@+id/exit"
-          android:title="Выход"/>
+          android:title="Выход из учетной записи"/>
 </menu>
