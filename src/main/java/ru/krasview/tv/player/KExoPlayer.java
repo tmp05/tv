@@ -411,6 +411,18 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 				}
 			}
 		}
+		else if (e.type ==ExoPlaybackException.TYPE_SOURCE ) {
+			String SourceEx = e.getSourceException().getMessage();
+			if (SourceEx.contains("404")){
+				errorString = "Файл не найден";
+			}
+			else if (SourceEx.contains("Unable to connect")) {
+				errorString = "Ошибка сети";
+			}
+			else {
+				errorString = "Ошибка воспроизведения";
+			}
+		}
 		if (errorString != null) {
 			Toast.makeText(getContext(), "Player error! " + errorString, Toast.LENGTH_LONG).show();
 		}
