@@ -34,7 +34,7 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 159
+        versionCode 160
         versionName "1.0"
     }
     splits {

@@ -404,27 +404,24 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 					} else if (decoderInitializationException.secureDecoderRequired) {
 						errorString = "secureDecoderRequired";
 					} else {
-						errorString = "Decoder not found";
+						errorString = "Не найдено подходящего кодека";
 					}
 				} else {
 					errorString = "error_instantiating_decoder";
 				}
 			}
-		}
-		else if (e.type ==ExoPlaybackException.TYPE_SOURCE ) {
+		} else if (e.type ==ExoPlaybackException.TYPE_SOURCE) {
 			String SourceEx = e.getSourceException().getMessage();
-			if (SourceEx.contains("404")){
+			if (SourceEx.contains("404")) {
 				errorString = "Файл не найден";
-			}
-			else if (SourceEx.contains("Unable to connect")) {
+			} else if (SourceEx.contains("Unable to connect")) {
 				errorString = "Ошибка сети";
-			}
-			else {
+			} else {
 				errorString = "Ошибка воспроизведения";
 			}
 		}
 		if (errorString != null) {
-			Toast.makeText(getContext(), "Player error! " + errorString, Toast.LENGTH_LONG).show();
+			Toast.makeText(getContext(), errorString, Toast.LENGTH_LONG).show();
 		}
 	}
 
