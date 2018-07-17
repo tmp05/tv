@@ -32,4 +32,11 @@ public class TypeConsts {
 	public static final String MOVIE		= "sublist_movie";
 
 	public static final String BILLING		= "billing";
+
+	public static final String ALL_GENRE_MOVIE	= "all_genre_movies";
+	public static final String ALL_GENRE_SERIES	= "all_genre_series";
+	public static final String ALL_GENRE_ANIME	= "all_genre_anime";
+	public static final String GENRE_MOVIE	= "genre_movie";
+	public static final String GENRE_SERIES	= "genre_series";
+	public static final String GENRE_ANIME	= "genre_anime";
 }

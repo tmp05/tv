@@ -64,6 +64,11 @@ public class AllShowList extends UserShowList{
 		m.put("type", "alfabet_series");
 		m.put("name", "По алфавиту");
 		data.add(m);
+
+		m = new HashMap<String, Object>();
+		m.put("type",TypeConsts.ALL_GENRE_SERIES);
+		m.put("name", "По жанрам");
+		data.add(m);
 	}
 
 	private void loadNext() {

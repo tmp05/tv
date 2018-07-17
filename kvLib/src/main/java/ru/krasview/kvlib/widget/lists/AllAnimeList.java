@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ru.krasview.kvlib.indep.ListAccount;
+import ru.krasview.kvlib.indep.consts.TypeConsts;
 import ru.krasview.secret.ApiConst;
 
 import android.content.Context;
@@ -36,6 +37,11 @@ public class AllAnimeList extends AllShowList {
 		m = new HashMap<String, Object>();
 		m.put("type", "alfabet_anime");
 		m.put("name", "По алфавиту");
+		data.add(m);
+
+		m = new HashMap<String, Object>();
+		m.put("type", TypeConsts.ALL_GENRE_ANIME);
+		m.put("name", "По жанрам");
 		data.add(m);
 	}
 }

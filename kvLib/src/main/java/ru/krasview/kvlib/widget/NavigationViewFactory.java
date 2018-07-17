@@ -58,6 +58,12 @@ public class NavigationViewFactory implements Factory {
 		}else if(type.equals("letter_movie"))		{view = new LetterMovieList(c, map);
 		}else if(type.equals("search_movie"))		{view = new SearchMovieList(c);
 		}else if(type.equals("faves"))			{view = new FavesList(c, map);
+		}else if(type.equals(TypeConsts.ALL_GENRE_SERIES))			{view = new AllGenreShowList(c);
+		}else if(type.equals(TypeConsts.ALL_GENRE_MOVIE))			{view = new AllGenreMovieList(c,map);
+		}else if(type.equals(TypeConsts.ALL_GENRE_ANIME))			{view = new AllGenreAnimeList(c,map);
+		}else if(type.equals(TypeConsts.GENRE_SERIES))			{view = new GenreShowList(c,map);
+		}else if(type.equals(TypeConsts.GENRE_MOVIE))			{view = new GenreMovieList(c,map);
+		}else if(type.equals(TypeConsts.GENRE_ANIME))			{view = new GenreAnimeList(c,map);
 		}else						{view = get_unknown(type);
 		}
 		if(implementsInterface(view, List.class)){
