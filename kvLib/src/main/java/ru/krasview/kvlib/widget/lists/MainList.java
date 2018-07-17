@@ -21,14 +21,14 @@ public class MainList extends List {
 			m.put("type", "my_shows_all");
 			m.put("name", "Я смотрю");
 			data.add(m);
-		}	
+		}
 		if(account.isTVAccount()){
 			m = new HashMap<String, Object>();
 			m.put("type", TypeConsts.TV);
 			m.put("name", "Телевидение");
 			data.add(m);
 		}
-		
+
 		m = new HashMap<String, Object>();
 		m.put("type", TypeConsts.MOVIE);
 		m.put("name", "Фильмы");
