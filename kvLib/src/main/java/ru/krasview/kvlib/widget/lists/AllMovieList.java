@@ -43,7 +43,8 @@ public class AllMovieList extends AllShowList {
 		data.add(m);
 
 		m = new HashMap<String, Object>();
-		m.put("type", TypeConsts.ALL_GENRE_MOVIE);
+		m.put("type", TypeConsts.GENRES);
+		m.put("section", "movie/genre");
 		m.put("name", "По жанрам");
 		data.add(m);
 	}

@@ -66,7 +66,8 @@ public class AllShowList extends UserShowList{
 		data.add(m);
 
 		m = new HashMap<String, Object>();
-		m.put("type",TypeConsts.ALL_GENRE_SERIES);
+		m.put("type",TypeConsts.GENRES);
+        m.put("section", "series/genre");
 		m.put("name", "По жанрам");
 		data.add(m);
 	}
@@ -143,13 +144,13 @@ public class AllShowList extends UserShowList{
 			}
 			task.onStep(m);
 		}
-		m = new HashMap<String, Object>();
-		m.put("type", "next");
-		m.put("name", "...");
-		if(task.isCancelled()) {
-			return;
-		}
-		task.onStep(m);
+//		m = new HashMap<String, Object>();
+//		m.put("type", "next");
+//		m.put("name", "...");
+//		if(task.isCancelled()) {
+//			return;
+//		}
+//		task.onStep(m);
 	}
 
 	@Override

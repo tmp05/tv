@@ -7,17 +7,18 @@ import java.util.Map;
 import ru.krasview.secret.ApiConst;
 
 public class GenreShowList extends AllShowList {
-    //не убирать
-    @Override
+    String section;
+
     public void setConstData(){
     }
 
     public GenreShowList(Context context, Map<String, Object> map) {
         super(context, map);
+        section = (String)map.get("type");
     }
 
     @Override
     protected String getApiAddress() {
-        return ApiConst.SHOW_GENRES_SERIES+"?id="+ getMap().get("id");
-    }
+        return ApiConst.BASE + section+"?id="+getMap().get("id");
+      }
 }

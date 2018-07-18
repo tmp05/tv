@@ -40,7 +40,8 @@ public class AllAnimeList extends AllShowList {
 		data.add(m);
 
 		m = new HashMap<String, Object>();
-		m.put("type", TypeConsts.ALL_GENRE_ANIME);
+		m.put("type", TypeConsts.GENRES);
+		m.put("section", "anime/genre");
 		m.put("name", "По жанрам");
 		data.add(m);
 	}

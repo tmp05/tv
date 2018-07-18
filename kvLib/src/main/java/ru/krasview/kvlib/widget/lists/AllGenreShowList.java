@@ -16,18 +16,20 @@ import ru.krasview.kvlib.widget.List;
 import ru.krasview.secret.ApiConst;
 
 public class AllGenreShowList extends List {
-    public AllGenreShowList(Context context){
-        super(context, null);
+    String section;
+
+    public AllGenreShowList(Context context,Map<String, Object> map){
+        super(context, map);
+        section = (String)map.get("section");
     }
 
     protected void setType(Map<String, Object> map) {
-        map.put("type", TypeConsts.GENRE_SERIES);
-    }
-    protected String getApiAddress() {
-        return ApiConst.SHOW_GENRES;
+        map.put("type", section);
     }
 
-    protected String getType() {return "genre_series";}
+    protected String getApiAddress() {
+        return ApiConst.BASE+"/genres";
+    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -53,7 +55,7 @@ public class AllGenreShowList extends List {
             m = new HashMap<>();
             m.put("id", Parser.getValue("id", locNode));
             m.put("name", Parser.getValue("title", locNode));
-            m.put("type", this.getType() );
+            m.put("type", section );
             if(task.isCancelled()) {
                 return;
             }
