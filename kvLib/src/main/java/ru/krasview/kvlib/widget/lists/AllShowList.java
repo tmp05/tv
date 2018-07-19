@@ -144,13 +144,13 @@ public class AllShowList extends UserShowList{
 			}
 			task.onStep(m);
 		}
-//		m = new HashMap<String, Object>();
-//		m.put("type", "next");
-//		m.put("name", "...");
-//		if(task.isCancelled()) {
-//			return;
-//		}
-//		task.onStep(m);
+		m = new HashMap<String, Object>();
+		m.put("type", "next");
+		m.put("name", "...");
+		if(task.isCancelled()) {
+			return;
+		}
+		task.onStep(m);
 	}
 
 	@Override
