@@ -21,14 +21,13 @@
 
      <item android:id="@+id/new_game"
           android:title="Настройки"/>
-
+    <item android:id="@+id/exitlogin"
+        android:title="Сбросить учетную запись"/>
     <item
           android:id="@+id/kv_login_item"
           android:title="Профиль"
           android:showAsAction="withText|ifRoom"
           android:icon="@drawable/ic_new_login" />
-
-
     <item android:id="@+id/exit"
-          android:title="Выход из учетной записи"/>
+        android:title="Закрыть"/>
 </menu>
