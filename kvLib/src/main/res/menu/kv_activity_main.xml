@@ -9,6 +9,8 @@
           android:title="Смотреть сериалы"/>
     <item android:id="@+id/exit"
           android:title="Выход из учетной записи"/>
+    <item android:id="@+id/exit_app"
+          android:title="Выход из приложения"/>
     <item
           android:id="@+id/kv_login_item"
           android:title="Логин"

@@ -47,6 +47,7 @@ public class LoadDataToGUITask extends AsyncTask<String, Map<String, Object>, Vo
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onProgressUpdate(Map<String, Object>... progress) {
 		if(progress.length == 1) {
@@ -58,6 +59,7 @@ public class LoadDataToGUITask extends AsyncTask<String, Map<String, Object>, Vo
 		mAdapter.notifyDataSetChanged();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onPostExecute(Void result) {
 		if(isCancelled()){
