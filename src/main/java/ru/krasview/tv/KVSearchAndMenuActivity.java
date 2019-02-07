@@ -159,7 +159,11 @@ public abstract class KVSearchAndMenuActivity extends AppCompatActivity
         } else if (id == R.id.kv_login_item) {
             return true;
         } else if (id == R.id.exit) {
-            exit();
+           // exit();
+			return true;
+		} else if (id == R.id.exitlogin) {
+			exit();
+			return true;
         } else if (id == R.id.kv_home_item) {
             home();
             return true;
