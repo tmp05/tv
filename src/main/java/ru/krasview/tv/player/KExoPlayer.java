@@ -26,8 +26,10 @@ import com.google.android.exoplayer2.trackselection.MappingTrackSelector.MappedT
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.ui.TrackSelectionView;
-import com.google.android.exoplayer2.upstream.DataSource;
+//import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.Player.EventListener;
 
@@ -52,7 +54,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	private SurfaceView mSurface;
 	SimpleExoPlayer player;
     PlayerView simpleExoPlayerView;
-	DataSource.Factory dataSourceFactory;
+	DefaultHttpDataSourceFactory dataSourceFactory;
     DefaultTrackSelector trackSelector;
 
 	TVController mTVController;
@@ -84,8 +86,11 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 		simpleExoPlayerView.requestFocus();
 		simpleExoPlayerView.setPlayer(player);
 
+		//DefaultHttpDataSourceFactory http
+		dataSourceFactory = new DefaultHttpDataSourceFactory("http://kadu.ru", null);
+		dataSourceFactory.getDefaultRequestProperties().set("Referer", "https://krasview.ru");
 		//dataSourceFactory = new DefaultDataSourceFactory(getContext(), Util.getUserAgent(getContext(), "krasview"), null);
-		dataSourceFactory = new DefaultDataSourceFactory(getContext(), "http://kadu.ru", null);
+		//dataSourceFactory = new DefaultDataSourceFactory(getContext(), "http://kadu.ru", httpDataSourceFactory);
 	}
 
 	private void setSize() {
