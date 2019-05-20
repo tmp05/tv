@@ -25,7 +25,7 @@ import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector.MappedTrackInfo;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.ui.TrackSelectionView;
+import com.google.android.exoplayer2.ui.TrackSelectionDialogBuilder;
 //import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
@@ -160,11 +160,15 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	private void displayTrackSelector(Activity activity) {
         MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
         if(mappedTrackInfo != null) {
-            Pair<AlertDialog, TrackSelectionView> dialogPair =
-                    TrackSelectionView.getDialog(activity, "Звуковая дорожка", trackSelector, 1);
+            /*Pair<AlertDialog, TrackSelectionDialogBuilder> dialogPair =
+					TrackSelectionDialogBuilder.getDialog(activity, "Звуковая дорожка", trackSelector, 1);
             dialogPair.second.setShowDisableOption(true);
             //dialogPair.second.setAllowAdaptiveSelections(allowAdaptiveSelections);
-            dialogPair.first.show();
+            dialogPair.first.show();*/
+			new TrackSelectionDialogBuilder(activity, "Звуковая дорожка",trackSelector,1)
+					.setShowDisableOption(true)
+					.build()
+					.show();
         }
     }
 

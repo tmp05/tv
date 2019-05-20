@@ -1,35 +1,27 @@
 package ru.krasview.tv;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.view.MenuItemCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.SearchView.OnQueryTextListener;
 import com.example.kvlib.R;
 import ru.krasview.kvlib.adapter.CombineSimpleAdapter;
 import ru.krasview.kvlib.indep.AuthAccount;
 import ru.krasview.kvlib.indep.HTTPClient;
 import ru.krasview.kvlib.indep.ListAccount;
-import ru.krasview.kvlib.indep.SearchAccount;
 import ru.krasview.kvlib.indep.consts.AuthRequestConst;
 import ru.krasview.kvlib.indep.consts.TagConsts;
 import ru.krasview.kvlib.indep.consts.TypeConsts;
@@ -37,7 +29,6 @@ import ru.krasview.kvlib.interfaces.FatalErrorExitListener;
 import ru.krasview.kvlib.widget.List;
 import ru.krasview.secret.ApiConst;
 
-import java.net.URLEncoder;
 import java.util.Map;
 
 public abstract class KVSearchAndMenuActivity extends AppCompatActivity

@@ -12,7 +12,7 @@ android {
 
 dependencies {
     api project(':kvSecret')
-    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     api files('libs/universal-image-loader-1.9.3.jar')
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
 }

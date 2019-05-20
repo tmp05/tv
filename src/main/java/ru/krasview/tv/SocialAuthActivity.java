@@ -9,7 +9,7 @@ import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
 import ru.krasview.secret.ApiConst;
 import android.app.Activity;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
