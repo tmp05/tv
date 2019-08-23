@@ -29,7 +29,7 @@ import org.videolan1.libvlc.LibVLC;
 import org.videolan1.libvlc.LibVlcException;
 import org.videolan1.libvlc.TrackInfo;
 
-import ru.krasview.tv.R;
+import ru.ks.tv.R;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteFullException;

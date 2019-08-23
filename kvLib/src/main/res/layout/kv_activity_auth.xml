@@ -15,7 +15,7 @@
         <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="krasview.tv" 
+        android:text="ks.tv"
         android:gravity="center_horizontal"
         android:textSize="50dp"
         android:padding="20dp">
@@ -94,7 +94,7 @@
         <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="krasview.tv" 
+        android:text="ks.tv"
         android:gravity="center_horizontal"
         android:textSize="50dp"
         android:padding="20dp">
@@ -109,39 +109,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/kv_auth_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" 
-        >
-
-        <Button
-            android:id="@+id/kv_auth_kraslan_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Войти как абонент Красноярской сети" 
-            android:layout_weight="1"
-            android:visibility="gone"
-            android:onClick="onClick"/>
-
-        <Button
-            android:id="@+id/kv_auth_registration_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Зарегистрироваться на krasview" 
-            android:layout_weight="1"
-            android:onClick="onClick"/>
-
-        <Button
-            android:id="@+id/kv_auth_guest_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Войти как гость" 
-            android:layout_weight="1"
-            android:onClick="onClick"/>
-    
-    </LinearLayout>
 
     
     

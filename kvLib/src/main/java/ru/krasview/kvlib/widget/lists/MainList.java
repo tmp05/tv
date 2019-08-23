@@ -29,19 +29,5 @@ public class MainList extends List {
 			data.add(m);
 		}
 
-		m = new HashMap<String, Object>();
-		m.put("type", TypeConsts.MOVIE);
-		m.put("name", "Фильмы");
-		data.add(m);
-
-		m = new HashMap<String, Object>();
-		m.put("type", TypeConsts.ALL_SHOW);
-		m.put("name", "Сериалы");
-		data.add(m);
-
-		m = new HashMap<String, Object>();
-		m.put("type", TypeConsts.ALL_ANIME);
-		m.put("name", "Аниме");
-		data.add(m);
 	}
 }

@@ -22,9 +22,9 @@
         <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="krasview" 
+        android:text="KrasSet TV"
         android:gravity="center_horizontal"
-        android:textSize="40dp"
+        android:textSize="34dp"
         android:paddingBottom="15dp">       
         </TextView>
 
@@ -71,38 +71,7 @@
           
         </Button>
             
-        <Button
-            android:id="@+id/kv_auth_registration_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Регистрация"
-            android:layout_weight="1"
-            android:onClick="onClick"/>
-        
-             <Button
-            android:id="@+id/kv_auth_kraslan_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="" 
-            android:layout_weight="1"
-            android:visibility="gone"
-            android:onClick="onClick"/>
 
-        <Button
-            android:id="@+id/kv_auth_guest_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Войти как гость(без ТВ)"
-            android:layout_weight="1"
-            android:onClick="onClick"/>
-    
-    <GridView 
-        android:id="@+id/social_grid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_gravity="center_horizontal" >   
-        </GridView>
     
 </LinearLayout>
 

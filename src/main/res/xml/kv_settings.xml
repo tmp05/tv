@@ -21,7 +21,7 @@
 	<ListPreference
 		android:key="video_player_tv"
 		android:title="Проигрыватель"
-		android:defaultValue="std"
+		android:defaultValue="VLC"
 		android:entries="@array/tv_player"
 		android:entryValues="@array/tv_player_values"/>
 
@@ -34,25 +34,30 @@
 		android:entryValues="@array/aspect_ratio_video"/>
 	</PreferenceCategory>
 
-	<PreferenceCategory android:title="Настройки для видео">
-	<ListPreference
-		android:key="video_player_serial"
-		android:title="Проигрыватель"
-		android:defaultValue="std"
-		android:entries="@array/video_player"
-		android:entryValues="@array/video_player_values"/>
-	<ListPreference
-		android:key="aspect_ratio_video"
-		android:title="Соотношение сторон"
-		android:summary="Устанавливает соотношение сторон для видео"
-		android:defaultValue="default"
-		android:entries="@array/aspect_ratio_video"
-		android:entryValues="@array/aspect_ratio_video"/>
-	<ListPreference
-		android:key="my_view_sort"
-		android:title="Сортировка в Я смотрю"
-		android:defaultValue="default"
-		android:entries="@array/my_view_sort"
-		android:entryValues="@array/my_view_sort"/>
-	</PreferenceCategory>
+	<CheckBoxPreference
+		android:defaultValue="true"
+		android:key="autoplay"
+		android:summary="При перезагрузке устройства приложение будет автоматически запущено"
+		android:title="Автозапуск"/>
+	<!--<PreferenceCategory android:title="Настройки для видео">-->
+	<!--<ListPreference-->
+		<!--android:key="video_player_serial"-->
+		<!--android:title="Проигрыватель"-->
+		<!--android:defaultValue="std"-->
+		<!--android:entries="@array/video_player"-->
+		<!--android:entryValues="@array/video_player_values"/>-->
+	<!--<ListPreference-->
+		<!--android:key="aspect_ratio_video"-->
+		<!--android:title="Соотношение сторон"-->
+		<!--android:summary="Устанавливает соотношение сторон для видео"-->
+		<!--android:defaultValue="default"-->
+		<!--android:entries="@array/aspect_ratio_video"-->
+		<!--android:entryValues="@array/aspect_ratio_video"/>-->
+	<!--<ListPreference-->
+		<!--android:key="my_view_sort"-->
+		<!--android:title="Сортировка в Я смотрю"-->
+		<!--android:defaultValue="default"-->
+		<!--android:entries="@array/my_view_sort"-->
+		<!--android:entryValues="@array/my_view_sort"/>-->
+	<!--</PreferenceCategory>-->
 </PreferenceScreen>

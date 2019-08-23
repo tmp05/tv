@@ -26,41 +26,18 @@ public class NavigationViewFactory implements Factory {
 		String type = (String)map.get(TagConsts.TYPE);
 		// Log.d("Navigation", "type: " + type);
 		if(type == null)				{view = get_null();
-		}else if(type.equals(TypeConsts.MAIN))		{view = new MainList(c);
+		}else if(type.equals(TypeConsts.MAIN))		{view = new TVList(c);
 		}else if(type.equals(TypeConsts.TV))		{view = new TVList(c);
 		}else if(type.equals(TypeConsts.FAVORITE_TV))	{view = new TVFavoriteList(c);
-		}else if(type.equals(TypeConsts.MY_ALL))	{view = new UserShowList(c);
+		//}else if(type.equals(TypeConsts.MY_ALL))	{view = new UserShowList(c);
 		}else if(type.equals("my_view"))		{view = new UserShowList(c,(String)map.get("section"));
-		}else if(type.equals(TypeConsts.DESCRIPTION))	{view = new Serial(c, map);
-		}else if(type.equals("series"))			{view = new SeasonList(c, map);
-		}else if(type.equals("anime"))			{view = new SeasonList(c, map);
-		}else if(type.equals("movie"))			{view = new MovieList(c, map);
-		}else if(type.equals("season_list"))		{view = new SeasonList(c, map);
-		}else if(type.equals(TypeConsts.ALL_SERIES))	{view = new AllSeriesList(c, map);
-		}else if(type.equals(TypeConsts.SEASON))	{view = new OneSeasonSeriesList(c, map);
-		}else if(type.equals(TypeConsts.ALL_SHOW))	{view = new AllShowList(c);
-		}else if(type.equals(TypeConsts.ALL_ANIME))	{view = new AllAnimeList(c);
-		}else if(type.equals(TypeConsts.ALPHABET_SHOW))	{view = new AlfabetShowList(c);
-		}else if(type.equals(TypeConsts.ALPHABET_ANIME)){view = new AlfabetAnimeList(c);
-		}else if(type.equals(TypeConsts.LETTER_SHOW))	{view = new LetterShowList(c, map);
-		}else if(type.equals(TypeConsts.LETTER_ANIME))	{view = new LetterAnimeList(c, map);
-		}else if(type.equals(TypeConsts.SEARCH_SHOW))	{view = new SearchShowList(c);
-		}else if(type.equals(TypeConsts.SEARCH_ANIME))	{view = new SearchAnimeList(c);
-		}else if(type.equals(TypeConsts.NEW_SERIES))	{view = new NewSeriesList(c, map);
 		}else if(type.equals(TypeConsts.TV_RECORD))	{view = new TVRecordList(c);
 		}else if(type.equals(TypeConsts.FAVORITE_TV_RECORD))
 								{view = new TVFavoriteRecordList(c);
 		}else if(type.equals(TypeConsts.DATE_LIST))	{view = new DateList(c, map);
 		}else if(type.equals(TypeConsts.RECORD_LIST))	{view = new RecordList(c, map);
-		}else if(type.equals(TypeConsts.MOVIE))		{view = new AllMovieList(c, map);
-		}else if(type.equals(TypeConsts.ALL_MOVIE))	{view = new AllMovieList(c, map);
-		}else if(type.equals("alfabet_movie"))		{view = new AlfabetMovieList(c);
-		}else if(type.equals("letter_movie"))		{view = new LetterMovieList(c, map);
-		}else if(type.equals("search_movie"))		{view = new SearchMovieList(c);
-		}else if(type.equals("faves"))			{view = new FavesList(c, map);
-		}else if(type.equals(TypeConsts.GENRES))	{view = new AllGenreShowList(c,map);
-		}else if(type.contains("/genre"))			{view = new GenreShowList(c,map);
-		}else						{view = get_unknown(type);
+		}
+		else						{view = get_unknown(type);
 		}
 		if(implementsInterface(view, List.class)){
 			((List)view).setFactory(this);

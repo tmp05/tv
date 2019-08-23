@@ -33,7 +33,7 @@ import java.util.Arrays;
 import org.videolan1.vlc.BitmapCache;
 import org.videolan1.vlc.Media;
 import org.videolan1.vlc.MurmurHash;
-import ru.krasview.tv.R;
+import ru.ks.tv.R;
 import org.videolan1.vlc.Util;
 import org.videolan1.vlc.VLCApplication;
 

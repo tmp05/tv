@@ -119,13 +119,6 @@ public class CombineSimpleAdapter extends BaseAdapter {
 			holder.current_program = (TextView)view.findViewById(R.id.current_program);
 			holder.currentLayout = view.findViewById(R.id.current_layout);
 			holder.new_series = (TextView)view.findViewById(R.id.new_series);
-			if(ListAccount.fromLauncher) {
-				view.setBackgroundResource(R.drawable.selector);
-				holder.name.setTextColor(colors);
-				holder.current_program.setTextColor(colors);
-				Drawable progress_tv = mParent.getContext().getResources().getDrawable(R.drawable.progress_tv);
-				holder.progress.setProgressDrawable(progress_tv);
-			}
 			view.setTag(holder);
 		} else {
 			view = convertView;

@@ -4,37 +4,36 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="48dip"
-        android:orientation="horizontal"
-        android:paddingTop="5dip"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-        android:background="@drawable/header">
-        <ImageView
-            android:layout_width="35dip"
-            android:layout_height="35dip"
-            android:src="@drawable/header_icon_loupe"
-            android:scaleType="fitXY"
-            android:paddingTop="2dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="7dip" />
-        <EditText
-            android:id="@+id/search_text"
-            android:layout_width="0px"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:layout_height="42dp"
-            android:hint="@string/searchable_hint"
-            android:inputType="textNoSuggestions"
-            android:imeOptions="actionSearch" />
-    </LinearLayout>
-    <ListView
-        android:id="@id/android:list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:divider="?attr/item_divider"
-        android:dividerHeight="1dp"
-        android:fastScrollEnabled="true" />
+    <!--<LinearLayout-->
+        <!--&lt;!&ndash;android:layout_width="fill_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="48dip"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:orientation="horizontal"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:paddingTop="5dip"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:paddingLeft="5dip"        android:paddingRight="5dip"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:background="@drawable/header">&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<ImageView&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:layout_width="35dip"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:layout_height="35dip"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:src="@drawable/header_icon_loupe"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:scaleType="fitXY"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:paddingTop="2dip"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:layout_marginLeft="5dip"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:layout_marginRight="7dip" />&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<EditText&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:id="@+id/search_text"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:layout_width="0px"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:layout_weight="1"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:singleLine="true"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:layout_height="42dp"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:hint="@string/searchable_hint"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:inputType="textNoSuggestions"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;android:imeOptions="actionSearch" />&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
+    <!--&lt;!&ndash;<ListView&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@id/android:list"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="fill_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="fill_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:divider="?attr/item_divider"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:dividerHeight="1dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:fastScrollEnabled="true" />&ndash;&gt;-->
 </LinearLayout>

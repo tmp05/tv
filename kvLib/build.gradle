@@ -4,15 +4,25 @@ android {
     apply plugin: 'com.android.library'
 
     android {
-        compileSdkVersion = 27
+        compileSdkVersion = 28
     }
 
     useLibrary  'org.apache.http.legacy'
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+    compileSdkVersion = 28
+    buildToolsVersion = '28.0.3'
+    buildTypes {
+        release {
+        }
+    }
 }
 
 dependencies {
     api project(':kvSecret')
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     api files('libs/universal-image-loader-1.9.3.jar')
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
 }

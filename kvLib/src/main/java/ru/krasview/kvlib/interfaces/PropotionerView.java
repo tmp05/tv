@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 @brief Класс-обертка для помещения View в Animator.
 
 Позволяет складывать в Animator как View, реализующие интерфейсы
-ViewPropotionerInterface и SearchInterface, так и не реализующие их.
+ViewPropotionerInterface и SearcInterface, так и не реализующие их.
 Также позволяет содержащимся в Animator объектам View
 предлагать новый View-объект аниматору.
 */
@@ -106,7 +106,7 @@ public class PropotionerView extends FrameLayout implements ViewPropotionerInter
 	}
 
 //--------------------------------------------------------------------
-// Implementation of SearchInterface
+// Implementation of SearcInterface
 //--------------------------------------------------------------------
 
 	@Override

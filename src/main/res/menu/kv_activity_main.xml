@@ -6,8 +6,6 @@
     <!--  android:title="Настройки системы" /-->
     <item android:id="@+id/menuUpdateChannels"
           android:title="Обновить список каналов" />
-    <item android:id="@+id/changeInterface" 
-          android:title="Смотреть сериалы"/>
     <item android:id="@+id/exitlogin"
           android:title="Сбросить учетную запись"/>
     <item

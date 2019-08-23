@@ -16,13 +16,13 @@ import ru.krasview.kvlib.interfaces.ViewProposeListener;
 /** @class NewAnimator
 @brief Специализированное расширение класса Animator.
 
-Хранит View в оболочках из PropotionerView,
+Хранит View в оболочках из PropotioneView,
 поэтому может вызывать функции из соответствующих интерфейсов этих объектов.
 Также  отвечает за добавление предложенных View.
 */
-// нужно доделать: добавление и получение любого вью в обертке из PropotionerView
+// нужно доделать: добавление и получение любого вью в обертке из PropotioneView
 // обработку нажатий клавиш и прикосновений можно вынести в родительский класс,
-// так как эти функции не зависят от PropotionerView.
+// так как эти функции не зависят от PropotioneView.
 
 public class NewAnimator extends LeftRightAnimator implements ViewProposeListener {
 	private Factory mFactory;

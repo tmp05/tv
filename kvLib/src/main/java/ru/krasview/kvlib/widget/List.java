@@ -46,9 +46,6 @@ public abstract  class List extends ListView implements ViewPropotionerInterface
 		super(context);
 		data = new ArrayList<Map<String, Object>>();
 		mMap = map;
-		if(ListAccount.fromLauncher){
-			this.setDivider(null);
-		}
 		account = AuthAccount.getInstance();
 		((Activity)getContext()).registerForContextMenu(this);
 	}

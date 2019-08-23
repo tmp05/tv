@@ -6,6 +6,7 @@ public class AuthAccount {
 	public final static int AUTH_TYPE_KRASVIEW = 2;//как пользователь krasview
 	public final static int AUTH_TYPE_GUEST = 3;//как неавторизованный пользователь
 	public final static int AUTH_TYPE_KRASVIEW_SOCIAL = 4;//как пользователь krasview через социальную сеть
+	public final static int CHANNEL = 0;//номер канала
 
 	private static AuthAccount instance = new AuthAccount();
 
@@ -23,6 +24,7 @@ public class AuthAccount {
 	private String mPassword = "";
 	private String mHash = "1";
 	private String mTvHash = "1";
+	private String mTvChannel = "0";
 
 	private int getType() {
 		return mType;
@@ -44,6 +46,10 @@ public class AuthAccount {
 		return mTvHash;
 	}
 
+	public String getTvChannel() {
+		return mTvChannel;
+	}
+
 	public void setType(int type) {
 		mType = type;
 	}
@@ -62,6 +68,10 @@ public class AuthAccount {
 
 	public void setTvHash(String tvHash) {
 		mTvHash = tvHash;
+	}
+
+	public void setTvChannel(String tvChannel) {
+		mTvChannel = tvChannel;
 	}
 
 	public boolean isKrasviewAccount() {
