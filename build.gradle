@@ -42,8 +42,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 4
-        versionName "4.0"
+        versionCode 5
+        versionName "5.0"
         signingConfig signingConfigs.config
     }
     splits {
@@ -80,9 +80,11 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-core:2.10.0'
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.10.0'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.10.0'
+    implementation 'cz.msebera.android:httpclient:4.5.8'
 }
 
 if(project.hasProperty("krasview.signing")
     && new File(project.property("krasview.signing") + ".gradle").exists()) {
   apply from: project.property("krasview.signing") + ".gradle";
 }
+//        releaseVersionCode 5

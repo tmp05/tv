@@ -16,11 +16,18 @@ import ru.krasview.kvlib.indep.Parser;
 import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
 import ru.krasview.secret.ApiConst;
 import ru.ks.tv.R;
+import ru.ks.tv.updater.AppUpdate;
+import ru.ks.tv.updater.AppUpdateUtil;
+import ru.ks.tv.updater.DownloadUpdateService;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,8 +43,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+@SuppressLint("SetJavaScriptEnabled")
 public class MainAuthActivity extends Activity {
-
+	public final static int PERMISSION_UPDATE_WRITE = 1;
+	public final static int PERMISSION_SAVE_FILE = 2;
+	public static final String ACTION_SHOW_UPDATE_DIALOG = "ru.jehy.rutracker_free.SHOW_UPDATE_DIALOG";
 	public static SharedPreferences prefs;
 
 	//какой интерфейс был включен в прошлый раз
@@ -45,14 +55,11 @@ public class MainAuthActivity extends Activity {
 	public static final int INTERFACE_KRASVIEW = 1; //красвью(новый)
 
 	public static int auth_type; //("pref_auth_type")Предыдущий заход был при помощи:
-//	public final static int AUTH_TYPE_UNKNOWN = AuthEnterConsts.AUTH_TYPE_UNKNOWN;//без логина, как гость
-//	public final static int AUTH_TYPE_TV = AuthEnterConsts.AUTH_TYPE_TV;//как абонент красноярской сети
-//	public final static int AUTH_TYPE_KRASVIEW = AuthEnterConsts.AUTH_TYPE_KRASVIEW;//как пользователь krasview
-//	public final static int AUTH_TYPE_GUEST = AuthEnterConsts.AUTH_TYPE_GUEST;//как неавторизованный пользователь
-//	public final static int AUTH_TYPE_KRASVIEW_SOCIAL = AuthEnterConsts.AUTH_TYPE_KRASVIEW_SOCIAL;//как пользователь krasview через социальную сеть */
+
 
 	private final int REQUEST_CODE_GUEST = 0;
 	private final int REQUEST_CODE_SOCIAL = 1;
+	private boolean updateChecked = false;
 
 	String kraslan_login = "";//логин(номер счета) для красноярской сети
 	private String login;//("pref_login")//сохраненный логин
@@ -81,10 +88,47 @@ public class MainAuthActivity extends Activity {
 		initLayout();
 	}
 
+	public static Intent createUpdateDialogIntent(AppUpdate update) {
+		Intent updateIntent = new Intent(MainAuthActivity.ACTION_SHOW_UPDATE_DIALOG);
+		updateIntent.putExtra("update", update);
+		return updateIntent;
+	}
+
+
+	public static boolean isAppBeingUpdated(Context context) {
+
+		DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+		DownloadManager.Query q = new DownloadManager.Query();
+		q.setFilterByStatus(DownloadManager.STATUS_RUNNING);
+		Cursor c = downloadManager.query(q);
+		if (c.moveToFirst()) {
+			String fileName = c.getString(c.getColumnIndex(DownloadManager.COLUMN_TITLE));
+			return fileName.equals(DownloadUpdateService.DOWNLOAD_UPDATE_TITLE);
+		}
+		return false;
+	}
+
+	public void checkUpdates() {
+
+		if (updateChecked) {
+			return;
+		}
+		//first init
+		Thread updateThread = new Thread() {
+			@Override
+			public void run() {
+				AppUpdateUtil.checkForUpdate(MainAuthActivity.this);
+				MainAuthActivity.this.updateChecked = true;
+			}
+		};
+		updateThread.start();
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		HTTPClient.setContext(this);
+		checkUpdates();
 	}
 
 	private void fastAuth(boolean fast) {
@@ -189,6 +233,8 @@ public class MainAuthActivity extends Activity {
 			@SuppressWarnings("unchecked")
 			@Override
 			protected Void doInBackground(String... params) {
+				if(android.os.Debug.isDebuggerConnected())
+					android.os.Debug.waitForDebugger();
 				Map<String, Object> m;
 				Document mDocument;
 				mDocument = Parser.XMLfromString(params[0]);
