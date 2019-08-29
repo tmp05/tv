@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.core.content.FileProvider;
 
@@ -22,9 +23,17 @@ public class DownloadUpdateService extends Service {
     public static final String KEY_DOWNLOAD_URL = "downloadURL";
     private static final String FILE_NAME = "app_new.apk";
 
+    final String LOG_TAG = "myLogs";
+
+    public void onCreate() {
+        super.onCreate();
+        Log.d(LOG_TAG, "DownloadUpdateService onCreate");
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        Log.d(LOG_TAG, "MyService onStartCommand");
+        Log.d(LOG_TAG, "intent is "+intent);
         if (intent != null) {
 
             String downloadUrl = intent.getStringExtra(KEY_DOWNLOAD_URL);
@@ -60,17 +69,19 @@ public class DownloadUpdateService extends Service {
 
                             if (status == DownloadManager.STATUS_SUCCESSFUL) {
                                 //open the downloaded file
-                                Intent install = new Intent(Intent.ACTION_VIEW);
-                                install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                Uri downloadUri2 = downloadUri;
-                                if (Build.VERSION.SDK_INT >= 24) {
-                                    downloadUri2 = FileProvider.getUriForFile(ctxt,
-                                            getApplicationContext().getPackageName() + ".provider",
-                                            newApkFile);
-                                }
-                                install.setDataAndType(downloadUri2,
-                                        manager.getMimeTypeForDownloadedFile(startedDownloadId));
-                                ctxt.startActivity(install);
+                                    Intent install = new Intent(Intent.ACTION_VIEW);
+                                    install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    Uri downloadUri2 = downloadUri;
+                                    if (Build.VERSION.SDK_INT >= 24) {
+                                        downloadUri2 = FileProvider.getUriForFile(ctxt,
+                                                getApplicationContext().getPackageName() + ".provider",
+                                                newApkFile);
+                                    }
+                                    install.setDataAndType(downloadUri2,
+                                            manager.getMimeTypeForDownloadedFile(startedDownloadId));
+                                    install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                    ctxt.startActivity(install);
+
                             } else if (status == DownloadManager.STATUS_FAILED) {
                                 if (newApkFile.exists()) {
                                     newApkFile.delete();

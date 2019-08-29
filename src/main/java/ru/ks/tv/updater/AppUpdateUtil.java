@@ -1,7 +1,6 @@
 package ru.ks.tv.updater;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +9,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.json.JSONException;
@@ -33,7 +33,7 @@ import ru.ks.tv.R;
 
 public class AppUpdateUtil {
 
-    private static final String GITHUB_RELEASES_URL = "https://api.github.com/repos/jehy/rutracker-free/releases/latest";
+    private static final String GITHUB_RELEASES_URL = "https://api.github.com/repos/tmp05/tv/releases/latest";
 
     private static final String TAG = "AppUpdateUtil";
     private static String assetUrl = null;
@@ -64,6 +64,8 @@ public class AppUpdateUtil {
 
                             AppUpdate update = new AppUpdate(releaseAssets.getString("browser_download_url"),
                                     releaseInfo.getString("tag_name"), releaseInfo.getString("body"), AppUpdate.UP_TO_DATE);
+
+
 
                             SemVer currentVersion = SemVer.parse(BuildConfig.VERSION_NAME);
                             SemVer remoteVersion = SemVer.parse(update.getVersion());
@@ -115,10 +117,34 @@ public class AppUpdateUtil {
             startUpdate(context, assetUrl);
     }
 
+    public static void beginUpdate(final MainAuthActivity context, final AppUpdate update){
+        boolean writable = false;//sometimes downloads dir writable... sometimes not :(
+        File dir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        if (dir != null) {
+            writable = dir.canWrite();
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !writable) {
+            int permissionCheck = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            int permissionCheck2 = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+            if (permissionCheck == PackageManager.PERMISSION_DENIED ||
+                    permissionCheck2 == PackageManager.PERMISSION_DENIED) {
+                Log.w(TAG, "record storage denied, asking for permissions");
+                assetUrl = update.getAssetUrl();
+                context.requestPermissions(
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,},
+                        MainAuthActivity.PERMISSION_UPDATE_WRITE);
+            } else {
+                startUpdate(context, update.getAssetUrl());
+            }
+        } else {
+            startUpdate(context, update.getAssetUrl());
+        }
+    }
+
     public static AlertDialog getAppUpdateDialog(final MainAuthActivity context, final AppUpdate update) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context).setTitle(R.string.update_available).setMessage(
-                context.getString(R.string.app_name) + " v" + update.getVersion() + " " + "is available"
-                        + "\n\n" + "Changes:" + "\n\n" + update.getChangelog()).setIcon(R.mipmap.ic_launcher)
+                "Доступна версия KSTV " + " v" + update.getVersion())
                 .setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -146,7 +172,7 @@ public class AppUpdateUtil {
                             startUpdate(context, update.getAssetUrl());
                         }
                     }
-                }).setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                }).setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();

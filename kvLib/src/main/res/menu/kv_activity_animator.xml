@@ -3,13 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 >
 
-     <item
-          android:id="@+id/kv_refresh_item"
-          android:title="Обновить"
-          app:showAsAction="always"
-          android:icon="@drawable/ic_new_refresh"/>
      <item android:id="@+id/new_game"
           android:title="Настройки"/>
+    <item android:id="@+id/update"
+        android:title="Обновить приложение"/>
+    <ProgressBar
+        android:id="@+id/ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:indeterminateDrawable="@drawable/spinner_ring"
+        android:indeterminateOnly="true" />
     <item android:id="@+id/exitlogin"
         android:title="Выйти из учетной записи"/>
     <item
@@ -22,4 +26,5 @@
         app:showAsAction="withText|ifRoom" />
     <item android:id="@+id/exit"
         android:title="Закрыть"/>
+
 </menu>

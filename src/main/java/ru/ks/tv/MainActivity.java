@@ -1,19 +1,7 @@
 package ru.ks.tv;
 
-import ru.krasview.kvlib.animator.NewAnimator;
-import ru.krasview.kvlib.indep.AuthAccount;
-import ru.krasview.kvlib.indep.HTTPClient;
-import ru.krasview.kvlib.indep.HeaderAccount;
-import ru.krasview.kvlib.indep.consts.TypeConsts;
-import ru.krasview.kvlib.indep.ListAccount;
-import ru.krasview.kvlib.indep.consts.RequestConst;
-import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
-import ru.krasview.kvlib.interfaces.PropotionerView;
-import ru.krasview.kvlib.widget.List;
-import ru.krasview.kvlib.widget.NavigationViewFactory;
-import ru.krasview.secret.ApiConst;
-
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -26,17 +14,28 @@ import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.FrameLayout;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.widget.Toast;
 
 import com.example.kvlib.R;
+
+import ru.krasview.kvlib.animator.NewAnimator;
+import ru.krasview.kvlib.indep.AuthAccount;
+import ru.krasview.kvlib.indep.HTTPClient;
+import ru.krasview.kvlib.indep.HeaderAccount;
+import ru.krasview.kvlib.indep.ListAccount;
+import ru.krasview.kvlib.indep.consts.RequestConst;
+import ru.krasview.kvlib.indep.consts.TypeConsts;
+import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
+import ru.krasview.kvlib.interfaces.PropotionerView;
+import ru.krasview.kvlib.widget.List;
+import ru.krasview.kvlib.widget.NavigationViewFactory;
+import ru.krasview.secret.ApiConst;
 
 public class MainActivity extends KVSearchAndMenuActivity {
 	NewAnimator animator;
 	String start = TypeConsts.MAIN;
 	FrameLayout layout;
 	private BroadcastReceiver mNetworkStateIntentReceiver;
+	public boolean pref_autoplay;
 //OnCreate
 
 	@Override
@@ -149,7 +148,12 @@ public class MainActivity extends KVSearchAndMenuActivity {
 
 	@Override
 	public void onBackPressed() {
-		//super.onBackPressed();  Отмена кнопки назад
+		SharedPreferences prefs;
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		pref_autoplay = prefs.getBoolean("autoplay", false);
+		if (pref_autoplay) {
+				super.onBackPressed();
+		 }
 	}
 
 	@Override

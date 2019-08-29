@@ -22,7 +22,7 @@
         <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="KrasSet TV"
+        android:text="KrasSet TV 4.0"
         android:gravity="center_horizontal"
         android:textSize="34dp"
         android:paddingBottom="15dp">       

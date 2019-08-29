@@ -26,6 +26,11 @@ allprojects {
         maven { url "https://maven.google.com" }
         jcenter()
         google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 
@@ -42,8 +47,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 5
-        versionName "5.0"
+        versionCode 4
+        versionName "4.0"
         signingConfig signingConfigs.config
     }
     splits {

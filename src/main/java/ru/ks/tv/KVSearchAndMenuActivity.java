@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -15,7 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.kvlib.R;
+
+import java.util.Map;
+
 import ru.krasview.kvlib.adapter.CombineSimpleAdapter;
 import ru.krasview.kvlib.indep.AuthAccount;
 import ru.krasview.kvlib.indep.HTTPClient;
@@ -26,13 +29,10 @@ import ru.krasview.kvlib.interfaces.FatalErrorExitListener;
 import ru.krasview.kvlib.widget.List;
 import ru.krasview.secret.ApiConst;
 
-import java.util.Map;
-
 public abstract class KVSearchAndMenuActivity extends AppCompatActivity
 									 implements  FatalErrorExitListener{
 
 	AuthAccount account = AuthAccount.getInstance();
-
 	View searchHost;
 
 	protected abstract void exit();
@@ -104,9 +104,18 @@ public abstract class KVSearchAndMenuActivity extends AppCompatActivity
 		} else if (id == R.id.exitlogin) {
 			exit();
 			return true;
-        } else if (id == R.id.kv_refresh_item) {
-                refresh();
-                return true;
+        } else if (id == R.id.update) {
+			//first init
+//			Thread updateThread = new Thread() {
+//				@Override
+//				public void run() {
+//					AppUpdateUtil.checkForUpdate(KVSearchAndMenuActivity.this);
+//				}
+//			};
+//			updateThread.start();
+//			ProgressBar progressBar = findViewById(R.id.ProgressBar);
+//			progressBar.setProgress(50);
+		return true;
         }
 
         return super.onOptionsItemSelected(item);

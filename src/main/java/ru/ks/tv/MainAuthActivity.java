@@ -1,38 +1,21 @@
 package ru.ks.tv;
 
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import ru.krasview.kvlib.indep.consts.IntentConst;
-import ru.krasview.kvlib.indep.AuthAccount;
-import ru.krasview.kvlib.indep.HTTPClient;
-import ru.krasview.kvlib.indep.Parser;
-import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
-import ru.krasview.secret.ApiConst;
-import ru.ks.tv.R;
-import ru.ks.tv.updater.AppUpdate;
-import ru.ks.tv.updater.AppUpdateUtil;
-import ru.ks.tv.updater.DownloadUpdateService;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -43,12 +26,35 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import ru.krasview.kvlib.indep.AuthAccount;
+import ru.krasview.kvlib.indep.HTTPClient;
+import ru.krasview.kvlib.indep.Parser;
+import ru.krasview.kvlib.indep.consts.IntentConst;
+import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
+import ru.krasview.secret.ApiConst;
+import ru.ks.tv.updater.AppUpdate;
+import ru.ks.tv.updater.AppUpdateUtil;
+import ru.ks.tv.updater.DownloadUpdateService;
+import ru.ks.tv.updater.UpdateBroadcastReceiver;
+
 @SuppressLint("SetJavaScriptEnabled")
 public class MainAuthActivity extends Activity {
 	public final static int PERMISSION_UPDATE_WRITE = 1;
-	public final static int PERMISSION_SAVE_FILE = 2;
-	public static final String ACTION_SHOW_UPDATE_DIALOG = "ru.jehy.rutracker_free.SHOW_UPDATE_DIALOG";
+	public static final String ACTION_SHOW_UPDATE_DIALOG = "ru.ks.tv.SHOW_UPDATE_DIALOG";
 	public static SharedPreferences prefs;
+    private final UpdateBroadcastReceiver showUpdateDialog = new UpdateBroadcastReceiver();
+	private static final String TAG = "MainAuthActivity";
 
 	//какой интерфейс был включен в прошлый раз
 	public static final int INTERFACE_TV = 0; //телевидение(старый)
@@ -59,7 +65,7 @@ public class MainAuthActivity extends Activity {
 
 	private final int REQUEST_CODE_GUEST = 0;
 	private final int REQUEST_CODE_SOCIAL = 1;
-	private boolean updateChecked = false;
+	public boolean updateChecked = false;
 
 	String kraslan_login = "";//логин(номер счета) для красноярской сети
 	private String login;//("pref_login")//сохраненный логин
@@ -71,7 +77,6 @@ public class MainAuthActivity extends Activity {
 	EditText edit_login, edit_password;
 	Button button_enter, button_registration;
 	ImageButton button_help;
-	GridView social_grid;
 
 	//интенты для вызова активити
 	Intent krasviewIntent;
@@ -88,12 +93,19 @@ public class MainAuthActivity extends Activity {
 		initLayout();
 	}
 
+
+
 	public static Intent createUpdateDialogIntent(AppUpdate update) {
 		Intent updateIntent = new Intent(MainAuthActivity.ACTION_SHOW_UPDATE_DIALOG);
 		updateIntent.putExtra("update", update);
 		return updateIntent;
 	}
 
+	@Override
+	public void onPause() {
+		super.onPause();
+		showUpdateDialog.unregister(this);
+	}
 
 	public static boolean isAppBeingUpdated(Context context) {
 
@@ -127,8 +139,31 @@ public class MainAuthActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		showUpdateDialog.register(this, new IntentFilter(ACTION_SHOW_UPDATE_DIALOG));
 		HTTPClient.setContext(this);
 		checkUpdates();
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+										   @NonNull String[] permissions, @NonNull int[] grantResults) {
+		switch (requestCode) {
+			case PERMISSION_UPDATE_WRITE: {
+				// If request is cancelled, the result arrays are empty.
+				if (grantResults.length > 0
+						&& grantResults[0] == PackageManager.PERMISSION_GRANTED
+						&& grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+					Log.v(TAG, "PERMISSION_UPDATE_WRITE granted for updater");
+					AppUpdateUtil.startUpdate(this);
+
+				} else {
+					Log.w(TAG, "PERMISSION_UPDATE_WRITE NOT granted for updater");
+				}
+			}
+			break;
+			// other 'case' lines to check for other
+			// permissions this app might request
+		}
 	}
 
 	private void fastAuth(boolean fast) {
