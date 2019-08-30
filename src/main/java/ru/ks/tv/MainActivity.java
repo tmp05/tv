@@ -1,19 +1,27 @@
 package ru.ks.tv;
 
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.FrameLayout;
+
+import androidx.annotation.NonNull;
 
 import com.example.kvlib.R;
 
@@ -29,14 +37,23 @@ import ru.krasview.kvlib.interfaces.PropotionerView;
 import ru.krasview.kvlib.widget.List;
 import ru.krasview.kvlib.widget.NavigationViewFactory;
 import ru.krasview.secret.ApiConst;
+import ru.ks.tv.updater.AppUpdate;
+import ru.ks.tv.updater.AppUpdateUtil;
+import ru.ks.tv.updater.DownloadUpdateService;
+import ru.ks.tv.updater.UpdateBroadcastReceiver;
 
 public class MainActivity extends KVSearchAndMenuActivity {
+	public final static int PERMISSION_UPDATE_WRITE = 1;
+	public static final String ACTION_SHOW_UPDATE_DIALOG = "ru.ks.tv.SHOW_UPDATE_DIALOG";
 	NewAnimator animator;
 	String start = TypeConsts.MAIN;
 	FrameLayout layout;
 	private BroadcastReceiver mNetworkStateIntentReceiver;
 	public boolean pref_autoplay;
-//OnCreate
+	public boolean updateChecked = false;
+	private final UpdateBroadcastReceiver showUpdateDialog = new UpdateBroadcastReceiver();
+	private static final String TAG = "MainActivity";
+	ProgressDialog pd;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +73,7 @@ public class MainActivity extends KVSearchAndMenuActivity {
 		getPacketAndStart();
 	}
 
-	ProgressDialog pd;
+
 	private void getPacketAndStart() {
 		getPrefs();
 
@@ -81,11 +98,74 @@ public class MainActivity extends KVSearchAndMenuActivity {
 		});
 	}
 
+	@Override
+	public void onPause() {
+		super.onPause();
+		showUpdateDialog.unregister(this);
+	}
+
+	public void checkUpdates() {
+
+		if (updateChecked) {
+			return;
+		}
+		//first init
+		Thread updateThread = new Thread() {
+			@Override
+			public void run() {
+				AppUpdateUtil.checkForUpdate(MainActivity.this);
+				MainActivity.this.updateChecked = true;
+			}
+		};
+		updateThread.start();
+	}
+
+
+	public static boolean isAppBeingUpdated(Context context) {
+
+		DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+		DownloadManager.Query q = new DownloadManager.Query();
+		q.setFilterByStatus(DownloadManager.STATUS_RUNNING);
+		Cursor c = downloadManager.query(q);
+		if (c.moveToFirst()) {
+			String fileName = c.getString(c.getColumnIndex(DownloadManager.COLUMN_TITLE));
+			return fileName.equals(DownloadUpdateService.DOWNLOAD_UPDATE_TITLE);
+		}
+		return false;
+	}
 	//настройка actionbar-a
 	private void styleActionBar() {
 		if(getSupportActionBar() != null) {
 			getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_background));
 		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+										   @NonNull String[] permissions, @NonNull int[] grantResults) {
+		switch (requestCode) {
+			case PERMISSION_UPDATE_WRITE: {
+				// If request is cancelled, the result arrays are empty.
+				if (grantResults.length > 0
+						&& grantResults[0] == PackageManager.PERMISSION_GRANTED
+						&& grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+					Log.v(TAG, "PERMISSION_UPDATE_WRITE granted for updater");
+					AppUpdateUtil.startUpdate(this);
+
+				} else {
+					Log.w(TAG, "PERMISSION_UPDATE_WRITE NOT granted for updater");
+				}
+			}
+			break;
+			// other 'case' lines to check for other
+			// permissions this app might request
+		}
+	}
+
+	public static Intent createUpdateDialogIntent(AppUpdate update) {
+		Intent updateIntent = new Intent(MainActivity.ACTION_SHOW_UPDATE_DIALOG);
+		updateIntent.putExtra("update", update);
+		return updateIntent;
 	}
 
 	//настройка фона
@@ -128,9 +208,12 @@ public class MainActivity extends KVSearchAndMenuActivity {
 	}
 
 	String pref_orientation = "default";
+
 	@Override
 	public void onResume() {
 		super.onResume();
+		showUpdateDialog.register(this, new IntentFilter(ACTION_SHOW_UPDATE_DIALOG));
+		checkUpdates();
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		pref_orientation = prefs.getString("orientation", "default");
 		switch (pref_orientation) {

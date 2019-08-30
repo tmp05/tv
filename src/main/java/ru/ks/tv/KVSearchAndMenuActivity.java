@@ -15,8 +15,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.kvlib.R;
-
 import java.util.Map;
 
 import ru.krasview.kvlib.adapter.CombineSimpleAdapter;
@@ -51,31 +49,10 @@ public abstract class KVSearchAndMenuActivity extends AppCompatActivity
 		@Override
     public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.kv_activity_animator, menu);
-
 		MenuItem loginItem = menu.findItem(R.id.kv_login_item);
-		String str = "";
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		int auth_type = prefs.getInt("pref_auth_type", AuthAccount.AUTH_TYPE_UNKNOWN);
 		String login = prefs.getString("pref_login", "");
-		String password = prefs.getString("pref_password", "");
-		switch(auth_type) {
-		case AuthAccount.AUTH_TYPE_GUEST:
-			str = "Гость";
-			break;
-		case AuthAccount.AUTH_TYPE_TV:
-			str = "Абонент";
-			break;
-		case AuthAccount.AUTH_TYPE_UNKNOWN:
-			str = "Неизвестно";
-			break;
-		}
-		String locLog = str;
-		if(login == null||password == null) {
-		} else {
-			locLog = (login.equals(""))?str:login;
-		}
-
-    	loginItem.setTitle(locLog);
+    	loginItem.setTitle(login);
 
     	//requestFocus();
 		return super.onCreateOptionsMenu(menu);
@@ -104,7 +81,10 @@ public abstract class KVSearchAndMenuActivity extends AppCompatActivity
 		} else if (id == R.id.exitlogin) {
 			exit();
 			return true;
-        } else if (id == R.id.update) {
+        } else if (id == R.id.kv_refresh_item) {
+			refresh();
+			return true;
+  //      } else if (id == R.id.update) {
 			//first init
 //			Thread updateThread = new Thread() {
 //				@Override
@@ -115,7 +95,7 @@ public abstract class KVSearchAndMenuActivity extends AppCompatActivity
 //			updateThread.start();
 //			ProgressBar progressBar = findViewById(R.id.ProgressBar);
 //			progressBar.setProgress(50);
-		return true;
+//		return true;
         }
 
         return super.onOptionsItemSelected(item);

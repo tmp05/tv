@@ -47,8 +47,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 4
-        versionName "4.0"
+        versionCode 6
+        versionName "6.0"
         signingConfig signingConfigs.config
     }
     splits {

@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:padding="@dimen/main_padding" >
 
-    <FrameLayout 
-    android:id="@+id/search"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    
-	</FrameLayout>
+    <FrameLayout
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 </FrameLayout>

@@ -197,19 +197,6 @@ public class CombineSimpleAdapter extends BaseAdapter {
 			holder.currentLayout.setVisibility(View.GONE);
 		}
 
-		//число новых серий
-		if(type.equals("series")) {
-			if(map.get("new_series") == null) {
-				holder.new_series.setVisibility(View.GONE);
-				new LoadNewSeriesNumber(this,map).execute();
-				map.put("new_series", 0);
-			} else if(map.get("new_series") != null && (Integer)map.get("new_series") == 0) {
-				holder.new_series.setVisibility(View.GONE);
-			} else {
-				holder.new_series.setText("+" + map.get("new_series"));
-				holder.new_series.setVisibility(View.VISIBLE);
-			}
-		}
 
 		if(type.equals("video")) {
 			holder.image.setVisibility(View.GONE);

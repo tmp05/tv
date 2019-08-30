@@ -27,7 +27,7 @@ import cz.msebera.android.httpclient.impl.client.CloseableHttpClient;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
 import cz.msebera.android.httpclient.util.EntityUtils;
 import ru.ks.tv.BuildConfig;
-import ru.ks.tv.MainAuthActivity;
+import ru.ks.tv.MainActivity;
 import ru.ks.tv.R;
 
 
@@ -77,7 +77,7 @@ public class AppUpdateUtil {
                                 Log.v(TAG, "App version is up to date");
                             }
 
-                            Intent updateIntent = MainAuthActivity.createUpdateDialogIntent(update);
+                            Intent updateIntent = MainActivity.createUpdateDialogIntent(update);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(updateIntent);
                         } catch (JSONException je) {
                             Log.e(TAG, "Exception thrown while checking for update");
@@ -86,7 +86,7 @@ public class AppUpdateUtil {
                     } else {
                         //throw new ClientProtocolException("Unexpected response status: " + status);
                         AppUpdate update = new AppUpdate(null, null, null, AppUpdate.ERROR);
-                        Intent updateIntent = MainAuthActivity.createUpdateDialogIntent(update);
+                        Intent updateIntent = MainActivity.createUpdateDialogIntent(update);
                         LocalBroadcastManager.getInstance(context).sendBroadcast(updateIntent);
                     }
                     return null;
@@ -117,7 +117,7 @@ public class AppUpdateUtil {
             startUpdate(context, assetUrl);
     }
 
-    public static void beginUpdate(final MainAuthActivity context, final AppUpdate update){
+    public static void beginUpdate(final MainActivity context, final AppUpdate update){
         boolean writable = false;//sometimes downloads dir writable... sometimes not :(
         File dir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         if (dir != null) {
@@ -133,7 +133,7 @@ public class AppUpdateUtil {
                 context.requestPermissions(
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                 Manifest.permission.READ_EXTERNAL_STORAGE,},
-                        MainAuthActivity.PERMISSION_UPDATE_WRITE);
+                        MainActivity.PERMISSION_UPDATE_WRITE);
             } else {
                 startUpdate(context, update.getAssetUrl());
             }
@@ -142,7 +142,7 @@ public class AppUpdateUtil {
         }
     }
 
-    public static AlertDialog getAppUpdateDialog(final MainAuthActivity context, final AppUpdate update) {
+    public static AlertDialog getAppUpdateDialog(final MainActivity context, final AppUpdate update) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context).setTitle(R.string.update_available).setMessage(
                 "Доступна версия KSTV " + " v" + update.getVersion())
                 .setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
@@ -164,7 +164,7 @@ public class AppUpdateUtil {
                                 context.requestPermissions(
                                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                                 Manifest.permission.READ_EXTERNAL_STORAGE,},
-                                        MainAuthActivity.PERMISSION_UPDATE_WRITE);
+                                        MainActivity.PERMISSION_UPDATE_WRITE);
                             } else {
                                 startUpdate(context, update.getAssetUrl());
                             }

@@ -6,16 +6,13 @@ import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -25,8 +22,6 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -43,19 +38,12 @@ import ru.krasview.kvlib.indep.Parser;
 import ru.krasview.kvlib.indep.consts.IntentConst;
 import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
 import ru.krasview.secret.ApiConst;
-import ru.ks.tv.updater.AppUpdate;
-import ru.ks.tv.updater.AppUpdateUtil;
 import ru.ks.tv.updater.DownloadUpdateService;
-import ru.ks.tv.updater.UpdateBroadcastReceiver;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class MainAuthActivity extends Activity {
-	public final static int PERMISSION_UPDATE_WRITE = 1;
-	public static final String ACTION_SHOW_UPDATE_DIALOG = "ru.ks.tv.SHOW_UPDATE_DIALOG";
-	public static SharedPreferences prefs;
-    private final UpdateBroadcastReceiver showUpdateDialog = new UpdateBroadcastReceiver();
-	private static final String TAG = "MainAuthActivity";
 
+	public static SharedPreferences prefs;
 	//какой интерфейс был включен в прошлый раз
 	public static final int INTERFACE_TV = 0; //телевидение(старый)
 	public static final int INTERFACE_KRASVIEW = 1; //красвью(новый)
@@ -65,7 +53,7 @@ public class MainAuthActivity extends Activity {
 
 	private final int REQUEST_CODE_GUEST = 0;
 	private final int REQUEST_CODE_SOCIAL = 1;
-	public boolean updateChecked = false;
+
 
 	String kraslan_login = "";//логин(номер счета) для красноярской сети
 	private String login;//("pref_login")//сохраненный логин
@@ -95,76 +83,17 @@ public class MainAuthActivity extends Activity {
 
 
 
-	public static Intent createUpdateDialogIntent(AppUpdate update) {
-		Intent updateIntent = new Intent(MainAuthActivity.ACTION_SHOW_UPDATE_DIALOG);
-		updateIntent.putExtra("update", update);
-		return updateIntent;
-	}
-
 	@Override
 	public void onPause() {
 		super.onPause();
-		showUpdateDialog.unregister(this);
-	}
-
-	public static boolean isAppBeingUpdated(Context context) {
-
-		DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
-		DownloadManager.Query q = new DownloadManager.Query();
-		q.setFilterByStatus(DownloadManager.STATUS_RUNNING);
-		Cursor c = downloadManager.query(q);
-		if (c.moveToFirst()) {
-			String fileName = c.getString(c.getColumnIndex(DownloadManager.COLUMN_TITLE));
-			return fileName.equals(DownloadUpdateService.DOWNLOAD_UPDATE_TITLE);
-		}
-		return false;
-	}
-
-	public void checkUpdates() {
-
-		if (updateChecked) {
-			return;
-		}
-		//first init
-		Thread updateThread = new Thread() {
-			@Override
-			public void run() {
-				AppUpdateUtil.checkForUpdate(MainAuthActivity.this);
-				MainAuthActivity.this.updateChecked = true;
-			}
-		};
-		updateThread.start();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		showUpdateDialog.register(this, new IntentFilter(ACTION_SHOW_UPDATE_DIALOG));
 		HTTPClient.setContext(this);
-		checkUpdates();
 	}
 
-	@Override
-	public void onRequestPermissionsResult(int requestCode,
-										   @NonNull String[] permissions, @NonNull int[] grantResults) {
-		switch (requestCode) {
-			case PERMISSION_UPDATE_WRITE: {
-				// If request is cancelled, the result arrays are empty.
-				if (grantResults.length > 0
-						&& grantResults[0] == PackageManager.PERMISSION_GRANTED
-						&& grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-					Log.v(TAG, "PERMISSION_UPDATE_WRITE granted for updater");
-					AppUpdateUtil.startUpdate(this);
-
-				} else {
-					Log.w(TAG, "PERMISSION_UPDATE_WRITE NOT granted for updater");
-				}
-			}
-			break;
-			// other 'case' lines to check for other
-			// permissions this app might request
-		}
-	}
 
 	private void fastAuth(boolean fast) {
 		if(!fast) {

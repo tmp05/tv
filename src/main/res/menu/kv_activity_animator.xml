@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+
+     <item android:id="@+id/new_game"
+          android:title="Настройки"/>
+    <item android:id="@+id/kv_refresh_item"
+        android:title="Обновить"/>
+    <item android:id="@+id/kv_login_item"
+        android:checkable="false"
+        android:enabled="false"
+        android:icon="@drawable/ic_new_login"
+        android:title="Профиль"
+        android:visible="false"/>
+    <item android:id="@+id/exitlogin"
+        android:title="Выйти из учетной записи"/>
+     <item android:id="@+id/exit"
+        android:title="Закрыть"/>
+
+</menu>
