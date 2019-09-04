@@ -3,7 +3,7 @@
     android:layout_height="fill_parent"
     android:background="#000000">
 
-    <ru.krasview.player.standard.AVideoView
+    <ru.ks.player.standard.AVideoView
         android:id="@+id/kv_a_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,14 +1,5 @@
 package ru.ks.tv.player;
 
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
-
-import org.videolan1.vlc.Util;
-
-import com.example.kvlib.R;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -25,6 +16,15 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+
+import com.example.kvlib.R;
+
+import org.videolan1.vlc.Util;
+
+import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class VideoController extends FrameLayout {
 	static VideoInterface mVideo;
@@ -277,15 +277,6 @@ public class VideoController extends FrameLayout {
 				} else {
 					//Log.i("Debug", "VideoController запрашивать время");
 				}
-//				// todo request subtitles
-//				String result = HTTPClient.getXML(ApiConst.GET_POSITION, "id="+id, AuthRequestConst.AUTH_KRASVIEW);
-//				if(result!=null&&!result.equals("")&&!result.equals("<results status=\"error\"><msg>Can't connect to server</msg></results>")) {
-//					int r = (int) Float.parseFloat(result);
-//					//Log.i("Debug", "Получено время " + Util.millisToString(r*1000));
-//					return r*1000;
-//				} else {
-//					return 0;
-//				}
 				return 0;
 			}
 
@@ -355,29 +346,4 @@ public class VideoController extends FrameLayout {
 		((VideoActivity)getContext()).onNext(false);
 	}
 
-//	private static class Updater {
-//		private static class SentProgressRunnable implements Runnable {
-//			String video = "";
-//
-//			SentProgressRunnable(String id) {
-//				super();
-//				video = id;
-//			}
-//			@Override
-//			public void run() {
-//				String address = ApiConst.SET_POSITION;
-//				int progress = mVideo.getTime();
-//				String params = "video_id="+video+"&time="+(progress/1000);
-//
-//                //String address_complete = ApiConst.SET_WATCH;
-//				//String params_complete = "video_id="+video;//+"&login="+URLEncoder.encode(Parser.login)+"&password="+URLEncoder.encode(Parser.password);
-//				Log.i("Debug", "Отправлено: id="+ video + " time=" + Util.millisToString(progress));
-//				HTTPClient.getXML(address, params, AuthRequestConst.AUTH_KRASVIEW);
-//			}
-//		}
-//
-//		static void updateProgress(String id) {
-//			new Thread(new SentProgressRunnable(id)).start();
-//		};
-//	}
 }

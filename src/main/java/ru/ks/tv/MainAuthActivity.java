@@ -2,12 +2,9 @@ package ru.ks.tv;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,13 +29,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import ru.krasview.kvlib.indep.AuthAccount;
-import ru.krasview.kvlib.indep.HTTPClient;
-import ru.krasview.kvlib.indep.Parser;
-import ru.krasview.kvlib.indep.consts.IntentConst;
-import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
-import ru.krasview.secret.ApiConst;
-import ru.ks.tv.updater.DownloadUpdateService;
+import ru.ks.kvlib.indep.AuthAccount;
+import ru.ks.kvlib.indep.HTTPClient;
+import ru.ks.kvlib.indep.Parser;
+import ru.ks.kvlib.indep.consts.IntentConst;
+import ru.ks.kvlib.interfaces.OnLoadCompleteListener;
+import ru.ks.secret.ApiConst;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class MainAuthActivity extends Activity {
@@ -46,7 +42,7 @@ public class MainAuthActivity extends Activity {
 	public static SharedPreferences prefs;
 	//какой интерфейс был включен в прошлый раз
 	public static final int INTERFACE_TV = 0; //телевидение(старый)
-	public static final int INTERFACE_KRASVIEW = 1; //красвью(новый)
+	public static final int INTERFACE_KS = 1; //красвью(новый)
 
 	public static int auth_type; //("pref_auth_type")Предыдущий заход был при помощи:
 
@@ -67,13 +63,13 @@ public class MainAuthActivity extends Activity {
 	ImageButton button_help;
 
 	//интенты для вызова активити
-	Intent krasviewIntent;
+	Intent ksIntent;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		HTTPClient.setContext(this);
-		krasviewIntent = new Intent(IntentConst.ACTION_MAIN_ACTIVITY);
+		ksIntent = new Intent(IntentConst.ACTION_MAIN_ACTIVITY);
 		setContentView(R.layout.kv_activity_auth_small);
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		logout = prefs.getBoolean("pref_now_logout", true);
@@ -101,7 +97,7 @@ public class MainAuthActivity extends Activity {
 			return;
 		}
 		Intent local = null;
-		local = krasviewIntent;
+		local = ksIntent;
 		startActivity(local);
 		this.finish();
 	}
@@ -120,7 +116,7 @@ public class MainAuthActivity extends Activity {
 		edit_login.setText(login);
 		password = prefs.getString("pref_password", "");
 		final String kraslan_addr = ApiConst.TV_AUTH;
-		final String oauth_api_addr = ApiConst.KRASVIEW_OAUTH;
+		final String oauth_api_addr = ApiConst.KS_OAUTH;
 		OnLoadCompleteListener listener = new OnLoadCompleteListener() {
 			@Override
 			public void loadComplete(String result) {
@@ -275,13 +271,13 @@ public class MainAuthActivity extends Activity {
 		enterProgressDialog.show();
 
 		final String auth_address_tv = ApiConst.TV_AUTH;
-		final String auth_address_krasview = ApiConst.KRASVIEW_AUTH;
+		final String auth_address_ks = ApiConst.KS_AUTH;
 
 		OnLoadCompleteListener listener = new OnLoadCompleteListener() {
 			boolean tv = false;
-			boolean krasview = false;
+			boolean ks = false;
 			boolean check_tv = false;
-			boolean check_krasview = false;
+			boolean check_ks = false;
 
 			@Override
 			public void loadComplete(String result) {
@@ -304,38 +300,38 @@ public class MainAuthActivity extends Activity {
 						tv = true;
 					}
 				}
-				if(get_address.equals(auth_address_krasview)) {
+				if(get_address.equals(auth_address_ks)) {
 					if(result.equals("<results status=\"error\"><msg>Can't connect to server</msg></results>")) {
 						Toast toast = Toast.makeText(getApplicationContext(),
 							"Невозможно подключиться к серверу, проверьте подключение, попробуйте позже", Toast.LENGTH_SHORT);
 						toast.show();
 						return;
 					}
-					check_krasview = true;
+					check_ks = true;
 					if(result.equals("error")) {
-						krasview = false;
+						ks = false;
 					} else {
 						prefs.edit().putString("pref_hash", result).apply();
-						krasview = true;
+						ks = true;
 					}
 				}
-				if(check_tv && check_krasview) {
+				if(check_tv && check_ks) {
 					enterProgressDialog.dismiss();
 				} else {
 					return;
 				}
-				if(krasview) {
-					startActivity(krasviewIntent);
+				if(ks) {
+					startActivity(ksIntent);
 					MainAuthActivity.this.finish();
-					prefs.edit().putInt("pref_auth_type", AuthAccount.AUTH_TYPE_KRASVIEW).apply();
+					prefs.edit().putInt("pref_auth_type", AuthAccount.AUTH_TYPE_KS).apply();
 				}
-				if(tv && !krasview) {
-					startActivity(krasviewIntent);
+				if(tv && !ks) {
+					startActivity(ksIntent);
 					MainAuthActivity.this.finish();
 					prefs.edit().putInt("pref_auth_type", AuthAccount.AUTH_TYPE_TV)
 					.apply();
 				}
-				if(!tv && !krasview) {
+				if(!tv && !ks) {
 					Toast toast = Toast.makeText(getApplicationContext(),
 						"Ошибка авторизации, возможно, вы неправильно ввели логин или пароль ", Toast.LENGTH_SHORT);
 					toast.show();
@@ -344,7 +340,7 @@ public class MainAuthActivity extends Activity {
 			}
 		};
 		HTTPClient.getXMLAsync(auth_address_tv, "login=" + URLEncoder.encode(login) +"&password="+URLEncoder.encode(password) ,listener);
-		HTTPClient.getXMLAsync(auth_address_krasview, "login=" + URLEncoder.encode(login) +"&password="+URLEncoder.encode(password) ,listener);
+		HTTPClient.getXMLAsync(auth_address_ks, "login=" + URLEncoder.encode(login) +"&password="+URLEncoder.encode(password) ,listener);
 	}
 
 	public void onClick(View v) {

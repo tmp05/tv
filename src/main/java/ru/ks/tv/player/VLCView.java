@@ -1,17 +1,5 @@
 package ru.ks.tv.player;
 
-import java.util.ArrayList;
-import java.util.Map;
-
-import org.videolan1.libvlc.EventHandler;
-import org.videolan1.libvlc.IVideoPlayer;
-import org.videolan1.libvlc.LibVLC;
-import org.videolan1.libvlc.LibVlcException;
-import org.videolan1.vlc.Util;
-
-
-import ru.ks.tv.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,16 +15,28 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
-//import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.SurfaceHolder.Callback;
+import android.view.SurfaceView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
+import org.videolan1.libvlc.EventHandler;
+import org.videolan1.libvlc.IVideoPlayer;
+import org.videolan1.libvlc.LibVLC;
+import org.videolan1.libvlc.LibVlcException;
+import org.videolan1.vlc.Util;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+import ru.ks.tv.R;
+
+//import android.util.Log;
+
 public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface {
-	public final static String TAG = "ru.krasview.tv.VideoViewVLC";
+	public final static String TAG = "ru.ks.tv.VideoViewVLC";
 
 	TVController mTVController;
 	VideoController mVideoController;

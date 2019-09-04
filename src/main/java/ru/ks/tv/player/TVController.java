@@ -6,10 +6,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import ru.krasview.kvlib.indep.AuthAccount;
-import ru.krasview.kvlib.indep.HTTPClient;
-import ru.krasview.kvlib.indep.Parser;
-import ru.krasview.secret.ApiConst;
+import ru.ks.kvlib.indep.AuthAccount;
+import ru.ks.kvlib.indep.HTTPClient;
+import ru.ks.kvlib.indep.Parser;
+import ru.ks.secret.ApiConst;
 
 import com.example.kvlib.R;
 import android.content.Context;

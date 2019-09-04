@@ -16,7 +16,7 @@
       android:scaleType="fitXY"
       />
   
-<ru.krasview.tv.service.FontTextView
+<ru.ks.tv.service.FontTextView
     android:id="@+id/text1"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
-    <ru.krasview.multi.widget.MyListView
+    <ru.ks.multi.widget.MyListView
         android:id="@+id/list_wrapper"
         android:layout_width="match_parent"
     	android:layout_height="match_parent"

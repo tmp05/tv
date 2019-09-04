@@ -8,13 +8,13 @@
 		android:entries="@array/orientation"
 		android:entryValues="@array/orientation_values"/>
 
-	<ListPreference
-		android:key="aspect_ratio"
-		android:title="Соотношение сторон"
-		android:summary="Устанавливает соотношение сторон экрана"
-		android:defaultValue="default"
-		android:entries="@array/aspect_ratio_display"
-		android:entryValues="@array/aspect_ratio_display"/>
+	<!--<ListPreference-->
+		<!--android:key="aspect_ratio"-->
+		<!--android:title="Соотношение сторон"-->
+		<!--android:summary="Устанавливает соотношение сторон экрана"-->
+		<!--android:defaultValue="default"-->
+		<!--android:entries="@array/aspect_ratio_display"-->
+		<!--android:entryValues="@array/aspect_ratio_display"/>-->
 
 	<PreferenceCategory android:title="Настройки для телеканалов">
 

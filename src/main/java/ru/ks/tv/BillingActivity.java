@@ -1,24 +1,5 @@
 package ru.ks.tv;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import com.example.kvlib.R;
-
-import ru.krasview.kvlib.adapter.CombineSimpleAdapter;
-import ru.krasview.kvlib.indep.AuthAccount;
-import ru.krasview.kvlib.indep.HTTPClient;
-import ru.krasview.kvlib.indep.HeaderAccount;
-import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
-import ru.krasview.kvlib.widget.lists.PackageList;
-import ru.krasview.secret.ApiConst;
-import ru.krasview.secret.Billing;
-import ru.ks.tv.billing.util.IabHelper;
-import ru.ks.tv.billing.util.IabResult;
-import ru.ks.tv.billing.util.Inventory;
-import ru.ks.tv.billing.util.Purchase;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -29,6 +10,25 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import com.example.kvlib.R;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import ru.ks.kvlib.adapter.CombineSimpleAdapter;
+import ru.ks.kvlib.indep.AuthAccount;
+import ru.ks.kvlib.indep.HTTPClient;
+import ru.ks.kvlib.indep.HeaderAccount;
+import ru.ks.kvlib.interfaces.OnLoadCompleteListener;
+import ru.ks.kvlib.widget.lists.PackageList;
+import ru.ks.secret.ApiConst;
+import ru.ks.secret.Billing;
+import ru.ks.tv.billing.util.IabHelper;
+import ru.ks.tv.billing.util.IabResult;
+import ru.ks.tv.billing.util.Inventory;
+import ru.ks.tv.billing.util.Purchase;
 
 public class BillingActivity extends Activity implements OnLoadCompleteListener, OnItemClickListener {
 	IabHelper mHelper;
@@ -194,7 +194,7 @@ public class BillingActivity extends Activity implements OnLoadCompleteListener,
 			String address = ApiConst.SUBSCRIBE;
 			String secret = Billing.getSecret(hash, packet);
 			String params = "packet=" + packet + "&" + "secret=" + secret;
-			String result = HTTPClient.getXML(address, params, AuthAccount.AUTH_TYPE_KRASVIEW);
+			String result = HTTPClient.getXML(address, params, AuthAccount.AUTH_TYPE_KS);
 			return result;
 		}
 

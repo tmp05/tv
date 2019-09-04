@@ -47,8 +47,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 6
-        versionName "6.0"
+        versionCode 7
+        versionName "7.1"
         signingConfig signingConfigs.config
     }
     splits {
@@ -88,8 +88,8 @@ dependencies {
     implementation 'cz.msebera.android:httpclient:4.5.8'
 }
 
-if(project.hasProperty("krasview.signing")
-    && new File(project.property("krasview.signing") + ".gradle").exists()) {
-  apply from: project.property("krasview.signing") + ".gradle";
+if(project.hasProperty("ks.signing")
+    && new File(project.property("ks.signing") + ".gradle").exists()) {
+  apply from: project.property("ks.signing") + ".gradle";
 }
 //        releaseVersionCode 5

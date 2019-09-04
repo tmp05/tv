@@ -26,22 +26,22 @@
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <!---->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.LAUNCH" />-->
-                <!--<category android:name="android.intent.category.HOME"/>-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.HOME"/>-->
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
             <!--</intent-filter>-->
+
+            <intent-filter>
+                <action android:name="android.intent.action.LAUNCH" />
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".GuestAuthActivity"
@@ -64,7 +64,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Оплата">
             <intent-filter>
-                <action android:name="ru.krasview.tv.ACTION_BILLING" />
+                <action android:name="ru.ks.tv.ACTION_BILLING" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -75,7 +75,7 @@
             android:launchMode="singleInstance"
             android:theme="@style/Theme.MyTheme.NoTitleBar.Fullscreen">
             <intent-filter>
-                <action android:name="ru.krasview.tv.PLAY_VIDEO_LIST" />
+                <action android:name="ru.ks.tv.PLAY_VIDEO_LIST" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -86,12 +86,12 @@
             android:label=""
             android:theme="@style/Theme.AppCompat">
             <intent-filter>
-                <action android:name="krasview.intent.action.LAUNCH" />
+                <action android:name="ks.intent.action.LAUNCH" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
-                <action android:name="ru.krasview.tv.ACTION_MAIN_ACTIVITY" />
+                <action android:name="ru.ks.tv.ACTION_MAIN_ACTIVITY" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

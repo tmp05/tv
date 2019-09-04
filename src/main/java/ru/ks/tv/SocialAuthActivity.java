@@ -1,32 +1,33 @@
 package ru.ks.tv;
 
-import java.util.regex.Pattern;
-
-import ru.krasview.kvlib.indep.AuthAccount;
-import ru.krasview.kvlib.indep.HTTPClient;
-import ru.krasview.kvlib.indep.consts.IntentConst;
-import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
-import ru.krasview.secret.ApiConst;
 import android.app.Activity;
-import android.os.Build;
-import androidx.annotation.RequiresApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebResourceRequest;
+
+import androidx.annotation.RequiresApi;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.dom.Element;
-import ru.krasview.kvlib.indep.Parser;
-import ru.ks.tv.R;
+import org.w3c.dom.Node;
+
+import java.util.regex.Pattern;
+
+import ru.ks.kvlib.indep.AuthAccount;
+import ru.ks.kvlib.indep.HTTPClient;
+import ru.ks.kvlib.indep.Parser;
+import ru.ks.kvlib.indep.consts.IntentConst;
+import ru.ks.kvlib.interfaces.OnLoadCompleteListener;
+import ru.ks.secret.ApiConst;
 
 public class SocialAuthActivity extends Activity {
 	WebView wv;
@@ -107,7 +108,7 @@ public class SocialAuthActivity extends Activity {
 				prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 				prefs.edit().putString("pref_login", "")
 					.putString("pref_password", "")
-					.putInt("pref_auth_type", AuthAccount.AUTH_TYPE_KRASVIEW_SOCIAL)
+					.putInt("pref_auth_type", AuthAccount.AUTH_TYPE_KS_SOCIAL)
 					.apply();
 				Intent a = new Intent(IntentConst.ACTION_MAIN_ACTIVITY);
 				startActivity(a);

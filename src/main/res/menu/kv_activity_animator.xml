@@ -13,8 +13,8 @@
         android:icon="@drawable/ic_new_login"
         android:title="Профиль"
         android:visible="false"/>
-    <item android:id="@+id/exitlogin"
-        android:title="Выйти из учетной записи"/>
+    <!--<item android:id="@+id/exitlogin"-->
+        <!--android:title="Выйти из учетной записи"/>-->
      <item android:id="@+id/exit"
         android:title="Закрыть"/>
 

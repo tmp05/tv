@@ -18,14 +18,14 @@
     
  
 
-    <ru.krasview.tv.NewKVList
+    <ru.ks.tv.NewKVList
         android:id = "@+id/main_list"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_alignParentLeft = "true"
         android:focusableInTouchMode="true"/>    
         
-     <ru.krasview.filling.KVVideo
+     <ru.ks.filling.KVVideo
          android:id="@+id/main_video" 
          android:layout_width="match_parent"
   		 android:layout_height="match_parent"
@@ -70,9 +70,9 @@
              
          </LinearLayout>
          
-     </ru.krasview.filling.KVVideo>
+     </ru.ks.filling.KVVideo>
      
-     <ru.krasview.filling.KVOverlay
+     <ru.ks.filling.KVOverlay
   		 android:id="@+id/main_overlay"
    	     android:layout_width="match_parent"
   		 android:layout_height="match_parent"
@@ -81,7 +81,7 @@
                  
          
 
-     </ru.krasview.filling.KVOverlay> 
+     </ru.ks.filling.KVOverlay>
       <View
              android:id="@+id/main_menu_pause"
              android:layout_width="50dp"

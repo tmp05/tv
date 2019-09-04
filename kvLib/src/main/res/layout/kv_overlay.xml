@@ -23,7 +23,7 @@
   			android:visibility="gone"
   			android:scaleType="fitXY"/>
         
-    	<ru.krasview.tv.KVTime
+    	<ru.ks.tv.KVTime
          	android:id="@+id/main_time"
          	android:layout_width="match_parent"
   		 	android:layout_height="wrap_content"

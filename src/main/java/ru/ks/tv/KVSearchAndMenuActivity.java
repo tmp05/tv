@@ -17,15 +17,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Map;
 
-import ru.krasview.kvlib.adapter.CombineSimpleAdapter;
-import ru.krasview.kvlib.indep.AuthAccount;
-import ru.krasview.kvlib.indep.HTTPClient;
-import ru.krasview.kvlib.indep.consts.AuthRequestConst;
-import ru.krasview.kvlib.indep.consts.TagConsts;
-import ru.krasview.kvlib.indep.consts.TypeConsts;
-import ru.krasview.kvlib.interfaces.FatalErrorExitListener;
-import ru.krasview.kvlib.widget.List;
-import ru.krasview.secret.ApiConst;
+import ru.ks.kvlib.adapter.CombineSimpleAdapter;
+import ru.ks.kvlib.indep.AuthAccount;
+import ru.ks.kvlib.indep.HTTPClient;
+import ru.ks.kvlib.indep.consts.AuthRequestConst;
+import ru.ks.kvlib.indep.consts.TagConsts;
+import ru.ks.kvlib.indep.consts.TypeConsts;
+import ru.ks.kvlib.interfaces.FatalErrorExitListener;
+import ru.ks.kvlib.widget.List;
+import ru.ks.secret.ApiConst;
 
 public abstract class KVSearchAndMenuActivity extends AppCompatActivity
 									 implements  FatalErrorExitListener{

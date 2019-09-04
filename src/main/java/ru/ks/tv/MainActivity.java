@@ -25,18 +25,18 @@ import androidx.annotation.NonNull;
 
 import com.example.kvlib.R;
 
-import ru.krasview.kvlib.animator.NewAnimator;
-import ru.krasview.kvlib.indep.AuthAccount;
-import ru.krasview.kvlib.indep.HTTPClient;
-import ru.krasview.kvlib.indep.HeaderAccount;
-import ru.krasview.kvlib.indep.ListAccount;
-import ru.krasview.kvlib.indep.consts.RequestConst;
-import ru.krasview.kvlib.indep.consts.TypeConsts;
-import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
-import ru.krasview.kvlib.interfaces.PropotionerView;
-import ru.krasview.kvlib.widget.List;
-import ru.krasview.kvlib.widget.NavigationViewFactory;
-import ru.krasview.secret.ApiConst;
+import ru.ks.kvlib.animator.NewAnimator;
+import ru.ks.kvlib.indep.AuthAccount;
+import ru.ks.kvlib.indep.HTTPClient;
+import ru.ks.kvlib.indep.HeaderAccount;
+import ru.ks.kvlib.indep.ListAccount;
+import ru.ks.kvlib.indep.consts.RequestConst;
+import ru.ks.kvlib.indep.consts.TypeConsts;
+import ru.ks.kvlib.interfaces.OnLoadCompleteListener;
+import ru.ks.kvlib.interfaces.PropotionerView;
+import ru.ks.kvlib.widget.List;
+import ru.ks.kvlib.widget.NavigationViewFactory;
+import ru.ks.secret.ApiConst;
 import ru.ks.tv.updater.AppUpdate;
 import ru.ks.tv.updater.AppUpdateUtil;
 import ru.ks.tv.updater.DownloadUpdateService;
@@ -197,7 +197,7 @@ public class MainActivity extends KVSearchAndMenuActivity {
 			return;
 		}
 		prefs.edit().putBoolean("pref_now_logout", false)
-		.putInt("pref_last_interface", MainAuthActivity.INTERFACE_KRASVIEW).apply();
+		.putInt("pref_last_interface", MainAuthActivity.INTERFACE_KS).apply();
 		HTTPClient.setContext(this);
 		HTTPClient.setExitListener(this);
 		AuthAccount.getInstance().setLogin(prefs.getString("pref_login", ""));
@@ -231,12 +231,12 @@ public class MainActivity extends KVSearchAndMenuActivity {
 
 	@Override
 	public void onBackPressed() {
-		SharedPreferences prefs;
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		pref_autoplay = prefs.getBoolean("autoplay", false);
-		if (pref_autoplay) {
-				super.onBackPressed();
-		 }
+//		SharedPreferences prefs;
+//		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//		pref_autoplay = prefs.getBoolean("autoplay", false);
+//		if (pref_autoplay) {
+//				super.onBackPressed();
+//		 }
 	}
 
 	@Override

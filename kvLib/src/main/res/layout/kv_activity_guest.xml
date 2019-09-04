@@ -18,14 +18,7 @@
             android:onClick="onClick"
             android:layout_weight="1"/>
            
-           <Button
-        	android:id="@+id/kv_auth_registration_button"
-        	android:layout_width="match_parent"
-        	android:layout_height="match_parent"
-        	android:text="Зарегистрироваться на krasview" 
-        	android:onClick="onClick"
-        	android:layout_weight="1"/>
-           
+
           
            
        </LinearLayout>
@@ -55,7 +48,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text=
-                "	Вы можете войти как гость, тогда вам будет недоступен просмотр телеканалов. Однако, вам будут доступны более трех тысяч сериалов и аниме, представленных на сайте krasview.ru. Если же вы хотите смотреть телевидение через это приложение, нужно зарегистрироваться на krasview." />
+                "	Вы можете войти как гость, тогда вам будет недоступен просмотр телеканалов. Однако, вам будут доступны более трех тысяч сериалов и аниме. Если же вы хотите смотреть телевидение через это приложение, нужно зарегистрироваться." />
 
             
 <CheckBox

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLCVout.OnNewVideoLayoutListener, VideoInterface {
-    public final static String TAG = "Krasview/VideoViewVLC";
+    public final static String TAG = "Ks/VideoViewVLC";
 
     private SurfaceView mSurface;
     private SurfaceHolder holder;

@@ -5,7 +5,7 @@
     <string name="home_node">level1.xml</string>
     <string name="const_name">name</string>
     <string name="title_activity_main" translatable="false">ТВ</string>
-    <string name="krasview_address_main" translatable="false">http://tv.kraslan.ru/api/tv/get.xml</string>
+    <string name="ks_address_main" translatable="false">http://tv.kraslan.ru/api/tv/get.xml</string>
    
 
     <!-- Main VLC Interface -->

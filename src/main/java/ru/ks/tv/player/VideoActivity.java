@@ -14,17 +14,23 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.*;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.SurfaceView;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.example.kvlib.R;
 import com.google.android.exoplayer2.ui.PlayerView;
 
 import org.videolan1.vlc.Util;
-import ru.krasview.kvlib.indep.ListAccount;
 
 import java.util.Map;
+
+import ru.ks.kvlib.indep.ListAccount;
 
 public class VideoActivity extends Activity {
 	RelativeLayout mFrame;
@@ -44,7 +50,7 @@ public class VideoActivity extends Activity {
 
 	private final Handler mHandler = new VideoPlayerHandler(this);
 
-	final static String ACTION_VIDEO_LIST = "ru.krasview.tv.PLAY_VIDEO_LIST";
+	final static String ACTION_VIDEO_LIST = "ru.ks.tv.PLAY_VIDEO_LIST";
 
 	private static final int FADE_OUT = 1;
 	private static final int FADE_OUT_INFO = 4;
