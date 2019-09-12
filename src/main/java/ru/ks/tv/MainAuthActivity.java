@@ -1,8 +1,8 @@
 package ru.ks.tv;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.app.admin.DevicePolicyManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -37,7 +37,7 @@ import ru.ks.kvlib.interfaces.OnLoadCompleteListener;
 import ru.ks.secret.ApiConst;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class MainAuthActivity extends Activity {
+public class MainAuthActivity extends BaseActivity {
 
 	public static SharedPreferences prefs;
 	//какой интерфейс был включен в прошлый раз
@@ -56,6 +56,7 @@ public class MainAuthActivity extends Activity {
 	private String password;//("pref_password")//сохраненный пароль
 
 	private boolean logout;
+	private boolean autoplay;
 
 	//элементы разметки
 	EditText edit_login, edit_password;
@@ -65,6 +66,9 @@ public class MainAuthActivity extends Activity {
 	//интенты для вызова активити
 	Intent ksIntent;
 
+	private boolean isAdminActive;
+	private DevicePolicyManager mDevicePolicyManager;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -73,11 +77,11 @@ public class MainAuthActivity extends Activity {
 		setContentView(R.layout.kv_activity_auth_small);
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		logout = prefs.getBoolean("pref_now_logout", true);
+		autoplay = prefs.getBoolean("autoplay", false);
 		fastAuth(!logout);
 		initLayout();
+		setUpAdmin(autoplay);
 	}
-
-
 
 	@Override
 	public void onPause() {
@@ -153,20 +157,7 @@ public class MainAuthActivity extends Activity {
 		if(str.equals("")) {
 			return;
 		}
-		//social_grid.setAdapter(new SocialButtonAdapter());
-//       adjustGridView();
-//		social_grid.setOnItemClickListener(new GridView.OnItemClickListener() {
-//			@SuppressWarnings("unchecked")
-//			@Override
-//			public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
-//				Map<String, Object> m = (Map<String,Object>) parent.getItemAtPosition(position);
-//				Intent socialIntent = new Intent(MainAuthActivity.this, SocialAuthActivity.class);
-//				socialIntent.putExtra("address", (String)m.get("url"));
-//				MainAuthActivity.this.startActivityForResult(socialIntent, REQUEST_CODE_SOCIAL);
-//			}
-//		}
-		//);
-		//((SocialButtonAdapter)social_grid.getAdapter()).addData(str);
+
 	}
 
 
@@ -348,45 +339,19 @@ public class MainAuthActivity extends Activity {
 		case R.id.kv_auth_enter_button:
 			enter();
 			break;
-//		case R.id.kv_auth_registration_button:
-//			Intent b = new Intent(Intent.ACTION_VIEW);
-//			b.setData(Uri.parse(ApiConst.CREATE_ACCOUNT));
-//			startActivity(b);
-//			break;
-//		case R.id.kv_auth_guest_button:
-//			guestAuth();
-//			break;
-//		case R.id.kv_auth_kraslan_button:
-//			prefs.edit().putString("pref_login", "")
-//			.putString("pref_password", "")
-//			.putInt("pref_auth_type", AuthAccount.AUTH_TYPE_TV).apply();
-//			fastAuth(true);
-//			break;
 		}
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(resultCode != RESULT_OK) return;
-		switch(requestCode) {
-		case REQUEST_CODE_GUEST:
-		case REQUEST_CODE_SOCIAL:
-			this.finish();
-			break;
-		}
-	}
+//	@Override
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		if(resultCode != RESULT_OK) return;
+//		switch(requestCode) {
+//		case REQUEST_CODE_GUEST:
+//		case REQUEST_CODE_SOCIAL:
+//			this.finish();
+//			break;
+//		}
+//	}
 
-	private void guestAuth() {
-		if(!prefs.getBoolean("pref_guest_check", false)) {
-			Intent c = new Intent(this, GuestAuthActivity.class);
-			this.startActivityForResult(c, REQUEST_CODE_GUEST);
-		} else {
-			prefs.edit().putString("pref_login", "")
-			.putString("pref_password", "")
-			.putInt("pref_auth_type", AuthAccount.AUTH_TYPE_GUEST).apply();
-			Intent a = new Intent(IntentConst.ACTION_MAIN_ACTIVITY);
-			startActivity(a);
-			this.finish();
-		}
-	}
+
 }

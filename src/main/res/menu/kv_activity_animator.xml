@@ -7,14 +7,10 @@
           android:title="Настройки"/>
     <item android:id="@+id/kv_refresh_item"
         android:title="Обновить"/>
-    <item android:id="@+id/kv_login_item"
-        android:checkable="false"
-        android:enabled="false"
-        android:icon="@drawable/ic_new_login"
-        android:title="Профиль"
-        android:visible="false"/>
-    <!--<item android:id="@+id/exitlogin"-->
-        <!--android:title="Выйти из учетной записи"/>-->
+    <item
+        android:id="@+id/kv_login_item"
+        android:title="Логин"
+        app:showAsAction="always" />
      <item android:id="@+id/exit"
         android:title="Закрыть"/>
 

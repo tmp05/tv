@@ -49,7 +49,6 @@ public class MainActivity extends KVSearchAndMenuActivity {
 	String start = TypeConsts.MAIN;
 	FrameLayout layout;
 	private BroadcastReceiver mNetworkStateIntentReceiver;
-	public boolean pref_autoplay;
 	public boolean updateChecked = false;
 	private final UpdateBroadcastReceiver showUpdateDialog = new UpdateBroadcastReceiver();
 	private static final String TAG = "MainActivity";
@@ -229,15 +228,7 @@ public class MainActivity extends KVSearchAndMenuActivity {
 		}
 	}
 
-	@Override
-	public void onBackPressed() {
-//		SharedPreferences prefs;
-//		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//		pref_autoplay = prefs.getBoolean("autoplay", false);
-//		if (pref_autoplay) {
-//				super.onBackPressed();
-//		 }
-	}
+
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

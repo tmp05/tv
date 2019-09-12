@@ -52,7 +52,7 @@ public abstract class KVSearchAndMenuActivity extends AppCompatActivity
 		MenuItem loginItem = menu.findItem(R.id.kv_login_item);
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		String login = prefs.getString("pref_login", "");
-    	loginItem.setTitle(login);
+    	loginItem.setTitle("лицевой счет №"+login+" ");
 
     	//requestFocus();
 		return super.onCreateOptionsMenu(menu);

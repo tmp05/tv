@@ -3,5 +3,5 @@
     package="com.example.kvlib"
     android:versionCode="7"
     android:versionName="7.1"
-    android:minSdkVersion="16">
+    android:minSdkVersion="21">
 </manifest>

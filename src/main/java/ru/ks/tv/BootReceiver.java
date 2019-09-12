@@ -1,6 +1,5 @@
 package ru.ks.tv;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +13,7 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context arg0, Intent arg1) {
         SharedPreferences prefs;
         prefs = PreferenceManager.getDefaultSharedPreferences(arg0);
-        pref_autoplay = prefs.getBoolean("autoplay", true);
+        pref_autoplay = prefs.getBoolean("autoplay", false);
         if (pref_autoplay) {
             Intent ativivtyIntent = new Intent(arg0, MainAuthActivity.class);
             ativivtyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -23,3 +22,4 @@ public class BootReceiver extends BroadcastReceiver {
 
     }
 }
+

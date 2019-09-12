@@ -6,7 +6,16 @@
     <string name="const_name">name</string>
     <string name="title_activity_main" translatable="false">ТВ</string>
     <string name="ks_address_main" translatable="false">http://tv.kraslan.ru/api/tv/get.xml</string>
-   
+
+    <!--Kiosk mode-->
+    <string name="device_admin_enabled">Device Admin enabled</string>
+    <string name="device_admin_warning">Warning: Device Admin is going to be disabled.</string>
+    <string name="device_admin_disabled">Device Admin disabled</string>
+    <string name="kiosk_mode_enabled">Kiosk Mode enabled</string>
+    <string name="kiosk_mode_disabled">Kiosk Mode disabled</string>
+    <string name="kiosk_not_permitted">Kiosk Mode not permitted</string>
+    <string name="not_device_admin">This app is not a device admin!</string>
+    <string name="not_device_owner">This app is not the device owner!</string>
 
     <!-- Main VLC Interface -->
     <string name="app_name" translatable="false">VLC</string>
@@ -238,6 +247,7 @@
     <string name="quit">Quit application</string>
     <string name="update_available">Доступно обновление</string>
     <string name="update">Обновить</string>
+    <string name="key_of_pref">autoplay</string>
 
     <string-array name="deblocking_list">
         <item>@string/automatic</item>

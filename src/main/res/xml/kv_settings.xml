@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	android:title="Настройки абонента">
+
 	<ListPreference
 		android:key="orientation"
 		android:title="Ориентация экрана"
@@ -35,10 +37,10 @@
 	</PreferenceCategory>
 
 	<CheckBoxPreference
-		android:defaultValue="true"
+		android:defaultValue="false"
 		android:key="autoplay"
-		android:summary="При перезагрузке устройства приложение будет автоматически запущено"
-		android:title="Автозапуск"/>
+		android:summary="Приложение будет блокировать все другие приложения"
+		android:title="Использовать приложение как основное"/>
 	<!--<PreferenceCategory android:title="Настройки для видео">-->
 	<!--<ListPreference-->
 		<!--android:key="video_player_serial"-->
