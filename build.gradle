@@ -47,8 +47,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 7
-        versionName "7.1"
+        versionCode 8
+        versionName "8.1"
         signingConfig signingConfigs.config
     }
     splits {

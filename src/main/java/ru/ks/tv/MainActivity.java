@@ -70,6 +70,7 @@ public class MainActivity extends KVSearchAndMenuActivity {
 
 		styleBackground();
 		getPacketAndStart();
+
 	}
 
 

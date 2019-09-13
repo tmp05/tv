@@ -13,6 +13,7 @@ public class PrMainActivity extends BaseActivity implements SharedPreferences.On
 		SharedPreferences prefs =
 				PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(this);
+
 	}
 
 

@@ -13,8 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.Map;
 
 import ru.ks.kvlib.adapter.CombineSimpleAdapter;
@@ -27,12 +25,11 @@ import ru.ks.kvlib.interfaces.FatalErrorExitListener;
 import ru.ks.kvlib.widget.List;
 import ru.ks.secret.ApiConst;
 
-public abstract class KVSearchAndMenuActivity extends AppCompatActivity
+public abstract class KVSearchAndMenuActivity extends BaseActivity
 									 implements  FatalErrorExitListener{
 
 	AuthAccount account = AuthAccount.getInstance();
 	View searchHost;
-
 	protected abstract void exit();
 	protected abstract void refresh();
 

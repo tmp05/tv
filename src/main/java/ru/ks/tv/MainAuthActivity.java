@@ -56,7 +56,7 @@ public class MainAuthActivity extends BaseActivity {
 	private String password;//("pref_password")//сохраненный пароль
 
 	private boolean logout;
-	private boolean autoplay;
+
 
 	//элементы разметки
 	EditText edit_login, edit_password;
@@ -77,10 +77,11 @@ public class MainAuthActivity extends BaseActivity {
 		setContentView(R.layout.kv_activity_auth_small);
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		logout = prefs.getBoolean("pref_now_logout", true);
-		autoplay = prefs.getBoolean("autoplay", false);
 		fastAuth(!logout);
 		initLayout();
-		setUpAdmin(autoplay);
+		setUpAdmin(prefs.getBoolean("autoplay", false));
+
+
 	}
 
 	@Override

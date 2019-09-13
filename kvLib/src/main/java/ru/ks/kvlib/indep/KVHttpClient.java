@@ -40,7 +40,7 @@ public class KVHttpClient {
 		//httpClient.getParams().setParameter(CoreProtocolPNames.USER_AGENT, "");
 
 		HttpGet httpGet = new HttpGet(address);
-		httpGet.setHeader("User-Agent", "ks 7.1");
+		httpGet.setHeader("User-Agent", "ks 8");
 		HttpResponse httpResponse = httpClient.execute(httpGet);
 		HttpEntity httpEntity = httpResponse.getEntity();
 		if(httpEntity != null){

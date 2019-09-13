@@ -4,7 +4,7 @@
         <!--<limit-password />-->
         <!--<watch-login />-->
         <!--<reset-password />-->
-        <force-lock />
+        <!--<force-lock />-->
         <!--<wipe-data />-->
         <!--<expire-password />-->
         <!--<encrypted-storage />-->
