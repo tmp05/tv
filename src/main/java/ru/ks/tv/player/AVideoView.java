@@ -1,7 +1,5 @@
 package ru.ks.tv.player;
 
-import java.util.Map;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -16,6 +14,8 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.VideoView;
+
+import java.util.Map;
 
 public class AVideoView extends VideoView implements VideoInterface {
 	TVController mTVController;
@@ -44,8 +44,8 @@ public class AVideoView extends VideoView implements VideoInterface {
 	private static final int SURFACE_FROM_SETTINGS = 7;
 	private int mCurrentSize = SURFACE_FROM_SETTINGS;
 
-	String pref_aspect_ratio = "default";
-	String pref_aspect_ratio_video = "default";
+	String pref_aspect_ratio = "fullscreen";
+	String pref_aspect_ratio_video = "fullscreen";
 
 	public AVideoView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -82,9 +82,9 @@ public class AVideoView extends VideoView implements VideoInterface {
 		prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 		pref_aspect_ratio = prefs.getString("aspect_ratio", "default");
 		if(mMap.get("type").equals("video")) {
-			pref_aspect_ratio_video = prefs.getString("aspect_ratio_video", "default");
+			pref_aspect_ratio_video = prefs.getString("aspect_ratio_video", "fullscreen");
 		} else {
-			pref_aspect_ratio_video = prefs.getString("aspect_ratio_tv", "default");
+			pref_aspect_ratio_video = prefs.getString("aspect_ratio_tv", "fullscreen");
 		}
 	}
 

@@ -55,8 +55,8 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	Map<String, Object> mMap;
 	public final static String TAG = "Ks/KExoPlayer";
 
-	String pref_aspect_ratio = "default";
-	String pref_aspect_ratio_video = "default";
+	String pref_aspect_ratio = "fullscreen";
+	String pref_aspect_ratio_video = "fullscreen";
 
 	public KExoPlayer(Context context, PlayerView view) {
 		super(context);
@@ -143,9 +143,9 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 		prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 		pref_aspect_ratio = prefs.getString("aspect_ratio", "default");
 		if(mMap.get("type").equals("video")) {
-			pref_aspect_ratio_video = prefs.getString("aspect_ratio_video", "default");
+			pref_aspect_ratio_video = prefs.getString("aspect_ratio_video", "fullscreen");
 		} else {
-			pref_aspect_ratio_video = prefs.getString("aspect_ratio_tv", "default");
+			pref_aspect_ratio_video = prefs.getString("aspect_ratio_tv", "fullscreen");
 		}
 		Log.d(TAG, "aspect ratio: " + pref_aspect_ratio_video);
 	}

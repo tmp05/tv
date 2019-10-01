@@ -12,8 +12,8 @@ import android.util.Log;
 import androidx.appcompat.app.AlertDialog;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,25 +26,29 @@ import cz.msebera.android.httpclient.client.methods.HttpGet;
 import cz.msebera.android.httpclient.impl.client.CloseableHttpClient;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
 import cz.msebera.android.httpclient.util.EntityUtils;
+import ru.ks.kvlib.indep.Parser;
 import ru.ks.tv.BuildConfig;
 import ru.ks.tv.MainActivity;
 import ru.ks.tv.R;
 
-
 public class AppUpdateUtil {
 
-    private static final String GITHUB_RELEASES_URL = "https://api.github.com/repos/tmp05/tv/releases/latest";
+  // private static final String GITHUB_RELEASES_URL = "https://api.github.com/repos/tmp05/tv/releases/latest";
+    private static final String GITHUB_RELEASES_URL = "https://tv.kraslan.ru/api/app/android/tv.xml";
 
     private static final String TAG = "AppUpdateUtil";
     private static String assetUrl = null;
 
+
     public static void checkForUpdate(final Context context) {
+
 
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
+
             final HttpGet httpget = new HttpGet(GITHUB_RELEASES_URL);
 
-            Log.v(TAG, "Executing request " + httpget.getRequestLine());
+            Log.v(TAG, "Executing request http://tv.kraslan.ru/api/app/android/actual.xml");
 
             // Create a custom response handler
             final ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
@@ -55,22 +59,28 @@ public class AppUpdateUtil {
                     int status = response.getStatusLine().getStatusCode();
                     if (status >= 200 && status < 300) {
                         HttpEntity entity = response.getEntity();
-                        //return entity != null ? EntityUtils.toString(entity) : null;
                         String body = EntityUtils.toString(entity);
+
                         try {
 
-                            JSONObject releaseInfo = new JSONObject(body);
-                            JSONObject releaseAssets = releaseInfo.getJSONArray("assets").getJSONObject(0);
+                            Document actual;
+                            actual = Parser.XMLfromString(body);
+                            actual.normalizeDocument();
 
-                            AppUpdate update = new AppUpdate(releaseAssets.getString("browser_download_url"),
-                                    releaseInfo.getString("tag_name"), releaseInfo.getString("body"), AppUpdate.UP_TO_DATE);
+                            Node node0 = actual.getElementsByTagName("application").item(0);
 
+                            AppUpdate update = new AppUpdate(Parser.getValue("url",node0),
+                                    Parser.getValue("versionCode", node0), "", AppUpdate.UP_TO_DATE);
 
+//                            JSONObject releaseInfo = new JSONObject(body);
+//                            JSONObject releaseAssets = releaseInfo.getJSONArray("assets").getJSONObject(0);
+
+//                            AppUpdate update = new AppUpdate(releaseAssets.getString("browser_download_url"),
+//                                    releaseInfo.getString("tag_name"), releaseInfo.getString("body"), AppUpdate.UP_TO_DATE);
 
                             SemVer currentVersion = SemVer.parse(BuildConfig.VERSION_NAME);
                             SemVer remoteVersion = SemVer.parse(update.getVersion());
 
-                            //If current version is smaller than remote version
                             if (currentVersion.compareTo(remoteVersion) < 0) {
                                 update.setStatus(AppUpdate.UPDATE_AVAILABLE);
                             } else {
@@ -79,7 +89,7 @@ public class AppUpdateUtil {
 
                             Intent updateIntent = MainActivity.createUpdateDialogIntent(update);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(updateIntent);
-                        } catch (JSONException je) {
+                        } catch (Exception je) {
                             Log.e(TAG, "Exception thrown while checking for update");
                             Log.e(TAG, je.toString());
                         }
@@ -97,6 +107,8 @@ public class AppUpdateUtil {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }catch (Exception e) {
+            e.printStackTrace();
         } finally {
             try {
                 httpclient.close();
@@ -104,7 +116,7 @@ public class AppUpdateUtil {
                 e.printStackTrace();
             }
         }
-    }
+   }
 
     private static void startUpdate(final Context context, String url) {
         Intent startDownloadIntent = new Intent(context, DownloadUpdateService.class);
@@ -117,34 +129,10 @@ public class AppUpdateUtil {
             startUpdate(context, assetUrl);
     }
 
-    public static void beginUpdate(final MainActivity context, final AppUpdate update){
-        boolean writable = false;//sometimes downloads dir writable... sometimes not :(
-        File dir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-        if (dir != null) {
-            writable = dir.canWrite();
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !writable) {
-            int permissionCheck = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            int permissionCheck2 = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
-            if (permissionCheck == PackageManager.PERMISSION_DENIED ||
-                    permissionCheck2 == PackageManager.PERMISSION_DENIED) {
-                Log.w(TAG, "record storage denied, asking for permissions");
-                assetUrl = update.getAssetUrl();
-                context.requestPermissions(
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,},
-                        MainActivity.PERMISSION_UPDATE_WRITE);
-            } else {
-                startUpdate(context, update.getAssetUrl());
-            }
-        } else {
-            startUpdate(context, update.getAssetUrl());
-        }
-    }
 
     public static AlertDialog getAppUpdateDialog(final MainActivity context, final AppUpdate update) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context).setTitle(R.string.update_available).setMessage(
-                "Доступна версия KSTV " + " v" + update.getVersion())
+                "Доступна версия KSTV на tv.kraslan.ru " + " v" + update.getVersion())
                 .setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

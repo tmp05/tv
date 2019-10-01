@@ -47,8 +47,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 8
-        versionName "8.1"
+        versionCode 12
+        versionName "12"
         signingConfig signingConfigs.config
     }
     splits {
@@ -73,6 +73,7 @@ android {
         targetCompatibility 1.8
     }
     buildToolsVersion = '28.0.3'
+    useLibrary  'org.apache.http.legacy'
 }
 
 dependencies {
@@ -92,4 +93,3 @@ if(project.hasProperty("ks.signing")
     && new File(project.property("ks.signing") + ".gradle").exists()) {
   apply from: project.property("ks.signing") + ".gradle";
 }
-//        releaseVersionCode 5

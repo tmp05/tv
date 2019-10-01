@@ -17,6 +17,10 @@
     <string name="not_device_admin">This app is not a device admin!</string>
     <string name="not_device_owner">This app is not the device owner!</string>
 
+    <string name="OK">OK</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Pass">0000</string>
+
     <!-- Main VLC Interface -->
     <string name="app_name" translatable="false">VLC</string>
     <string name="widget_name" translatable="false">VLC mini player</string>

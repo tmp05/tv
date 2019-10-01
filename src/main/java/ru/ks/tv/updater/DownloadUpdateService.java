@@ -57,7 +57,7 @@ public class DownloadUpdateService extends Service {
             //set BroadcastReceiver to install app when .apk is downloaded
             BroadcastReceiver onComplete = new BroadcastReceiver() {
                 public void onReceive(Context ctxt, Intent intent) {
-                    long finishedDownloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+                    long finishedDownloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0L);
                     if (startedDownloadId == finishedDownloadId) {
 
                         DownloadManager.Query query = new DownloadManager.Query();
@@ -69,18 +69,18 @@ public class DownloadUpdateService extends Service {
 
                             if (status == DownloadManager.STATUS_SUCCESSFUL) {
                                 //open the downloaded file
-                                    Intent install = new Intent(Intent.ACTION_VIEW);
-                                    install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    Uri downloadUri2 = downloadUri;
-                                    if (Build.VERSION.SDK_INT >= 24) {
-                                        downloadUri2 = FileProvider.getUriForFile(ctxt,
-                                                getApplicationContext().getPackageName() + ".provider",
-                                                newApkFile);
-                                    }
-                                    install.setDataAndType(downloadUri2,
-                                            manager.getMimeTypeForDownloadedFile(startedDownloadId));
-                                    install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                    ctxt.startActivity(install);
+                                Intent install = new Intent(Intent.ACTION_VIEW);
+                                install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                Uri downloadUri2 = downloadUri;
+                                if (Build.VERSION.SDK_INT >= 24) {
+                                    downloadUri2 = FileProvider.getUriForFile(ctxt,
+                                            getApplicationContext().getPackageName() + ".provider",
+                                            newApkFile);
+                                }
+                                install.setDataAndType(downloadUri2,
+                                        "application/vnd.android.package-archive");
+                                install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                ctxt.startActivity(install);
 
                             } else if (status == DownloadManager.STATUS_FAILED) {
                                 if (newApkFile.exists()) {

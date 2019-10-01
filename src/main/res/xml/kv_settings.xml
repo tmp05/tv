@@ -31,7 +31,7 @@
 		android:key="aspect_ratio_tv"
 		android:title="Соотношение сторон"
 		android:summary="Устанавливает соотношение сторон для телеканалов"
-		android:defaultValue="default"
+		android:defaultValue="fullscreen"
 		android:entries="@array/aspect_ratio_video"
 		android:entryValues="@array/aspect_ratio_video"/>
 	</PreferenceCategory>

@@ -20,6 +20,7 @@
         android:visibility="visible">
     
         <TextView
+            android:id="@+id/kv_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="KrasSet TV"

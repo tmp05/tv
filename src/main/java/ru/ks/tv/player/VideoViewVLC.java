@@ -46,8 +46,8 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
     private static final int SURFACE_FROM_SETTINGS = 7;
     private int mCurrentSize = SURFACE_FROM_SETTINGS;
 
-    String pref_aspect_ratio = "default";
-    String pref_aspect_ratio_video = "default";
+    String pref_aspect_ratio = "fullscreen";
+    String pref_aspect_ratio_video = "fullscreen";
 
 
     public VideoViewVLC(Context context) {
@@ -441,9 +441,9 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
         prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         pref_aspect_ratio = prefs.getString("aspect_ratio", "default");
         if(mMap.get("type").equals("video")) {
-            pref_aspect_ratio_video = prefs.getString("aspect_ratio_video", "default");
+            pref_aspect_ratio_video = prefs.getString("aspect_ratio_video", "fullscreen");
         } else {
-            pref_aspect_ratio_video = prefs.getString("aspect_ratio_tv", "default");
+            pref_aspect_ratio_video = prefs.getString("aspect_ratio_tv", "fullscreen");
         }
     }
 

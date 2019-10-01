@@ -30,7 +30,13 @@ public abstract class KVSearchAndMenuActivity extends BaseActivity
 
 	AuthAccount account = AuthAccount.getInstance();
 	View searchHost;
-	protected abstract void exit();
+
+	private int NCount = 0;
+	private int ECount = 0;
+    MenuItem NItem;
+    MenuItem EItem;
+
+    protected abstract void exit();
 	protected abstract void refresh();
 
 	@Override
@@ -45,8 +51,10 @@ public abstract class KVSearchAndMenuActivity extends BaseActivity
 
 		@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.kv_activity_animator, menu);
+	    getMenuInflater().inflate(R.menu.kv_activity_animator, menu);
 		MenuItem loginItem = menu.findItem(R.id.kv_login_item);
+		NItem = menu.findItem(R.id.new_game);
+        EItem = menu.findItem(R.id.exitlogin);
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		String login = prefs.getString("pref_login", "");
     	loginItem.setTitle("лицевой счет №"+login+" ");
@@ -55,12 +63,42 @@ public abstract class KVSearchAndMenuActivity extends BaseActivity
 		return super.onCreateOptionsMenu(menu);
     }
 
-	@Override
+    public void NullTheN(){
+		NCount = 0;
+		NItem.setTitle("Настройки");
+	}
+
+	public void NullTheE(){
+		ECount = 0;
+		EItem.setTitle("Выйти из учетной записи");
+	}
+
+    public void DoTheMenu(MenuItem item){
+		if (item == NItem) {
+			NCount = +NCount;
+			item.setTitle(item.getTitle()+".");
+			NullTheE();
+		}
+		else if (item == EItem) {
+			ECount = +ECount;
+			item.setTitle(item.getTitle()+".");
+			NullTheN();
+		}
+		else {
+			NullTheN();
+			NullTheE();
+		}
+	}
+
+		@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        DoTheMenu(item);
         if(id == R.id.new_game) {
-                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+			NCount = ++NCount;
+			if (NCount==5) {
+				NullTheN();
+			    int currentapiVersion = android.os.Build.VERSION.SDK_INT;
                 if (currentapiVersion >= 11) {
                     Intent settingsActivity = new Intent(getBaseContext(), PrMainActivity.class);
                     startActivity(settingsActivity);
@@ -70,13 +108,18 @@ public abstract class KVSearchAndMenuActivity extends BaseActivity
                     startActivity(settingsActivity);
                     return true;
                 }
+			}
         } else if (id == R.id.kv_login_item) {
             return true;
         } else if (id == R.id.exit) {
            // exit();
-			return true;
+            return true;
 		} else if (id == R.id.exitlogin) {
-			exit();
+			ECount = ++ECount;
+			if (ECount==5) {
+				NullTheE();
+				exit();
+			}
 			return true;
         } else if (id == R.id.kv_refresh_item) {
 			refresh();

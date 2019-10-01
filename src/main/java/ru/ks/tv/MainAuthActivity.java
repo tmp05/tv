@@ -3,6 +3,7 @@ package ru.ks.tv;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.app.admin.DevicePolicyManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Document;
@@ -75,14 +77,17 @@ public class MainAuthActivity extends BaseActivity {
 		HTTPClient.setContext(this);
 		ksIntent = new Intent(IntentConst.ACTION_MAIN_ACTIVITY);
 		setContentView(R.layout.kv_activity_auth_small);
+
+		TextView itemTextView = (TextView) findViewById(R.id.kv_item);
+		mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		logout = prefs.getBoolean("pref_now_logout", true);
 		fastAuth(!logout);
 		initLayout();
 		setUpAdmin(prefs.getBoolean("autoplay", false));
-
-
 	}
+
 
 	@Override
 	public void onPause() {

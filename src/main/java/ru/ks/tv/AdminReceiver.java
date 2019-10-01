@@ -14,6 +14,7 @@ public class AdminReceiver extends DeviceAdminReceiver {
 //        Toast.makeText(context, context.getString(R.string.device_admin_enabled), Toast.LENGTH_SHORT).show();
     }
 
+
     @Override
     public CharSequence onDisableRequested(Context context, Intent intent) {
         return context.getString(R.string.device_admin_warning);

@@ -65,8 +65,8 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 
 	private static final int SURFACE_SIZE = 3;
 
-	String pref_aspect_ratio = "default";
-	String pref_aspect_ratio_video = "default";
+	String pref_aspect_ratio = "fullscreen";
+	String pref_aspect_ratio_video = "fullscreen";
 
 	private Map<Integer,String> mAudioTracksList;
 
@@ -457,9 +457,9 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 		pref_aspect_ratio = prefs.getString("aspect_ratio", "default");
 		if(mMap.get("type").equals("video")) {
 			// Log.i("Debug", "video");
-			pref_aspect_ratio_video = prefs.getString("aspect_ratio_video", "default");
+			pref_aspect_ratio_video = prefs.getString("aspect_ratio_video", "fullscreen");
 		} else {
-			pref_aspect_ratio_video = prefs.getString("aspect_ratio_tv", "default");
+			pref_aspect_ratio_video = prefs.getString("aspect_ratio_tv", "fullscreen");
 			//Log.i("Debug", "channel" );
 		}
 	}
