@@ -1,5 +1,15 @@
 package ru.ks.kvlib.widget;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.SimpleAdapter;
+
 import java.util.Map;
 
 import ru.ks.kvlib.adapter.CombineSimpleAdapter;
@@ -8,15 +18,6 @@ import ru.ks.kvlib.indep.consts.IntentConst;
 import ru.ks.kvlib.indep.consts.RequestConst;
 import ru.ks.kvlib.indep.consts.TagConsts;
 import ru.ks.kvlib.indep.consts.TypeConsts;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.SimpleAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class KVItemClickListener implements OnItemClickListener {
 	private List mList;
@@ -74,7 +75,7 @@ public class KVItemClickListener implements OnItemClickListener {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mList.getContext());
 		String player;
 		if(t.equals(TypeConsts.CHANNEL) || t.equals(TypeConsts.TV_RECORD_VIDEO)) {
-			player = prefs.getString("video_player_tv", "std");
+			player = prefs.getString("video_player_tv", "VLC");
 		} else if(t.equals(TypeConsts.VIDEO)) {
 			player = prefs.getString("video_player_serial", "std");
 		} else {

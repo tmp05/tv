@@ -161,7 +161,7 @@ public class VideoActivity extends Activity {
 	private void getPrefs() {
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		pref_video_player_serial = prefs.getString("video_player_serial", "std");
-		pref_video_player_tv = prefs.getString("video_player_tv", "std");
+		pref_video_player_tv = prefs.getString("video_player_tv", "VLC");
 		pref_orientation = prefs.getString("orientation", "default");
 	}
 
